@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{parskip}
 \usepackage{hyperref}
+\usepackage{gensymb}
 
 \def\labelitemi{--}
 
@@ -30,7 +31,7 @@ The best way to be a Bayesian in ecology today}
 
 \section{Main text}
 
-Recent years have seen the explosion of Bayesian models across fields (CITES), including ecology. This change comes in part from increased computational power, but more from new algorithms (e.g., Hamiltonian Monte Carlo) that have made models faster and arguably easier to fit. Capitalizing on these advances \textsf{R} packages such as \textsf{brms} and \textsf{rstanarm} have seen much wider use than the previous generation of packages that streamlined fitting a set of pre-determined models using Bayesian approaches (\eg \textsf{MCMCglmm}. Bayesian approaches, long heralded as more powerful, flexible and especially adept at capturing the multiple levels of variance in ecological data, seem poised to help ecology as a discipline advance in leaps and bounds.
+Recent years have seen the explosion of Bayesian models across fields (CITES), including ecology. This change comes in part from increased computational power, but more from new algorithms (e.g., Hamiltonian Monte Carlo) that have made models faster and arguably easier to fit. Capitalizing on these advances \textsf{R} packages such as \textsf{brms} have seen much wider use than the previous generation of packages that streamlined fitting a set of pre-determined models using Bayesian approaches (\eg \textsf{MCMCglmm}. Bayesian approaches, long heralded as more powerful, flexible and especially adept at capturing the multiple levels of variance in ecological data, seem poised to help ecology as a discipline advance in leaps and bounds.
 
 Ecology itself seems poised to leap out of the jungle and land into the role society is asking of it as growing global challenges demand more predictive models of how communities and ecosystems will shift with climate change, habitat degradation and all that jazz. Ecology is now three decades on after the start of the synthesis movement, which required more advanced statistical and computational approaches of ecology to test fundamental theory across systems (CITES). Early concerns have given way to a widespread appreciation of the value of these new approaches, alongside a resounding fervor over `natural history.' At the same time, the growing anthropogenic challenges have increased the need for predictive models and forecasts from ecologists. 
 
@@ -43,19 +44,25 @@ Today, as large-scale ecological data becomes available for more diverse systems
 
 \subsection{Box by WPD with 3 paragraph explanation of Bayes}
 
+Someone with the initials WPD will hopefully write this. 
+
 \subsection{A brief overview of the benefits---and pitfalls---of Bayesian models} 
-\begin{enumerate}
-\item You can fit any model you want! This is so great as it blurs the line between conceptual models, mechanistic models, process-based models, mathematical models (theory) and statistical models. Yay!
-\item Because you can fit whatever you want, you can get numbers that really make sense -- numbers you may really want to estimate. This focus on effect sizes and what you want to estimate, moves away from p-values. Suddenly you can stop saying 'effect size' as some unitless Guretevitch value and say 'change in days per degree of warming under X model or such.' 
-\item You can fit any model you want! So you can fit stuff that may be almost entirely uninfluenced by your data if you have no idea what you're doing. Oh dear.
-\item So, how you do get all the benefits of Bayesian without doing something stupid?  
-\end{enumerate}
+
+Bayesian models have many benefits, but an often-mentioned one is that `you can fit any model you want.' While this is not entirely true (CITES), compared to the models ecologists can fit in popular modeling packages (\eg \testsf{lme4}) Bayesian modeling options can feel limitless. As long as you can write the out the likelihood of your desired model and assign priors to all parameters, you can generally `fit' any model. This includes non-linear ones, non-Gaussian families (\eg Poisson, beta or combinations thereof such as hurdle models), hierarchical designs and any combination of these, as well as `joint' models where parameters estimated in one equation appear in another, thus carrying through estimated uncertainty. Such flexibility is incredibly powerful in ecology where data are often influenced by complex spatial or temporal patterns, non-linear processes are widespread and common data types are non-Gaussian (\eg counts, percent cover etc.). 
+
+Fitting a bespoke model to your data and question frees scientists to estimate useful parameters---effectively, a way to get the numbers we often really want but don't have access to. Thus, instead of reporting a treatment's p-value and accompanying F statistic and degrees of freedom, models can be designed to estimate and report effects per \degree C of warming or at what level non-linearities due to high temperature begin---always with estimated uncertainty. While replication crises in other fields, driven in part by a overly zealous focus on p-values (CITES), and the rise of meta-analyses in ecology (CITES) have led to a somewhat greater focus on `effect sizes' in ecology (often used to refer to very specific unitless statistics, such as Cohen's $d$), bespoke models take this to a new level. Researchers can easily estimate comparable effect sizes from z-scored data, alongside estimates in meaningful natural units, such as per \degree C of warming or per hectare of habitat lost. 
+
+But this valuable flexibility is also one of the greatest pitfalls of Bayesian models You can fit almost whatever you want, but critical parts of your model might be almost entirely unimpacted by your data. And in ecological model fitting, we're most often interested in parameter estimates strongly informed by our data. 
+
+This `pitfall' of Bayesian is not new, nor unique to ecology---though the complexity of ecological data and processes may make it especially pernicious in ecology---and decades of statistical research has aimed to develop best practices when using Bayesian models to avoid this. These best practices generally center around a specific workflow; a variety of which can be found in exquisite detail elsewhere (CITES). We do not aim to repeat those here, but instead to provide you with a highly simplified but powerful workflow we believe when applied to Bayesian modeling in ecology could greatly accelerate progress. % This is a short overview of a much deeper topic. See \href{https://www.nature.com/articles/s43586-020-00001-2}{Bayesian statistics and modelling} for a little more depth, including how to develop priors and your basic model formulation.\\
 
 \subsection{Our simple Bayesian workflow}
 
-Below I outline a basic Bayesian workflow for someone using \verb|Stan|. This is a short overview of a much deeper topic. See \href{https://www.nature.com/articles/s43586-020-00001-2}{Bayesian statistics and modelling} for a little more depth, including how to develop priors and your basic model formulation.\\
+We outline a basic Bayesian workflow below that includes the major steps for Bayesian model fitting. Many steps should be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (\eg prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works, and learn from them. 
 
-Many steps should be familiar to statistical ecologists, but are often overlooked. We provide further steps particular to Bayesian (prior predictive checks).
+We assume a user of \textsf{Stan}, a relatively new probabalistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models and underpins the \textsf{R} packages \textsf{brms} and \textsf{rstanarm}, which fit a suite of specific (pre-defined) models. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (\eg Metropolis or GIBBS), but the basic workflow should apply to diverse implementations of Bayesian modeling. \\
+
+{\Large \bf Start here Lizzie!} \\
 
 \emph{Note that you might need to start simple and build up to get all these steps to work, but this is my recommended approach to the basic workflow.}
 
@@ -102,6 +109,7 @@ Many steps should be familiar to statistical ecologists, but are often overlooke
 \begin{enumerate}
 \item We got deeply in touch with the term {\bf nonidentifiability} and how it can happen (model nonidentifiability and data + model nonidentifiability) ... now that you can fit any model you want, you see this happen (before, a Hessian problem may have stood in your way sometimes for these models, but also sometimes for perfectly good models)
 \item Simplify! Simplify! Simplify! Once you do the workflow, you may end up like us: fitting fewer levels in your mixed effects models, fitting fewer interactions.
+\item Started comparing actual numbers, not p-values
 \item Don't cram the world into your model ... in contrast, value of the posterior for manipulation. 
 \item Plotting: The whole big wide world between plotting your raw data and plotting you model ... Plotting `partials' of your model (remove the site effects, for example).
 \end{enumerate}
@@ -135,5 +143,20 @@ Moving away from old school Bayesian and into the light -- Read this section to 
 \item Know your nonidentifiability
 \end{enumerate}
 
+\section{Figures}
+
+\begin{figure}[ht]
+\centering
+\noindent \includegraphics[width=0.7\textwidth]{figures/workflow.png}
+\caption{Simple workflow.}
+\label{fig:workflow}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\noindent \includegraphics[width=0.8\textwidth]{figures/Pages_from_generablestannyc.pdf}
+\caption{Reminder to Lizzie of a retrodictive check we could include.}
+\label{fig:retrodictivecheck}
+\end{figure}
 
 \end{document}
