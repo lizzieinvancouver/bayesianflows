@@ -19,6 +19,14 @@
 \bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
 \renewcommand{\refname}{\CHead{}}
 
+%%%%%%%
+%% To do %%
+%%%%%%%
+
+% Figure out where prior rants could go
+% Test data code for y = ax + b
+% retrodictive check for Kharouba paper
+% add some refs
 
 \title{How to fit Bayesian models and influence people \emph{or}\\
 How to do Bayesian model fitting in ecology \emph{or}\\
@@ -58,20 +66,42 @@ This `pitfall' of Bayesian is not new, nor unique to ecology---though the comple
 
 \subsection{Our simple Bayesian workflow}
 
-We outline a basic Bayesian workflow below that includes the major steps for Bayesian model fitting. Many steps should be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (\eg prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works, and learn from them. 
+We outline a basic Bayesian workflow below that includes what we consider the major steps for Bayesian model fitting. Many steps should be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (\eg prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works, and learn from them. 
 
 We assume a user of \textsf{Stan}, a relatively new probabalistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models and underpins the \textsf{R} packages \textsf{brms} and \textsf{rstanarm}, which fit a suite of specific (pre-defined) models. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (\eg Metropolis or GIBBS), but the basic workflow should apply to diverse implementations of Bayesian modeling. \\
 
+\emph{Step 1: Get your model running.} \\
+This obvious step assumes a suite of crucial work already done to define your model or interest. You must understand your question, your subdiscipline, and your data enough to formulate a useful model that you want to fit. This step thus assumes you arrive with a wealth of scientific expertise and a well enough thought out model. 
+
+Now, you need to write up the model and check you wrote it up correctly. Whether writing it out in \textsf{Stan}, where you need to be able to write out the full likelihood and set all your own priors, or using a package that writes much of the model for you (\eg \textsf{rstanarm}), you need the code and a way to verify the code is correct---test data (aka `fake data,' or `simulated data', etc.). To build test data you need to understand your model well enough to generate data from known parameters, then run that data through your model and confirm it returns the parameters. 
+
+This very basic model checking step is uncommon for many ecologists, but critical in our view. If you can simulate data from your model, then you can powerfully---and easily---answer questions related to statistical power, what effect sizes are reasonable, and, most likely, have new insights into how your model suggests the world works. `All models are wrong; some models are useful,' becomes much clearer when you have the power to generate data from your model under any parameter set you want. Once your \textsf{Stan} output returns the parameters you expect from your test data, you can move onto interrogating your priors. 
+
+\emph{Step 2: Check your priors.} \\
+Priors are the source of much discussion and focus by Bayesian and non-Bayesian researchers alike. Often treated as the big bad wolf of Bayesian, or the unseen hand producing the model fits you get, according to some. More accurately they are half of the equation that gives you your model posterior; and they are \emph{designed to me that way}. Bayesian philosophically is built around the idea that you have prior knowledge you trust and want to compare to new data---showing up through your likelihood.
+
+How much they influence your model fit is in many ways up to, and your data. Depending on your model and the data, the likelihood (influenced by your data) can easily overwhelm your priors.  On the other hand, as you can fit a Bayesian model with 100 parameters and only 5 datapoints, and then your priors likely matter a lot. Most dangerously, failing to think about them, check them and understand your model enough, can mean they may matter more than you know. 
+
+Luckily you can use the code you wrote to build test data and scale it up for prior predictive checks. In these, you explore a distribution of potentially reasonable values for your priors, then see how they influence your resulting output. How exactly to do this depends on your question, model and aims, but many guides can help you think through this (CITES). 
+
+In our experience, prior predictive checks can quickly disabuse newbies to Bayesian from their discomfort about priors. For example, you may not think you have a prior on how sunlight affects plant growth, until you realize your priors suggest plant growth of meters per day for one individual plant. Prior predictive checks in this way serve both as a check on the priors your using, and to further explore the model of the world tow hich you're planning to fit your data. 
+ 
+ \emph{Step 3: Run your model on your real data.} \\
+This is the step many ecologists skip straight to, leaping over steps 1-2 without realizing all they are missing along the way. While we can understand this approach---given the excitement of wanting to see how new data influences the model---we hope it's now obvious how much more can be gleaned from data by approaching the model through Steps 1-2. 
+
+As we're all familiar with this step, it's hopefully straightforward. Run the model---you've now validated, test-run and have ready to go---on your exciting new empirical data. 
+
 {\Large \bf Start here Lizzie!} \\
 
-\emph{Note that you might need to start simple and build up to get all these steps to work, but this is my recommended approach to the basic workflow.}
+
+You might need to start simple and build up to get all these steps to work, but this is my recommended approach to the basic workflow.
 
 \begin{enumerate}
 \item Check your code. Write down your model -- I recommend as basic math, then write it in \verb|Stan| and simulate one set of test data (often in \verb|R|). I recommend you do this first because it will flesh out any issues in your simulated data (\verb|R|) code, which you need right away (but you don't need the \verb|Stan| code until step 3).
 \begin{enumerate}
 \item Write your \verb|Stan| code.
 \item In \verb|R|, write simulated data where you {\bf write out all your parameters}, write $x$ and generate $y$ from your model. So, if I am doing simple regression ($y=mx+b$, with error $\epsilon$) then I would have to assign values to $m, b$ and $\epsilon$ and I would generate a vector of $x$ values, then I would simulate $y$ from those values.
-\item Run your \verb|Stan| code on your simulated data. Check that your \verb|Stan| code returns your model parameters, if not, check your code, set your error lower and/or sample size higher. Keep checking until your \verb|Stan| output matches your parameters (note check your \verb|Stan| code and your simulated data code) and you trust both.
+\item Run your \verb|Stan| code on your simulated data. 
 \end{enumerate}
 \item Prior predictive checks: Check yo' priors.
 \begin{enumerate}
