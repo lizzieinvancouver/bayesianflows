@@ -4,9 +4,9 @@
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage{amsmath}
-\usepackage{parskip}
 \usepackage{hyperref}
 \usepackage{gensymb}
+\usepackage{parskip}
 
 \def\labelitemi{--}
 
@@ -23,21 +23,27 @@
 %% To do %%
 %%%%%%%
 
-% Figure out where prior rants could go
 % Test data code for y = ax + b
 % retrodictive check for Kharouba paper
 % add some refs
+% read and edit
+% Figure out where prior rants could go
+
 
 \title{How to fit Bayesian models and influence people \emph{or}\\
 How to do Bayesian model fitting in ecology \emph{or}\\
 The best way to be a Bayesian in ecology today}
 \date{\today}
-\author{EM Wolkovich and WD Pearse and M Betancourt? and TJ Davies?}
+\author{EM Wolkovich and WD Pearse and and TJ Davies and M Betancourt?}
 \maketitle
 
+% 160 words; main text is 4,000
 \abstract{Improvements in algorithms and computational speed have heralded a new a era of Bayesian model fitting. Models are easier to fit, faster to run, and more flexible to fit, making them ideal for many of the complexities of ecological sampling designs. This has opened up Bayesian approaches to a new world of users, but how best to start using and implementing Bayesian approaches in ecology is still somewhere between old rules and methods and the new school where Bayesian approaches also include a specific workflow of not just how to do stats, but how to do science. Here we review a simple form of a Bayesian workflow that integrates mechanistic and statistical models with a computational toolkit that we argue could accelerate ecological science. [Maybe along the way we highlight common practices in ecology that are stupid as all tomorrow---as our approach makes clear---and outline best practices for jumping into the wonderful surf of the happy Bayesian ocean.]} 
 
 \section{Main text}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+
 
 Recent years have seen the explosion of Bayesian models across fields (CITES), including ecology. This change comes in part from increased computational power, but more from new algorithms (e.g., Hamiltonian Monte Carlo) that have made models faster and arguably easier to fit. Capitalizing on these advances \textsf{R} packages such as \textsf{brms} have seen much wider use than the previous generation of packages that streamlined fitting a set of pre-determined models using Bayesian approaches (\eg \textsf{MCMCglmm}. Bayesian approaches, long heralded as more powerful, flexible and especially adept at capturing the multiple levels of variance in ecological data, seem poised to help ecology as a discipline advance in leaps and bounds.
 
@@ -66,7 +72,7 @@ This `pitfall' of Bayesian is not new, nor unique to ecology---though the comple
 
 \subsection{Our simple Bayesian workflow}
 
-We outline a basic Bayesian workflow below that includes what we consider the major steps for Bayesian model fitting. Many steps should be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (\eg prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works, and learn from them. 
+We outline a basic Bayesian workflow below that includes what we consider the major steps for Bayesian model fitting. Many steps should be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (\eg prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works, and learn from them. As we focus on a simplified list of major steps, many of the smaller but still critical steps are omitted. For example, visualization is required at every step---especially 2 and 4; while we do not discuss this explicitly we refer to relevant publications.
 
 We assume a user of \textsf{Stan}, a relatively new probabalistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models and underpins the \textsf{R} packages \textsf{brms} and \textsf{rstanarm}, which fit a suite of specific (pre-defined) models. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (\eg Metropolis or GIBBS), but the basic workflow should apply to diverse implementations of Bayesian modeling. \\
 
@@ -86,85 +92,70 @@ Luckily you can use the code you wrote to build test data and scale it up for pr
 
 In our experience, prior predictive checks can quickly disabuse newbies to Bayesian from their discomfort about priors. For example, you may not think you have a prior on how sunlight affects plant growth, until you realize your priors suggest plant growth of meters per day for one individual plant. Prior predictive checks in this way serve both as a check on the priors your using, and to further explore the model of the world tow hich you're planning to fit your data. 
  
- \emph{Step 3: Run your model on your real data.} \\
-This is the step many ecologists skip straight to, leaping over steps 1-2 without realizing all they are missing along the way. While we can understand this approach---given the excitement of wanting to see how new data influences the model---we hope it's now obvious how much more can be gleaned from data by approaching the model through Steps 1-2. 
+ \emph{Step 3: Run your model on your empirical data.} \\
+This is the step many ecologists skip straight to, ourselves included. It's easy to see the appeal---fitting our new data to the model can feel like the moment when we'll learn something new. But, at least in our experience, this is not always the case. When we rush to this step, that first model we fit is often followed by another, and another---perhaps because one does not converge, or the results of another does not make immediate sense. After a while of this process, it can easily feel like we're not sure what we learned, if anything. 
+ 
+ In contrast, by approaching the model through Steps 1-2, it's often much easier to quickly see through the results of the model fit. And also easier to plan next steps. 
+ 
+% This is the step many ecologists skip straight to, leaping over steps 1-2 without realizing all they are missing along the way. While we can understand this approach---given the excitement of wanting to see how new data influences the model---we hope it's now obvious how much more can be gleaned from data by approaching the model through Steps 1-2. 
 
-As we're all familiar with this step, it's hopefully straightforward. Run the model---you've now validated, test-run and have ready to go---on your exciting new empirical data. 
+% As we're all familiar with this step, it's hopefully straightforward. Run the model---you've now validated, test-run and have ready to go---on your exciting new empirical data. 
+ \emph{Step 4: Retrodictive predictive checks} \\
+Once you have your posterior based on your model and new empirical data, it's time to interrogate it. Steps 1-2 have set you up well for this, as you have a sense of what different parameter estimates do to the model. Now you have the parameter estimates from your posterior you can simulate new data from them and see how that new world looks to you---called retrodictive predictive checks (or posterior predictive checks). Exactly how to do these are---again---up dependent on your question, model and aims (but again, lots written on this, CITES). In contrast to prior predictive checks, however, this step is built into some software. If you use \textsf{rstanarm}, then the package \textsf{shinystan} will automatically give you a set of retrodictive predictive checks, including histograms of simulated data, as well as examine the mean and variance of multiple simulated datasets. Often here you may find big differences from your empirical data and can start to generate hypotheses for why.
 
-{\Large \bf Start here Lizzie!} \\
+With those hypotheses in hand, you may very well want to tweak your model---which all part of the workflow. At that point you return to Step 1, tweak your code, and repeat the process. In this way, fitting multiple models is encouraged, but in a far more structured and careful way than traditional ecological model fitting in our experience. And there are big benefits to it. 
 
+% {\bf Benefits of this workflow}
+This process more fully integrates mathematical modeling into statistical modeling. To complete Step 1, you have to understand the underlying math of your model enough to simulate data from it. This can be challenging at first (\eg in our courses many students cannot recall how to simulate $y$ data from a simple linear regression), but is immensely beneficial to understanding your model. Indeed, we have found the greatest insights come not from the step we all know best---fitting the model with empirical data---but from every other step in this workflow. Developing simulated data to test the model, running prior and retrodictive checks all dive you deep into understanding your statistical model, which suddenly you may find yourself thinking through much more mechanistically. In our experience this process has quickly translated into insights for our biological systems, and all changed how we approach statistical models. 
 
-You might need to start simple and build up to get all these steps to work, but this is my recommended approach to the basic workflow.
+\subsection{How this workflow changed our science} % Surprising things that happened to us that may happen to you if you follow this workflow
 
-\begin{enumerate}
-\item Check your code. Write down your model -- I recommend as basic math, then write it in \verb|Stan| and simulate one set of test data (often in \verb|R|). I recommend you do this first because it will flesh out any issues in your simulated data (\verb|R|) code, which you need right away (but you don't need the \verb|Stan| code until step 3).
-\begin{enumerate}
-\item Write your \verb|Stan| code.
-\item In \verb|R|, write simulated data where you {\bf write out all your parameters}, write $x$ and generate $y$ from your model. So, if I am doing simple regression ($y=mx+b$, with error $\epsilon$) then I would have to assign values to $m, b$ and $\epsilon$ and I would generate a vector of $x$ values, then I would simulate $y$ from those values.
-\item Run your \verb|Stan| code on your simulated data. 
-\end{enumerate}
-\item Prior predictive checks: Check yo' priors.
-\begin{enumerate}
-\item Take your aforementioned \verb|R| code and set up priors for each parameter (e.g., distributions for $m, b, \epsilon$). {\bf In contrast to above, where you just set each parameter to one value, here you you want to draw multiple values for each parameter and visually check the output.} 
-\item How do I check the output? Just like posterior predictive checks, this is up to you! At a minimum I recommend thinking of plots you will make with your model in the end (for publications) and plotting that given different prior values.
-\item Your goal here is to check that your priors are reasonable, if they are not, adjust them. 
-\item Unlike in Step 1, you do {\bf not} need to run \verb|Stan|---you have your parameters so you can just simulate data from them, and then plot, examine etc.. No \verb|Stan| at this step. 
-\end{enumerate}
-\item Now you can run your model on your real data!
-\begin{enumerate}
-\item Check the output, if you have divergent transitions, you need to re-parameterize your model (may tried a non-centered model or such).
-\item I recommend ShinyStan here.
-\end{enumerate}
-\item Posterior predictive checks: How good or bad does your model do compared to your data?
-\begin{enumerate}
-\item Grab the parameter values from your fitted \verb|Stan| model. In posterior predictive checks \emph{these are the parameter values you use to simulate new data.}  
-\item You can adapt your \verb|R| code for simulating data above, but use your estimated parameters from your fitted model. 
-\item What should I look at? Ah, just like in prior predictive checks, you need to decide. Classic things are to look at the mean of 100 or so simulations of new data you generate versus your {\bf real} data. Also try the SD. Plot things! Look at the distribution. If you use the generated quantities block in \verb|Stan| ShinyStan will automatically generate a few plots but think hard about more.
-\item When does this get hard? In hierarchical models (and other models with hyperparameters) as you have multiple levels you can generate---you can use \emph{your estimated parameters from your fitted model at all levels or generate your lower-level parameters} (for example, you can generate species means using your species $\mu$ and $\sigma$). You have to think about what you want your model to predict.
-\item See how it is---do you see obvious problems caused by the distribution you selected or a grouping factor you're missing? If so, add it. And go back to Step 1. 
-\item (No \verb|Stan| at this step.)
-\end{enumerate}
-\end{enumerate}
+As we have used this workflow, how we approach our statistical models has changed. These changes have generally been similar for each of us. We suspect they are not unique to us, our study systems or questions. Instead, we think they represent common approaches to statistical modeling in ecology that could help the field progress, much as we believe they have helped our science. 
 
-{\bf Benefits of this workflow}
+ \emph{Understanding nonidentifiability} \\
 
-\begin{enumerate}
-\item More fully integrates the mathematical model to statistical part of Bayesian -- you have to write the model with test data before you fit to your data
-\item Both the test data writing and the posterior predictive checks dive you deep into understanding your mechanistic-statistical model and that, in our experience, gives you WAY more insights and ideas into your biological model and---wait for it---your biological system!
-\end{enumerate}
+Identifiability and---more common in our experience nonidentifiability---refers to whether whether all parameters in a model can be uniquely identified. Models can be nonidentifiable in several ways, including when mathematically some parameters cannot be uniquely defined. Statistically, nonidentifiability often is an outcome of the empirical data combined with the model. In this definition nonidentifiability occurs when the data do not contain ``sufficient information for unique estimation of a given parameter or set of parameters in a particular model'' (CITES). 
 
+Nonidentifiability can come up in many ways in ecology---and be hard to see, especially if you rushing through model fitting. But if you have to write out your model and simulated data, you may suddenly realize lots of places for nonidentifiability to live. For example, when species do not occur across most sites, a model including separate parameters for site and species is often nonidentifiable, but there's no warning in packages to tell you this; you have to learn it for yourself and test it out. We have become far better experts at nonidentifiability based on this workflow---and we have adjusted how we collect data and interpret results extensively because of it. 
 
-\subsection{Surprising things that happened to us that may happen to you if you follow this workflow}
+ \emph{Simplify} \\
+Once we noticed how pervasive nonidentifiability and weak identifiability (where parameter estimates are highly uncertain because the model and data together are nearly identifiable) were we started simplifying our models. Whereas previously when we had data that qualitatively appeared complexly nested, crossed, split or twisted, we would have tried to fit all of these intricacies (on the intercept) we are now more slow to add these to our models. By both understanding these terms better (including the many different ways each can be modeled), and understanding them better depending on the data and model in each unique context, we work slowly though what to include, and when it is most critical.
 
-\begin{enumerate}
-\item We got deeply in touch with the term {\bf nonidentifiability} and how it can happen (model nonidentifiability and data + model nonidentifiability) ... now that you can fit any model you want, you see this happen (before, a Hessian problem may have stood in your way sometimes for these models, but also sometimes for perfectly good models)
-\item Simplify! Simplify! Simplify! Once you do the workflow, you may end up like us: fitting fewer levels in your mixed effects models, fitting fewer interactions.
-\item Started comparing actual numbers, not p-values
-\item Don't cram the world into your model ... in contrast, value of the posterior for manipulation. 
-\item Plotting: The whole big wide world between plotting your raw data and plotting you model ... Plotting `partials' of your model (remove the site effects, for example).
-\end{enumerate}
+While before using this workflow, some of us would start with complex models, then simplify models until they converged. Often these were hierarchical models with many levels, built based more on a dogma of non-independence (and, somewhat relatedly, correct degrees of freedom) than an understanding of the model. We also often fit a suite of interactions: multiple two-way interactions and the occasional three-way interaction were common fare. But in simulating data, and fitting models to real, messy, imbalanced data using the workflow we came to see how much we were asking of our data and models together. Fitting a two-way interaction with half the effect size of a main effect takes a 16X sample size (CITE). This is sobering. It's more sobering when you see it played out again and again through this workflow. 
 
-\subsection{Challenges of the workflow compared to how we traditionally train ecologists (or, how this will reshape ecological training)}
+We now simplify based on a more careful reckoning. Usually this starting model is not simple, it often includes grouping factors that may be difficult to fit, but that we see as absolutely critical to the question, model and data at hand. We build up from there, often grouping posteriors by some factor (\eg site or biome) before we add it to our model. However, the ending model is often not as complex as we may have fit if we did not follow all the steps. And---through them, especially Step 4---we can feel confident our model is capturing important variation. 
+% Once you do the workflow, you may end up like us: fitting fewer levels in your mixed effects models, fitting fewer interactions.
 
-\begin{enumerate}
-\item Good stats workflows bleed into what we expect of theoretical ecologists (and yet we act like non-theory folks should be trained differently). 
-\item Theory = simpler models = outcome of a good Bayesian workflow (often)
-\end{enumerate}
+Understanding this variation includes re-approaching how we plot our model and data. While many of us are good at plotting raw data, and plotting our main model parameters (and plotting both these pieces together), the world in between is rarely taught. And it's in this in-between world that we have found a deep understanding of our models, what they're doing and---relatedly---what our results show. Many packages offer model predictions---based on a full or near-full model, but being able to decompose model predictions into varying components can give powerful insights. For example, model predictions can be plotted with and without major grouping factors such as `block,' `plot', or `species,' and suddenly how predictable a model is (or not) based on other factors like treatment or time becomes clear. 
 
-Moving away from old school Bayesian and into the light -- Read this section to the tune of `Let it go' from \emph{Frozen} 
-\begin{enumerate}
-\item Everyone can be a Bayesian, not just wildlife and fisheries biologists (aka HMM and state-space people)
-\item Please, stop going on and on about priors. 
-\item Conjugate priors as the crystal deodorant of priors (check Dan Simpson quote)
-\item Let go of `random' versus fixed effects ideas
-\item Let go of p-values and embrace numbers with units! (\href{https://www.youtube.com/watch?v=c3hxhv0lpI0}{`I am arbitrary but my story is often told ... '}
-\end{enumerate}
+ \emph{Looking at parameters in our models} \\
+Before this workflow, not all of us commonly discussed the values that parameters in our model took---things like the slope and intercept (two common model parameters) were sometimes reported, but we did not know them as well as we knew whether the $p$-value for the slope was $<0.05$. This changes quickly when you need to build simulated data for a phenological event (a day within the calendar year so, ideally between 1 and 366) and suddenly find it's $>$1000 based on the quick parameters you put into your code. 
 
+This focus on the value of parameters scales up through the workflow and across projects. Having a better sense of parameter values across different biological context, model parameterizations. and time periods gives us a better sense of how the biological world works, including what's reasonable, possible or wildly unrealistic. % Suddenly, weakly informative priors make ever more sense .... 
+
+\subsection{How this workflow reshapes ecological training} %Challenges of the workflow compared to how we traditionally train ecologists
+
+This four-step workflow is a simplified version of the current best practices for Bayesian model fitting, but many of the skills required are not part of traditional ecological training. Writing out the math behind most statistical models enough to complete Step 1 bleeds into the skillset usually reserved for those working on theory, where coding and simulating from a model are common tasks. In contrast field, lab and otherwise empirical-data based ecologists often fit models they could simulate data from. This dichotomy seems short-sighted in our current era, of bigger, messier data and greater computational methods poised to handle such messy data---if scientists are trained in how to build the right models for their questions and data. We believe training ecologists with a skillset where they quickly use this workflow could advance ecological science rapidly. % Theory = simpler models = outcome of a good Bayesian workflow (often)
+
+This workflow also requires a shift in how we approach Bayesian methods---and training in Bayesian models---in ecology. Already, uptake of new Bayesian \textsf{R} packages highlight that Bayesian methods are no longer the purview of only wildlife and fisheries biologists, and these changes come alongside advances in Bayesian workflows, algorithms, and visualiziations (CITES), that ecology must adapt its training for. While this is an active area, we highlight three major changes.
+
+(1) Prior `beliefs' are changing. Best practices for determining priors is an active area of statistical research (CITES), and training should reflect current best practices. These include that `non-informative priors' are a misnomer, as they are often informative (CITES), and priors can easily be `weakly informative' and thus a strong focus on the dangers of priors in training can be overkill (see supp or box where WDP includes part of his rant?). 
+
+Further, training often include a strong focus on priors, including conjugate priors (because of the importance of conjugate priors in closed form solutions for particular posteriors). Modern algorithms, such as HMC, do not require conjugate priors, which are now antiquated (and thus sometimes referred to as  `the crystal deodorant of Bayesian statistics'). Prior predictive checks provide a far more powerful way to understand how priors work within a particular model, and are far more useful than rules about which priors should be fit in certain cases or memorizing which priors are conjugate. 
+
+(2) `Random effects' are not just random. Hierarchical models contain grouping factors, sometimes referred to as `random effects,' such as species or individual. This term, however, is misleading, imprecise and thus no longer recommended (CITES). In ecology, it also carries with a heavy weight of older `rules' of what is `random' versus `fixed,' including that `random effects are things you don't care about, like block.' After a couple retrodictive posterior checks (Step 4), you might feel differently, as hierarchical effects are (by definition) drawn from an underlying distribution---meaning you can predict outside of the specific set you sampled, meaning you can predict for a new species or individual, whereas you cannot do so for many `fixed effects.' 
+
+(3) P-values are easily misleading (\href{https://www.youtube.com/watch?v=c3hxhv0lpI0}{`I am arbitrary but my story is often told ... '}), and there's no easy fix for that. The replication crisis, rampant in other fields, is based in part on an overly hopeful belief that $p$-values will separate the signal from the noise, with one easy number. In reality, small sample sizes, lack of routine reporting of interpretable effect sizes, fitting of many models without adequate explanation, poor data and code reporting habits all increase the chance of finding `significance' at a level of $\le0.05$ (CITES). This reality means a similar crisis is likely lurking in ecology, especially given small sample sizes alongside a tendency to fit complicated models with multiple interactions. The answer to this, however, is not Bayesian approaches, which (as we touch on above), bring their own ways to sift exciting results from a pile of chafe. 
+
+The answer is a workflow for careful model building, model fitting and model interrogation---as we outline here. Try it, and see if it transforms your life they way it transformed ours!
+
+\iffalse
 \subsection{Conclusions}
 \begin{enumerate}
 \item Ecologists cannot simulate their stats (or simple systems for that matter). Evolutionary biologists can. (And the field is better for it.)
 \item Maybe hint at that you need these skills (and unit testing) given rise of AI?
 \end{enumerate}
+\fi 
 
 {\bf Take home messages (maybe)}
 \begin{enumerate}
@@ -173,6 +164,7 @@ Moving away from old school Bayesian and into the light -- Read this section to 
 \item Know your nonidentifiability
 \end{enumerate}
 
+\newpage
 \section{Figures}
 
 \begin{figure}[ht]
