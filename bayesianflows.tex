@@ -23,11 +23,8 @@
 %% To do %%
 %%%%%%%
 
-% Test data code for y = ax + b
-% retrodictive check for Kharouba paper
-% read and edit
-% Figure out where prior rants could go
-
+% Test data code for y = ax + b?
+% Ask WDP to add prior rants
 % https://github.com/lizzieinvancouver/gelmanhill/wiki/Vocabulary
 
 \title{How to fit Bayesian models and influence people \emph{or}\\
@@ -74,7 +71,7 @@ This `pitfall' of Bayesian is not new, nor unique to ecology---though the comple
 
 \subsection{A very basic Bayesian workflow}
 
-We outline a basic Bayesian workflow below that includes what we consider the major steps for Bayesian model fitting. Many steps should be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (e.g. prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works, and learn from them. 
+We outline a basic Bayesian workflow below that includes what we consider the major steps for Bayesian model fitting (Fig. \ref{fig:workflow}). Many steps should be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (e.g. prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works, and learn from them. 
 
 As we focus on a simplified list of major steps, many of the smaller but still critical steps are omitted. For example, visualization is required at every step---especially 2 and 4; while we do not discuss this explicitly we refer to relevant publications.
 
@@ -109,7 +106,7 @@ This is the step many ecologists skip straight to, ourselves included. It's easy
  \emph{Step 4: Retrodictive predictive checks} \\
 Once you have your posterior based on your model and new empirical data, it's time to interrogate it. Steps 1-2 have set you up well for this, as you have a sense of what different parameter estimates do to the model. 
 
-Now that you have the parameter estimates from your posterior you can simulate new data from them and see how that new world looks to you---called retrodictive predictive checks (or posterior predictive checks). Exactly how to do these are---again---up dependent on your question, model and aims \citep[but again, there is lots written on this,][]{held2010,gelman200ppc,conn2018}. In contrast to prior predictive checks, however, this step is built into some software. If you use \textsf{rstanarm}, then the package \textsf{shinystan} will automatically give you a set of retrodictive predictive checks, including histograms of simulated data, and comparisons of the mean and variance of multiple simulated datasets with those of from your empirical data. Often here you may find big differences from your empirical data, and can start to generate hypotheses for why.
+Now that you have the parameter estimates from your posterior you can simulate new data from them and see how that new world looks to you---called retrodictive predictive checks (or posterior predictive checks, Fig. \ref{fig:retrodictivecheck}-{fig:retrodictivecheckSD}). Exactly how to do these are---again---up dependent on your question, model and aims \citep[but again, there is lots written on this,][]{held2010,gelman200ppc,conn2018}. In contrast to prior predictive checks, however, this step is built into some software. If you use \textsf{rstanarm}, then the package \textsf{shinystan} will automatically give you a set of retrodictive predictive checks, including histograms of simulated data, and comparisons of the mean and variance of multiple simulated datasets with those of from your empirical data. Often here you may find big differences from your empirical data, and can start to generate hypotheses for why.
 
 \emph{Feedbacks in the workflow}\\
 With those hypotheses in hand, you may very well want to tweak your model---this is all part of the workflow. At that point you return to Step 1, tweak your code, and repeat the process. In this way, fitting multiple models is encouraged, but in a far more structured and careful way than traditional ecological model fitting in our experience. And there are big benefits to it. 
@@ -172,6 +169,7 @@ This workflow depends strongly on simulating data---for testing your model (Step
 \item Know your nonidentifiability
 \end{enumerate}
 
+\newpage
 \section{References}
 \vspace{-5ex}
 \bibliography{refs/bayesrefsmini.bib}
@@ -189,9 +187,16 @@ This workflow depends strongly on simulating data---for testing your model (Step
 
 \begin{figure}[ht]
 \centering
-\noindent \includegraphics[width=0.8\textwidth]{figures/Pages_from_generablestannyc.pdf}
-\caption{Reminder to Lizzie of a retrodictive check we could include.}
+\noindent \includegraphics[width=0.8\textwidth]{examples/synchrony/graphs/rawvsonepredictivecheck.pdf}
+\caption{Example of a retrodictive check from time-series data of phenological events over time (raw data on top; one simulated dataset on the bottom, based on existing species number and their respective $x$ data).}
 \label{fig:retrodictivecheck}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\noindent \includegraphics[width=0.5\textwidth]{examples/synchrony/graphs/retroSDsync.pdf}
+\caption{Example of a retrodictive check from time-series data of phenological events over time, averaging across 1000 simulations.}
+\label{fig:retrodictivecheckSD}
 \end{figure}
 
 \end{document}
