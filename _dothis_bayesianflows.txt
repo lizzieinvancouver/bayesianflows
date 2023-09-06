@@ -1,4 +1,34 @@
 Started 22 August 2023
 
-- Email Will about his priors rant (text?) and when he will send comments
-- Go through comments with Jonathan to decide how to fix them (I think I have done most of the easy ones). 
+Great quote from Will's rant: Everything matters: it is the role of statistics to shine a light on what matters most.
+
+
+<><><><><><><><><><>
+<> Mike's feedback
+<> 30 Aug 2023 <>
+<><><><><><><><><><>
+
+As of 6 SEPTEMBER 2023 ... working HERE, look for % START HERE in tex....
+
+One of the common features of contemporary science is that data sets are getting larger, but also more messier. 
+
+...for inferences to be meaningful models need to model the data generating
+process, including the underlying ecology, the measurement design, and any contamination or corruption of the data. Classical methods are based on simple model assumptions, which are appropriate only when that data generating process is very clean.  One reason why the classical methods are becoming more fragile is that contemporary data generation processes are becoming dirtier.  The only way to do better is to spend way more time on cleaner experiments that are applicable to the classical methods or develop new methods bespoke to these more complicated data generating processes.  Of course Bayesian methods are particularly well-suited to the latter.
+
+
+Ecologists have to learn how to translate that domain expertise into probabilistic models; this isn’t trivial but it’s not as overwhelming as is often described.  In particular it’s often easier to tell a new story (model) than determine if an existing story (classical estimator) is good enough.
+
+Step 1 as modeling the data generation process.
+
+I wouldn’t say that you shouldn’t fit models that you can’t simulate but rather implementing a simulation first often makes the modeling process much easier.
+
+Best model isn’t based on fewer assumptions but rather _transparent_ assumptions.
+
+In general workflows help organize and systematize the steps needed to achieve a goal
+
+Simulation-based study of potential inferential behaviors generalizes the calibration of frequentist estimators.
+
+By adopting a careful workflow one doesn’t lose any of the benefits of existing methods; rather one is able
+to maintain those benefits while also being able to accommodate more complex data generating processes.  
+
+"Note that I use calibrate here in the sense of determining what outcomes a model might return" (Mike's workflow)
