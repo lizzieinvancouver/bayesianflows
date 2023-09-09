@@ -1,7 +1,15 @@
 Started 22 August 2023
 
-Great quote from Will's rant: Everything matters: it is the role of statistics to shine a light on what matters most.
 
+As of 8 September 2023 ... I did not get through all of Mike's comments but punted back to him. And no word from Will. 
+
+
+<><><><><><><><><><>
+<> August 2023 from Will ...
+<><><><><><><><><><>
+
+
+Great quote from Will's rant: Everything matters: it is the role of statistics to shine a light on what matters most.
 
 <><><><><><><><><><>
 <> Mike's feedback
@@ -10,10 +18,8 @@ Great quote from Will's rant: Everything matters: it is the role of statistics t
 
 As of 6 SEPTEMBER 2023 ... working HERE, look for % START HERE in tex....
 
-One of the common features of contemporary science is that data sets are getting larger, but also more messier. 
 
-...for inferences to be meaningful models need to model the data generating
-process, including the underlying ecology, the measurement design, and any contamination or corruption of the data. Classical methods are based on simple model assumptions, which are appropriate only when that data generating process is very clean.  One reason why the classical methods are becoming more fragile is that contemporary data generation processes are becoming dirtier.  The only way to do better is to spend way more time on cleaner experiments that are applicable to the classical methods or develop new methods bespoke to these more complicated data generating processes.  Of course Bayesian methods are particularly well-suited to the latter.
+% START HERE ... open _dothis_bayesianflows.txt and work in Mike's comments
 
 
 Ecologists have to learn how to translate that domain expertise into probabilistic models; this isn’t trivial but it’s not as overwhelming as is often described.  In particular it’s often easier to tell a new story (model) than determine if an existing story (classical estimator) is good enough.
@@ -28,7 +34,47 @@ In general workflows help organize and systematize the steps needed to achieve a
 
 Simulation-based study of potential inferential behaviors generalizes the calibration of frequentist estimators.
 
-By adopting a careful workflow one doesn’t lose any of the benefits of existing methods; rather one is able
-to maintain those benefits while also being able to accommodate more complex data generating processes.  
+By adopting a careful workflow one doesn’t lose any of the benefits of existing methods; rather one is able to maintain those benefits while also being able to accommodate more complex data generating processes.  
 
-"Note that I use calibrate here in the sense of determining what outcomes a model might return" (Mike's workflow)
+"Note that I use calibrate here in the sense of determining what outcomes a model might return" (Mike's workflow)																																																																																																																											
+
+
+DONE: 
+One of the common features of contemporary science is that data sets are getting larger, but also more messier. 
+
+...for inferences to be meaningful models need to model the data generating
+process, including the underlying ecology, the measurement design, and any contamination or corruption of the data. Classical methods are based on simple model assumptions, which are appropriate only when that data generating process is very clean.  One reason why the classical methods are becoming more fragile is that contemporary data generation processes are becoming dirtier.  The only way to do better is to spend way more time on cleaner experiments that are applicable to the classical methods or develop new methods bespoke to these more complicated data generating processes.  Of course Bayesian methods are particularly well-suited to the latter.
+
+
+<><><><><><><><><><>
+- Reply to Mike (sent 8 Sept 2023)
+
+Hi Mike,
+
+I am heading out for my annual September in the Rockies (Canadian Rockies) backpack so sending thoughts now, since I won't get any further for probably two weeks. I wanted to get further, but here I am. 
+
+All your caveats sound fine.
+
+And I loved your comments! I pulled out some that I have worked to integrate. I added some of the points of the data generating process to the intro and worked in inference versus calibration (yes!). Here's major things I wanted to add but did not yet work in (in no order):
+
+(a) In particular it’s often easier to tell a new story (model) than determine if an existing story (classical estimator) is good enough.
+(b) Best model isn’t based on fewer assumptions but rather _transparent_ assumptions.
+(c) By adopting a careful workflow one doesn’t lose any of the benefits of existing methods; rather ....
+
+And a few comments: 
+
+(1) I think introducing the data-generating process is great, and I have worked to add it in I think we can add it other places too. That said, I don't want it to feel the focus because I think ecologists are often taught you only need Bayesian for messy data and when you have a specific data generating process. But ...
+
+I have gotten way more out of the workflow -- I see through the stats (how bad p-values are becomes really clear when you simulate data; inference vs. calibration) and the science more deeply. And I want to somehow convey that clearly. This feels especially true just trying to get a new very good postdoc (fairly quantitative and very bright) postdoc in my lab to simulate data from y=ax+b linear regression. He did what *everyone* I know does -- he wrote lines and lines of code to mush together distributions until he had built some y data. He never built x data, he never assigned parameters and then he told me that his simulating y from y=ax+b was circular and that we should not use a normal distribution model because he doesn't have negative numbers in his y data .... The fundamental understanding of how to calculate an interaction, recode a categorical variable from hi/low to 0/1 etc.. has never been taught -- people have no idea the *values* their intercepts or slopes take, they don't see how simple equations add up ... and this workflow teaches that, or at least it did for me and has for others.  
+
+Thus I am a little worried about (1st) just re-affirming to ecologists too much that you only need Bayesian for messy data with complex data generating processes and (2nd) missing the message that you can get a lot more from this workflow. Even for the simplest model doing this `workflow' can teach SO MUCH, IMHO. 
+
+(2) Workflow of what? Good question! I feel a little embarrassed that I can't put my finger on this beyond, 'have a model you feel confident is functional for your aim (meaning to understand enough of how it works, what limits it has etc.).' 
+
+(3) I'd like to keep the language as simple as possible. I'd also like to avoid new terms, but I think we *should* add a table or `glossary' that spells out how we're using some words. 
+
+So, if none of this already makes you want to jump off the paper and you have any time in the next couple of weeks (or later), please send more thoughts (feel free to edit the tex etc.) and we can hopefully iterate on a draft we both like. BTW, I did not write the `A bluffer's guide to what Bayesian statistics is' so edit away there (though I added some of your improvements there ... not yet sure if they fit). 
+
+Because I am typing this pretty fast on a Friday, I hope my email conveys how much I liked your comments and hope you'll keep iterating with me (but also, zero pressure!). 
+
+L
