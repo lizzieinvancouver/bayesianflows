@@ -1,26 +1,73 @@
 Started 22 August 2023
 
 
-As of 8 September 2023 ... I did not get through all of Mike's comments but punted back to him. And no word from Will. 
+As of 18 September 2023 my goals are to: 
+
+% START HERE ... open _dothis_bayesianflows.txt and work in Mike's comments
+
+1) Define what a workflow is, what the goal of our workflow is. And talk about the workflow here as one of many workflows. 
+	In general workflows help organize and systematize the steps needed to achieve a goal
+	By adopting a careful workflow one doesn’t lose any of the benefits of existing methods; rather one is able to maintain those benefits while also being able to accommodate more complex data generating processes.  
+
+ ... I think this workflow does some calibration, some inference and some model development. 
+
+2) Work in: Best model isn’t based on fewer assumptions but rather _transparent_ assumptions.
+3) Calibrate versus inference (see below email on 11 Sept 2023, especially 'this all ties back to...')
+4) Add glossary
+*) How people often approach generating data  ... (see below email on 11 Sept 2023, especially lack of confounding part)
+*) In particular it’s often easier to tell a new story (model) than determine if an existing story (classical estimator) is good enough.
+	Implicit to that is trying to figure out exactly what the existing story is encoded in a classical estimator.  
 
 
 <><><><><><><><><><>
-<> August 2023 from Will ...
+<> Mike's reply
+<> 11 Sept 2023 <>
 <><><><><><><><><><>
 
+Snippets:
 
-Great quote from Will's rant: Everything matters: it is the role of statistics to shine a light on what matters most.
+An important point here is that “data generation process” is a pretty inclusive term.  “Data generating process” does not refer to the exact mechanism by which data is generating in any given analysis but rather a _model_ of that mechanism.  Some data generating processes wash out a lot of the underlying detail, some incorporate more of it.  Depending on how much data is collected a simpler model might be sufficient or a more sophisticated model might be needed.
+
+On the more practical side of things you can’t simulate data, or calibrate estimators, without having defined a data generating process!  Calculating power in a frequentist null hypothesis significance test requires the assumption of a data generating process, which is one reason why so many people avoid considering test power as much as possible.
+
+A simulation of the form
+
+  tilde{x}_n ~ pi(x)
+  mu_n = alpha + beta * tilde{x}_n
+  tilde{y}_n = pi(y; mu_n)
+
+defines a certain data generating process where the covariates x are generated first and then the variates y are generated second, conditional on the covariates without any confounding whatsoever.  That data generating process might be relevant for modeling a particular ecological system, but it allows us to study the consequences of the regression assumptions.
+
+This all ties back into the difference between calibration and inference.  “Calibration”, or whatever we want to call it, has nothing to do with how well a particular data generating process models an actual system.  It’s just a way to investigate the assumptions encoded in a model and their consequences.  Only when we get to “inference” do we pair the model with real data and then address the adequacy of the model.
+
+
+...
+
+> (2) Workflow of what? Good question! I feel a little embarrassed that I
+can't put my finger on this beyond, 'have a model you feel confident is
+functional for your aim (meaning to understand enough of how it works,
+what limits it has etc.).'
+
+It’s not your fault!  The word “workflow” is being absolutely abused these days.
+
+Formally all a “workflow” does is organize various steps together in a systematic fashion, but there are many different workflows depending on what steps are being included.
+
+For example one can establish a calibration workflow where one investigates the assumptions encoded in a given data generating model using simulated data.
+
+Or one could establish an inferential workflow where one constructs a posterior and then investigates model adequacy criteria.
+
+An inferential workflow can also be extended into a model development workflow.  If the model adequacy criteria inform not only that something is inadequate about the current model assumptions but what is inadequate (yay posterior retrodictive checks over all of the other garbage) then one can use those hints to iterative improve the modeling assumptions.
+
+The model development workflow I recommend in Principled Model Building Workflow combines all of these into a single, coherent model development workflow but that’s not necessarily appropriate for everyone.
+
+Ultimately it may be helpful to advocate for workflows, plural.  Bayesian methodologies can be used to systematically investigate the consequences of a given model, such as an estimator calibration workflow.  They can also be used to formalize heuristic residual checking with posterior retrodictive check and implement an iterative model development workflow.  Etc, etc.  The goal is to identify what you want to do and organize the steps to achieve that output as systematically as possible.
 
 <><><><><><><><><><>
 <> Mike's feedback
 <> 30 Aug 2023 <>
 <><><><><><><><><><>
 
-As of 6 SEPTEMBER 2023 ... working HERE, look for % START HERE in tex....
-
-
-% START HERE ... open _dothis_bayesianflows.txt and work in Mike's comments
-
+STUFF I could integrate, but have not yet... 
 
 Ecologists have to learn how to translate that domain expertise into probabilistic models; this isn’t trivial but it’s not as overwhelming as is often described.  In particular it’s often easier to tell a new story (model) than determine if an existing story (classical estimator) is good enough.
 
@@ -28,13 +75,7 @@ Step 1 as modeling the data generation process.
 
 I wouldn’t say that you shouldn’t fit models that you can’t simulate but rather implementing a simulation first often makes the modeling process much easier.
 
-Best model isn’t based on fewer assumptions but rather _transparent_ assumptions.
-
-In general workflows help organize and systematize the steps needed to achieve a goal
-
 Simulation-based study of potential inferential behaviors generalizes the calibration of frequentist estimators.
-
-By adopting a careful workflow one doesn’t lose any of the benefits of existing methods; rather one is able to maintain those benefits while also being able to accommodate more complex data generating processes.  
 
 "Note that I use calibrate here in the sense of determining what outcomes a model might return" (Mike's workflow)																																																																																																																											
 
@@ -78,3 +119,10 @@ So, if none of this already makes you want to jump off the paper and you have an
 Because I am typing this pretty fast on a Friday, I hope my email conveys how much I liked your comments and hope you'll keep iterating with me (but also, zero pressure!). 
 
 L
+
+
+<><><><><><><><><><>
+<> August 2023 from Will ...
+<><><><><><><><><><>
+
+Great quote from Will's rant: Everything matters: it is the role of statistics to shine a light on what matters most.
