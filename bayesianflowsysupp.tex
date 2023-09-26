@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage[top=1.00in, bottom=1.0in, left=1in, right=1in]{geometry}
+\renewcommand{\baselinestretch}{1.1}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{xr-hyper}
+\externaldocument{bayesianflows}
+\usepackage{hyperref}
+
+\def\labelitemi{--}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[LO]{}
+\fancyhead[RO]{}
+
+\begin{document}
+\bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
+\renewcommand{\refname}{\CHead{}}
+
+\title{Supplement: Simulation as a best practice in Bayesian workflows and beyond}
+\date{\today}
+\author{EM Wolkovich, TJ Davies, WD Pearse \& M Betancourt}
+\maketitle
+
+\section{Which workflow?}
+
+Formally, all a `workflow' does is organize various steps together in a systematic fashion, but there are many different workflows depending on what the aim is, which will determine which steps a workflow should include. For example a workflow aimed at calibration could look like an expanded version of our Step 1, where all the steps focus on investigating the assumptions encoded in a given model using simulated data. Or a workflow aimed at inference could expand Step 3, to focus on constructing a posterior, then investigating its model adequacy via several criteria. An inferential workflow can also be extended into a model development workflow.  If the model adequacy criteria inform not only that something is inadequate about the current model assumptions but what is inadequate (ideally this happens some in Step 4) then one can use those hints to iterative improve the modeling assumptions. We present in the main text a very simplified model development workflow that combines calibration, inference and some model development, but it is not necessarily appropriate for everyone, depending on their aims.
+
+% Ultimately it may be helpful to advocate for workflows, plural.  Bayesian methodologies can be used to systematically investigate the consequences of a given model, such as an estimator calibration workflow.  They can also be used to formalize heuristic residual checking with posterior retrodictive check and implement an iterative model development workflow.  Etc, etc.  The goal is to identify what you want to do and organize the steps to achieve that output as systematically as possible.
+
+\section{What's a model?}
+
+We cavalierly use the terms model, mechanistic model, process model, data generating process, and statistical model in this paper, which follows their current use in ecology.  This reality comes naturally from divergent fields using them in different ways, but it's important to recognize that what is `mechanistic' or `statistical' is not usually a clear distinction in ecology. Further, applying specific terms to certain modelling approaches, or to specific parts of a model should be done with care, especially if it impacts how you interpret the model. For example, consider:
+
+$y \sim \text{normal}( f(x), \sigma)$.
+
+Within this $f(x)$ is sometimes called the `mechanistic' or `process' model, and $\text{normal}(, \sigma)$, the `noise', `error', or even `measurement error', however, these terms are only accurate in certain (in our experience: rare) cases. Given that $f(x)$ will never contain the true underlying process, $\text{normal}(, \sigma)$ is functionally capturing everything not in $f(x).
+
+\iffalse
+On the more practical side of things you can’t simulate data, or calibrate estimators, without having model. Calculating power in a frequentist null hypothesis significance test requires the assumption of a data generating process, which is one reason why so many people avoid considering test power as much as possible.
+
+A simulation of the form:
+
+\begin{align*}
+  \tilde{x}_n &\sim \pi(x) \\
+  \mu_n & = \alpha + \beta * \tilde{x}_n\\
+  \tilde{y}_n &= \pi(y; \mu_n)
+\end{align*}
+
+
+defines a certain data generating process where the covariates $x$ are generated first and then the variates $y$ are generated second, conditional on the covariates without any confounding whatsoever.  That data generating process might be relevant for modeling a particular ecological system, but it allows us to study the consequences of the regression assumptions.
+
+This all ties back into the difference between calibration and inference.  `Calibration', or whatever we want to call it, has nothing to do with how well a particular data generating process models an actual system.  It’s just a way to investigate the assumptions encoded in a model and their consequences.  Only when we get to `inference' do we pair the model with real data and then address the adequacy of the model.
+\fi
+
+\section{References}
+\vspace{-5ex}
+\bibliography{refs/bayesrefsmini.bib}
+\end{document}

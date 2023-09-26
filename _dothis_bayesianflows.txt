@@ -1,66 +1,25 @@
 Started 22 August 2023
 
-
 As of 18 September 2023 my goals are to: 
+- Get feedback from Mike and the lab.
 
-% START HERE ... open _dothis_bayesianflows.txt and work in Mike's comments
+<><><><><><><><><><>
+<> Misc stuff I did not fit in
+<><><><><><><><><><>
 
-1) Define what a workflow is, what the goal of our workflow is. And talk about the workflow here as one of many workflows. 
-	In general workflows help organize and systematize the steps needed to achieve a goal
-	By adopting a careful workflow one doesn’t lose any of the benefits of existing methods; rather one is able to maintain those benefits while also being able to accommodate more complex data generating processes.  
-
- ... I think this workflow does some calibration, some inference and some model development. 
-
-2) Work in: Best model isn’t based on fewer assumptions but rather _transparent_ assumptions.
-3) Calibrate versus inference (see below email on 11 Sept 2023, especially 'this all ties back to...')
-4) Add glossary
-*) How people often approach generating data  ... (see below email on 11 Sept 2023, especially lack of confounding part)
-*) In particular it’s often easier to tell a new story (model) than determine if an existing story (classical estimator) is good enough.
-	Implicit to that is trying to figure out exactly what the existing story is encoded in a classical estimator.  
+- How people often approach generating data  ... (see below email on 11 Sept 2023, especially lack of confounding part)
+- In particular it’s often easier to tell a new story (model) than determine if an existing story (classical estimator) is good enough. ... Implicit to that is trying to figure out exactly what the existing story is encoded in a classical estimator.  
 
 
 <><><><><><><><><><>
-<> Mike's reply
-<> 11 Sept 2023 <>
-<><><><><><><><><><>
+From a good Patreon monthly questions email:
 
-Snippets:
-
-An important point here is that “data generation process” is a pretty inclusive term.  “Data generating process” does not refer to the exact mechanism by which data is generating in any given analysis but rather a _model_ of that mechanism.  Some data generating processes wash out a lot of the underlying detail, some incorporate more of it.  Depending on how much data is collected a simpler model might be sufficient or a more sophisticated model might be needed.
-
-On the more practical side of things you can’t simulate data, or calibrate estimators, without having defined a data generating process!  Calculating power in a frequentist null hypothesis significance test requires the assumption of a data generating process, which is one reason why so many people avoid considering test power as much as possible.
-
-A simulation of the form
-
-  tilde{x}_n ~ pi(x)
-  mu_n = alpha + beta * tilde{x}_n
-  tilde{y}_n = pi(y; mu_n)
-
-defines a certain data generating process where the covariates x are generated first and then the variates y are generated second, conditional on the covariates without any confounding whatsoever.  That data generating process might be relevant for modeling a particular ecological system, but it allows us to study the consequences of the regression assumptions.
-
-This all ties back into the difference between calibration and inference.  “Calibration”, or whatever we want to call it, has nothing to do with how well a particular data generating process models an actual system.  It’s just a way to investigate the assumptions encoded in a model and their consequences.  Only when we get to “inference” do we pair the model with real data and then address the adequacy of the model.
-
+More realistically we have to confront the fact that our practical observational models will not contain the true data generation process; at best we can track how well our inferences converge to good approximations to the relevant features of the true data generating process.
 
 ...
 
-> (2) Workflow of what? Good question! I feel a little embarrassed that I
-can't put my finger on this beyond, 'have a model you feel confident is
-functional for your aim (meaning to understand enough of how it works,
-what limits it has etc.).'
+Another way of stating these critiques is that because of the default emphasis on irrelevant features and estimator artifacts many predictive scores poorly quantify actual risk, making them vulnerable to overfitting. All of these complications are why I basically avoid predictive metrics entirely, although I admit that isn’t a popular approach. Personally I’m not so much interested in selecting between multiple models but rather identifying the inadequacies of a single model and then using that to inform principled improvements. This is more readily achieved with visual retrodictive checks than awkward quantifications.
 
-It’s not your fault!  The word “workflow” is being absolutely abused these days.
-
-Formally all a “workflow” does is organize various steps together in a systematic fashion, but there are many different workflows depending on what steps are being included.
-
-For example one can establish a calibration workflow where one investigates the assumptions encoded in a given data generating model using simulated data.
-
-Or one could establish an inferential workflow where one constructs a posterior and then investigates model adequacy criteria.
-
-An inferential workflow can also be extended into a model development workflow.  If the model adequacy criteria inform not only that something is inadequate about the current model assumptions but what is inadequate (yay posterior retrodictive checks over all of the other garbage) then one can use those hints to iterative improve the modeling assumptions.
-
-The model development workflow I recommend in Principled Model Building Workflow combines all of these into a single, coherent model development workflow but that’s not necessarily appropriate for everyone.
-
-Ultimately it may be helpful to advocate for workflows, plural.  Bayesian methodologies can be used to systematically investigate the consequences of a given model, such as an estimator calibration workflow.  They can also be used to formalize heuristic residual checking with posterior retrodictive check and implement an iterative model development workflow.  Etc, etc.  The goal is to identify what you want to do and organize the steps to achieve that output as systematically as possible.
 
 <><><><><><><><><><>
 <> Mike's feedback
