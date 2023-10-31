@@ -70,11 +70,7 @@ questions about what we know and what we should know.
 
 Step 1... 
 
-I mportant to emphasize that model configurations,
-i.e. parameters, have to be fixed first and then data simulated condition on that configuration.  For one the comparison
-between inferences and `truth' are a bit more clear": we're comparing what we estimated to what we started with.  For
-another it raises the important question of which model configurations we should try as relevant "truths", a question that
-eventually leads to prior predictive simulations.
+I mportant to emphasize that model configurations, i.e. parameters, have to be fixed first and then data simulated condition on that configuration.  For one the comparison between inferences and `truth' are a bit more clear": we're comparing what we estimated to what we started with.  For another it raises the important question of which model configurations we should try as relevant "truths", a question that eventually leads to prior predictive simulations.
 
 Say this again here: I mentioned this last time -- I'm not sure if it's worth explicitly mentioning that this kind of simulation study is
 exactly how power is formally defined.  Simulations allow us to estimate power in more general conditions that what is
@@ -88,7 +84,14 @@ Step 4 ...
 
 I think that it would also be useful to mention residual analysis. Overall we need to compare model retrodictions to the observed data, projected onto the features relevant to the analysis. Classical residual analysis compares point predictions to the observe data. R2 summarizes this comparison as a linear correlation. Posterior retrodictive checks compare an entire distribution of predictions to the observed data, allowing us to not only identify any inconsistencies but also use the probabilistic spread of the predictions to qualify how important any inconsistencies are.
 
+Feedbacks 
 
+`Developing simulated data to test the model, running prior and retrodictive checks all dive you deep into understanding
+your statistical model, which suddenly you may find yourself thinking through much more mechanistically.' I wonder if
+it's beneficial to frame this more as `dive deep into connecting your statistical model to your domain expertise'?  I
+often find myself trying to emphasize that people already have the domain expertise but they're not incorporating it into
+their analyses.  A lot of what this workflow is trying to do is facilitate that integration to leverage _what the analysts
+have always had!
 
 \section{References}
 \vspace{-5ex}

@@ -3,6 +3,17 @@ Started 22 August 2023
 As of 18 September 2023 my goals are to: 
 - Get feedback from Mike and the lab.
 
+
+<><><><><><><><><><><><>>
+<> Refs on calibration <>
+<><><><><><><><><><><><>>
+
+- Simple and helpful: https://mc-stan.org/docs/2_25/stan-users-guide/simulation-based-calibration.html
+- Handy: https://statmodeling.stat.columbia.edu/2019/09/05/gneiting-on-calibration-and-sharpness/
+- Mike's stuff, which I have mostly covered but could review
+- https://statmodeling.stat.columbia.edu/2020/10/15/calibration-problem-in-our-election-forecast/
+- http://www.stat.columbia.edu/~gelman/research/unpublished/sbc.pdf (Validating Bayesian Inference Algorithms with Simulation-Based Calibration)
+
 <><><><><><><><><><>
 <> Misc stuff I did not fit in
 <><><><><><><><><><>
