@@ -1,7 +1,19 @@
 Started 22 August 2023
 
-As of 18 September 2023 my goals are to: 
-- Get feedback from Mike and the lab.
+As of 1 November 2023 my goals are to: 
+
+Update draft
+- Shorten intro, removing the synthesis movement and get to workflow SOONER
+
+- Work in null hypotheses testing more: 
+	or one I don’t think that most readers would see the connection between null hypothesis significance testing/significance /power/false positives/true positives and simulation calibration. The critical bit here is that the success of conventional methods is based on calibration, it’s just a calibration dependent upon opaque and often irrelevant assumptions.  The idea of investigating what could happen given the assumptions is not new.
+
+- Broaden the audience (from Fredi)
+
+- More on how simulation as a way to play around with something (best learning is interactive for many) -- include this more in the steps? Definitely could include in training part ... maybe emphasize in how it changed us. 
+
+Intuition as trained through simulation. 
+
 
 
 <><><><><><><><><><><><>>
@@ -16,6 +28,7 @@ As of 18 September 2023 my goals are to:
 
 <><><><><><><><><><>
 <> Misc stuff I did not fit in
+<> from Mike's Sep-October comments
 <><><><><><><><><><>
 
 - How people often approach generating data  ... (see below email on 11 Sept 2023, especially lack of confounding part)
