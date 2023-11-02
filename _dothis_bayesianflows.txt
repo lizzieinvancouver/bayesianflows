@@ -8,11 +8,22 @@ Update draft
 - Work in null hypotheses testing more: 
 	or one I don’t think that most readers would see the connection between null hypothesis significance testing/significance /power/false positives/true positives and simulation calibration. The critical bit here is that the success of conventional methods is based on calibration, it’s just a calibration dependent upon opaque and often irrelevant assumptions.  The idea of investigating what could happen given the assumptions is not new.
 
-- Broaden the audience (from Fredi)
+- Broaden the audience (from Fredi): do this at the end say this (says JD)
 
 - More on how simulation as a way to play around with something (best learning is interactive for many) -- include this more in the steps? Definitely could include in training part ... maybe emphasize in how it changed us. 
 
-Intuition as trained through simulation. 
+- Intuition as trained through simulation. 
+
+Work on the Supp:
+
+- Overview of data and question
+- Show it does not work with lmer and backtrack to intercepts-only
+- Step 1: 
+	a) Simulate data with lots of data
+	b) Simulate data with less data
+- Step 2: Prior check
+- Step 3: Run the model
+- Step 4: PPC 
 
 
 

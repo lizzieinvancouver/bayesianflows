@@ -41,6 +41,11 @@ Nspp <- length(unique(rawlong.tot2$species)) #newid is character !
 species <- as.numeric(as.factor(rawlong.tot2$species))
 year <- rawlong.tot2$yr1981
 
+library(lme4)
+goo <- lmer(phenovalue~(year|species), data=rawlong.tot2) # singular
+goo <- lmer(phenovalue~year+(1|species), data=rawlong.tot2)
+summary(goo)
+
 if(runmodels){
 # See the stan code on this model for notes on what it does
 syncmodel <- stan("stan/twolevelrandomslope.stan", data=c("Nreal","Nspp","yreal","species","year"),
