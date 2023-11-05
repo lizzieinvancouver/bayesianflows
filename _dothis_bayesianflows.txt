@@ -1,12 +1,12 @@
 Started 22 August 2023
 
-As of 1 November 2023 my goals are to: 
+Once I have feedback from co-authors I should add it in and ...
+
+(1) suppneedtofix file -- ASCII issues here that I should fix and add this back to the supp (maybe)
+(2) If we keep the example, see Work on the Supp below for my ideas on this. 
 
 
 Work on the Supp:
-
-- Get Mike's truth figure: or try git/teaching/stan/priorpost
-
 - Overview of data and question
 - Show it does not work with lmer and backtrack to intercepts-only
 - Step 1: 

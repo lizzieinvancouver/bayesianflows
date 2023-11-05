@@ -20,7 +20,7 @@
 
 \begin{document}
 \bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
-
+\SweaveOpts{concordance=FALSE}
 \renewcommand{\refname}{\CHead{}}
 
 \title{Supplement: Simulation as a best practice in Bayesian workflows and beyond}
@@ -41,24 +41,23 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 
 \section{An example workflow}
 
+<<echo=FALSE>>=
+source("examples/synchrony/synchronylme4.R")
+@
 
 We review our workflow using an example from the first Bayesian model one of us ever fit. The resulting model is not ideal (as we'll show), but we use it to highlight the reality of the learning the skills of this workflow. Much like learning a foreign language you improve over time, to where you almost cannot fathom where you started. And when you're first learning a foreign language the stories you can tell will be crude and  clunky, but as you become more proficient they'll become more elaborate.
 
-Our example comes from a project aiming to estimate levels of trophic (a)synchrony with climate change. Using observational time-series data, we wanted to estimate changes in the relative timing of species pairs. We had data on Acartia hudsonica unique species from 1951 to 2013  and thought we should fit a mixed-model linear regression, with day of year (calendar day, so 1-366) of event as the response and year as the predictor. Given variable time-series length we thought we should set species as a `random effect' of species on the intercept and slope and so tried:
+Our example comes from a project aiming to estimate levels of trophic (a)synchrony with climate change. Using observational time-series data, we wanted to estimate changes in the relative timing of species pairs. We had data on \Sexpr{unique(d$species)} unique species from \Sexpr{min(d$year)} to \Sexpr{max(d$year)}  and thought we should fit a mixed-model linear regression, with day of year (calendar day, so 1-366) of event as the response and year as the predictor. Given variable time-series length we thought we should set species as a `random effect' of species on the intercept and slope and so tried:
 
-\begin{Schunk}
-\begin{Sinput}
-> modelwanted <- lmer(phenovalue~(year|species), data=d) 
-\end{Sinput}
-\end{Schunk}
+<<echo=TRUE>>=
+modelwanted <- lmer(phenovalue~(year|species), data=d) 
+@
 
 but that did not work; the model returned: \textt{boundary (singular) fit: see help('isSingular')}. We could get the same model with a `random effect' of species on the intercept only and that's what we would often have put in a paper. In the language of the day, we had `controlled' for non-independence in our data and so could have reported this model:
 
-\begin{Schunk}
-\begin{Sinput}
-> modelconverged <- lmer(phenovalue~year+(1|species), data=d)
-\end{Sinput}
-\end{Schunk}
+<<echo=TRUE>>=
+modelconverged <- lmer(phenovalue~year+(1|species), data=d)
+@
 
 But we knew this was not right: our understanding of climate change impacts suggested it was highly unlikely all species have a common change over time. So we tried a Bayesian approach to ideally fit separate slopes for each species over time, but drawn from a common distribution (which is what the term `random effect' generally refers to in ecology) and started thinking about our model. 
 
@@ -68,35 +67,39 @@ Even before we arrived at the data simulation step, we realized our verbal model
  
 Next we simulated data to test our model code. To do this we set the parameters as our first step, then we simulate the data  from these set parameters. In simulation, we know the `truth'---which here is a our model parameters---and we then compare those with what we estimated to what we started with.
  
-\begin{Schunk}
-\begin{Sinput}
->  # Create the species-level parameters
-> Nspp <- 50
-> mu_doy <- 125
-> sigma_doy <- 20
-> mu_shift <- 0.5
-> sigma_shift <- 5
-> species_doy <- rnorm(Nspp, mu_doy, sigma_doy)
-> species_trend <- rnorm(Nspp, mu_shift, sigma_shift)
-> # Create the overall `error'
-> sigma_y <- 5
-> # Create the data
-> year_0 <- 1980
-> n_data_per_species <- round(runif(Nspp, 5, 40))
-> species <- rep(1:Nspp, n_data_per_species)
-> N <- length(species)
-> year <- rep(NA, N)
-> for (sp in 1:Nspp){
-+   year[species==sp] <- rev(2009 - 1:(n_data_per_species[sp])) - year_0
-+ }
-> ypred <- length(N)
-> for (n in 1:N){
-+   s <- species[n]
-+   ypred[n] <- species_doy[s] + species_trend[s]*year[n]
-+ }
-> y <- rnorm(N, ypred, sigma_y)
-\end{Sinput}
-\end{Schunk}
+<<echo=TRUE>>=
+ # Create the species-level parameters
+Nspp <- 50
+mu_doy <- 125
+sigma_doy <- 20
+mu_shift <- 0.5
+sigma_shift <- 5
+species_doy <- rnorm(Nspp, mu_doy, sigma_doy)
+species_trend <- rnorm(Nspp, mu_shift, sigma_shift)
+
+# Create the overall `error'
+sigma_y <- 5
+
+# Create the data
+year_0 <- 1980
+n_data_per_species <- round(runif(Nspp, 5, 40))
+species <- rep(1:Nspp, n_data_per_species)
+N <- length(species)
+year <- rep(NA, N)
+
+for (sp in 1:Nspp){
+  year[species==sp] <- rev(2009 - 1:(n_data_per_species[sp])) - year_0
+}
+
+ypred <- length(N)
+
+for (n in 1:N){
+  s <- species[n]
+  ypred[n] <- species_doy[s] + species_trend[s]*year[n]
+}
+
+y <- rnorm(N, ypred, sigma_y)
+@ 
 
  And checked that it returned our results:
  

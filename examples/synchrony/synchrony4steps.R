@@ -1,12 +1,9 @@
-## Started 25 February 2022 ##
-## By Lizzie ##
+## Started 3 November 2023 ##
+## By Lizzie so far ##
+## Working on code to source in the supp of the Bayesian workflow paper ##
 
-## Synchrony code using real data for Bayes class ##
-# Makes one predictive check, then a few more
-# Show lm fits versus other two models
-
-## Still working on ...
-# Showing estimates from rstanarm using Bayesplot (Alina's code)
+## Examples in supp of paper
+# Figure S2. Estimating phenological change (days/year) using a hinge model and linear model for two interactions. (a) Daphnia spp. (in red) and Perca fluviatillis (in green) over the years 1969 to 2008 and (b) Operophtera brumata (in red) and Parus major (in green) over the years 1961 to 2008. Solid lines represent hinge model and dashed lines represent linear model. The dotted vertical line represents the inflection point of 1981 at year 0.
 
 ## housekeeping
 rm(list=ls()) 
@@ -21,67 +18,116 @@ runmodels <- FALSE
 
 ## libraries
 library(rstan)
-library(rstanarm)
-library(dplyr)
-library(shinystan)
 
-# saving one step and writing out semi-cleaned data for class
-if(FALSE){
-rawlong <- read.csv("input/rawlong2.csv")
-source("source/datacleaningmore.R")
+###########################
+## Step 1 simulate data ##
+###########################
+
+# Create the species-level parameters
+Nspp <- 50
+mu_doy <- 125
+sigma_doy <- 20
+mu_shift <- 0.5
+sigma_shift <- 5
+species_doy <- rnorm(Nspp, mu_doy, sigma_doy)
+species_trend <- rnorm(Nspp, mu_shift, sigma_shift)
+
+# Create the overall `error'
+sigma_y <- 5
+
+# Create the data
+year_0 <- 1980
+n_data_per_species <- round(runif(Nspp, 5, 40))
+species <- rep(1:Nspp, n_data_per_species)
+N <- length(species)
+year <- rep(NA, N)
+
+for (sp in 1:Nspp){
+  year[species==sp] <- rev(2009 - 1:(n_data_per_species[sp])) - year_0
 }
 
+ypred <- length(N)
+
+for (n in 1:N){
+  s <- species[n]
+  ypred[n] <- species_doy[s] + species_trend[s]*year[n]
+}
+
+y <- rnorm(N, ypred, sigma_y)
+
+# Plot the data
+
+# pdf("testdata.pdf", height=4, width=6)
+par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
+plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
+     bty="l", main="Test data")
+for (sp in 1:Nspp)
+  lines(year[species==sp], y[species==sp])
+# dev.off()
+
+
+##############################
+## Model fitting for Step 1 ##
+##############################
+
+library("rstan")
+options(mc.cores = 4)
+
+fit <- stan("stan/twolevelrandomslopeint.stan", data=c("N","y","Nspp","species","year"), iter=1000, chains=4)
+
+# grep stan output
+sumer <- summary(fit)$summary
+muparams <- sumer[grep("mu", rownames(sumer)), "mean"]
+spslopes <- sumer[grep("b\\[", rownames(sumer)), "mean"]
+
+plot(spslopes~species_trend)
+abline(0,1)
+
+###########################
+## Step 2: Prior checks ##
+###########################
+
+# To do ... 
+
+#######################
+## Step 3: real data ##
+#######################
+
+# get the data
 rawlong.tot2 <- read.csv("output/rawlong.tot2.csv")
-rawlong.nodups <- read.csv("output/rawlong.nodups.csv")
 
 # Formatting for R stan (several ways to do this, this is one)
-Nreal <- nrow(rawlong.tot2)
-yreal <- rawlong.tot2$phenovalue
+N <- nrow(rawlong.tot2)
+y <- rawlong.tot2$phenovalue
 Nspp <- length(unique(rawlong.tot2$species)) #newid is character !
 species <- as.numeric(as.factor(rawlong.tot2$species))
 year <- rawlong.tot2$yr1981
 
-library(lme4)
-goo <- lmer(phenovalue~(year|species), data=rawlong.tot2) # singular
-goo <- lmer(phenovalue~year+(1|species), data=rawlong.tot2)
-summary(goo)
+
 
 if(runmodels){
 # See the stan code on this model for notes on what it does
-syncmodel <- stan("stan/twolevelrandomslope.stan", data=c("Nreal","Nspp","yreal","species","year"),
+syncmodel <- stan("stan/twolevelrandomslope.stan", data=c("N","Nspp","y","species","year"),
                    iter=4000, warmup=3000, chains=4, cores=4)
 save(syncmodel, file="output/syncmodel.Rdata")
 
 # See the stan code on this model for notes on what it does
-syncmodel2 <- stan("stan/twolevelrandomslopeint.stan", data=c("Nreal","Nspp","yreal","species","year"),
+syncmodel2 <- stan("stan/twolevelrandomslopeint.stan", data=c("N","Nspp","y","species","year"),
                    iter=4000, warmup=3000, chains=4, cores=4)
 save(syncmodel2, file="output/syncmodel2.Rdata")
-
-# Partial pooling (random effects) of species on intercept and slope
-syncharm <- stan_lmer(phenovalue~(yr1981|species), data=rawlong.tot2, cores=4)
-save(syncharm, file="output/syncharm.Rdata")
-
-# Partial pooling (random effects) of species on intercept only
-syncharmint <- stan_lmer(phenovalue~yr1981 + (1|species), data=rawlong.tot2, cores=4)
-save(syncharmint, file="output/syncharmint.Rdata")
 }
-
-# launch_shinystan(syncharm)
 
 if(!runmodels){
 load("output/syncmodel.Rdata")
 load("output/syncmodel2.Rdata")
 }
 
-if(FALSE){
-print(syncmodel, pars = c("mu_b", "sigma_y", "a", "b"))
-print(syncmodel2, pars = c("mu_b", "sigma_y", "a", "b"))
-}
-
-
 ################################
 ## Posterior predictive checks ##
 ################################
+
+Nreal <- nrow(rawlong.tot2)
+yreal <- rawlong.tot2$phenovalue
 
 
 # First, plot the real data used in the model
@@ -217,73 +263,11 @@ mu_brsmodel <- mean(syncmodelpost$mu_b)
 arsmodel <- colMeans(syncmodelpost$a) 
 brsmodel <- rnorm(Nspp, mean=mu_brsmodel, sd=sigma_brsmodel)
 
-par(mfrow=c(1,3))
+par(mfrow=c(2,3))
 hist(dr$intfits, breaks=20, main="No pool intercepts", xlab="intercept")
-hist(a, breaks=20, main="Partial pool intercepts")
-hist(arsmodel, breaks=20, main="No pool intercepts (with PP slopes)")
+hist(a, breaks=20, main="Partial pool intercepts", xlab="intercept")
+hist(arsmodel, breaks=20, main="No pool intercepts (with PP slopes)", xlab="intercept")
 
-par(mfrow=c(1,3))
 hist(dr$slopefits, breaks=20, main="No pool slopes", xlab="change over time")
-hist(b, breaks=20, main="Partial pool slopes (and intercepts)")
-hist(brsmodel, breaks=20, main="PP slopes (w/ no pool intercepts)")
-
-#####################
-## Plot the models ##
-#####################
-
-library(viridis)
-my.pal <- viridis_pal(option="viridis")(length(unique(rawlong.tot2$species)))
-
-plot(phenovalue~yr1981, data=rawlong.tot2, ylab="day of year (of event)", xlim=c(0,35), ylim=c(0,220), pch=16)
-abline(lm(y~year), lwd=2)
-abline(syncmodel2post$mu_a, syncmodel2post$mu_b, col="dodgerblue", lwd=2)
-abline(mean(arsmodel), syncmodelpost$mu_b, col="firebrick", lwd=2)
-
-par(mfrow=c(1,2))
-
-plot(phenovalue~yr1981, data=rawlong.tot2, main="No pooling", 
-     ylab="day of year (of event)", xlab="year adjusted", xlim=c(0,35), ylim=c(0,220), pch=16, type="n")
-
-for(i in c(1:length(unique(rawlong.tot2$species)))){
-    subby <- subset(rawlong.tot2, species==unique(rawlong.tot2$species)[i])
-    points(phenovalue~yr1981, data=subby, pch=16, col=my.pal[i])
-    abline(dr$intfits[i], dr$slopefits[i], col=my.pal[i])
-    }
-
-plot(phenovalue~yr1981, data=rawlong.tot2, main="Partial pooling", 
-     ylab="day of year (of event)", xlab="year adjusted",  xlim=c(0,35), ylim=c(0,220), pch=16, type="n")
-
-syncmodel2sum <- summary(syncmodel2)$summary
-synmodel2as <- syncmodel2sum[grep("a\\[", rownames(syncmodel2sum)), "mean"]
-synmodel2bs <- syncmodel2sum[grep("b\\[", rownames(syncmodel2sum)), "mean"]
-
-for(i in c(1:length(unique(rawlong.tot2$species)))){
-    subby <- subset(rawlong.tot2, species==unique(rawlong.tot2$species)[i])
-    points(phenovalue~yr1981, data=subby, pch=16, col=my.pal[i])
-    abline(synmodel2as[i], synmodel2bs[i], col=my.pal[i])
-    }
-
-
-
-
-
-
-
-
-if(FALSE){ ## From local adaptation code
-plot(spring_event~lat_prov, data=d, type="n")
-points(spring_event~lat_prov, data=subset(d, prov_continent=="Europe"))
-points(spring_event~lat_prov, data=subset(d, prov_continent=="North America"), col="dodgerblue")
-
-abline(fit2_latsum["(Intercept)", "mean"], fit2_latsum["lat_prov", "mean"]) # line for Europe
-abline((fit2_latsum["(Intercept)", "mean"]+fit2_latsum["prov_continentNorth America", "mean"]),
-    (fit2_latsum["lat_prov", "mean"] + fit2_latsum["lat_prov:prov_continentNorth America", "mean"]), col="dodgerblue") # line for N America
-
-# We're initially most interested in these 'across garden and species' effects shown above ... so following...
-# https://mc-stan.org/bayesplot/
-posterior <- as.matrix(fit2_lat)
-
-mcmc_areas(posterior,
-           pars = c("lat_prov", "lat_prov:prov_continentNorth America"),
-           prob = 0.8)
-}
+hist(b, breaks=20, main="Partial pool slopes (and intercepts)", xlab="change over time")
+hist(brsmodel, breaks=20, main="PP slopes (w/ no pool intercepts)", xlab="change over time")
