@@ -41,6 +41,11 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 
 \section{An example workflow}
 
+% From Mike: To adjust and add this general caveat:
+one of the common problems, especially for people who are used to building analyses from black box components, is that transitioning to more flexible techniques is often overwhelming.  Even if the ideas are compelling the open-endedness in the implementation can discourage people who experiment, causing them to default back to the status quo.
+
+The benefit of a longer presentation with comprehensive examples is that the reader directly sees how all of these conceptual pieces fall into a practical implementation and how straightforward that implementation can be in the context of a particular application.  Generalizing to bespoke applications will still be frustrating, but at least they’re walking in the right direction.
+
 <<echo=FALSE>>=
 source("examples/synchrony/synchronylme4.R")
 @
@@ -127,6 +132,8 @@ Mike's workflow
 Any good vingettes?
 
 Aki's course on ROS?
+
+\cite{esfahani2021bayesian,schad2021,schad2022workflow}
 
 \section{References}
 \vspace{-5ex}
