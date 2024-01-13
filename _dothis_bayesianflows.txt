@@ -19,12 +19,11 @@ Work on the Supp:
 Co-author feedback (started 1 Jan 2024)
 
 NEXT UP!
-- Think a little on the new potential step 1 (step 1-2 merge) and ...
-- Think a little on Will's request of what gap each step addresses
-- Get some pen and paper or separate tex file notes on these two things above before diving in. 
-- AND (have done the above) ... now go through paper text, making overview cuts/changes and finalizing paper notes
+- ... go through paper text, making overview cuts/changes and finalizing paper notes
 
 B) Finish Mike's (all his smaller comments in, so just these below):
+- See his email about the math bit
+
 - Perhaps ironically one of the important lessons of the paper — carefully analyzing assumptions and their consequences — kind of requires a detailed discussion to explain.
 - Deal with his overall problem # 1 (below):
 
