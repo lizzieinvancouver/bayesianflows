@@ -19,39 +19,22 @@ Work on the Supp:
 Co-author feedback (started 1 Jan 2024)
 
 NEXT UP!
-- Add in a couple sentences about Mike's model config issue ** HERE! (Just below) 
-- Do a quick review of this diff to see if I am happy enough: https://github.com/lizzieinvancouver/bayesianflows/commit/504385decb6f22dd1d1ff27a7c7002421ab7db5a
-- Finish adding in Mike's email about the math bit (need to email him my queries).
 - Print out the new version and my musings (below), then edit the paper with an eye towards connecting current problems and workflow as solution (see my bit of paper notes from 5 Jan 2024).
 - An an abstract
 - Do the damn supp. 
 
-B) Finish Mike's (all his smaller comments in, so just these below):
+B) Keeping some good notes from Mike here (they are also in a PDF somewhere). 
 
 - Perhaps ironically one of the important lessons of the paper — carefully analyzing assumptions and their consequences kind of requires a detailed discussion to explain.
-- Deal with his overall problem # 1 (below):
-
-...but there is one systematic problem that I think should be addressed.
-
-The main limitation with Step 1 as it is currently written is that it doesn't specify which "truths" to consider.  One can read it as looking at simulations from a single set truth or multiple set truths depending on one's expectations/experience.  
-
-** HERE! At the very least I think there should be a few sentences discussions the c choice of from **which model configurations to simulate ** (EMW emphasis).  Ideally for me Steps 1 and 2 would be exchanged so that the scope of the prior model is available to motivate which model configurations to consider, either informally by heuristically choosing a range of configurations across the range of the prior model or formally with prior predictive simulations.
 
 This is much less critical, but there's an interesting discussion to be had about the problem of higher-order interactions.  Back in the day the identifiability of higher-order interactions in fixed effect and random effects models was a systematically studied problem (see for example Box, Hunter, and Hunter "Statistics for Experimenters") that involved crafting careful experimental designs so that the data could pin down these behaviors.  Much of that is no longer taught and so people end up applying the tools in situations where they silently fail.  The advantage of the recommended workflow is that these problems can be identified empirically so that even without all of that old-school experimental design knowledge one can use the tools more robustly.  That said this does tangent a bit from the main discussion, requiring a historical context that many are not likely to have, but it was striking enough to me that I thought it was worth mentioning even if it may not be appropriate for the manuscript.
 
-* Lizzie thinks ... why not merge Step 1 and 2: Will added: % WDP: I am biased (as you know), but on reading this section I wonder if it could be merged with Step 1. You make an argument that makes me happy (the 100 parameters and 5 data points bit), and make a coherent argument (that won me over in person, and does in print) that using priors to simulate and check data is a good idea before fitting the model, as it checks the ecology of the system. So why not merge them, and have the reason for this being to check the ecology of the system? You could even use it as an example of why thinking of a model as statistics ("I must check my priors are uninformative") is the *old* way of thinking, whereas in the new way of thinking we ask "what can I learn about my model and system" (and so simulating from the priors is a way to check model behaviour and identifiability)?
-
-\emph{Step 1: Check your model code.} 
-\emph{Step 2: Check your priors.} 
-NEW step 1: Check your model
-
-
-
-C) Will edits are added to tex, but need work, see 
 
 DONE:
 - Added in comments from JD (see PDF in comments folder)
 - Added in Mike's smaller comments.
+- Added in Will's comments.
+- Dealt with Mike's bigger comments. 
 
 My musings:
 - We may find we know way less than we think we did -- which is the path to learn a lot more. 
