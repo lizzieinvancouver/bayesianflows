@@ -1,10 +1,5 @@
 Started 22 August 2023
 
-I have feedback from co-authors I should add it (notes below) in and ...
-
-(1) suppneedtofix file -- ASCII issues here that I should fix and add this back to the supp (maybe)
-(2) If we keep the example, see Work on the Supp below for my ideas on this. 
-
 
 Work on the Supp:
 - Overview of data and question
@@ -16,19 +11,24 @@ Work on the Supp:
 - Step 3: Run the model
 - Step 4: PPC 
 
-Co-author feedback (started 1 Jan 2024)
 
 NEXT UP!
-- Print out the new version and my musings (below), then edit the paper with an eye towards connecting current problems and workflow as solution (see my bit of paper notes from 5 Jan 2024).
-- An an abstract
-- Do the damn supp. 
+- Sent to co-authors on Jan 17. 
+- Fix the figures: Maybe add a part that shows what pitfalls or problems they address (and maybe a part on what changes we need in ecological training). 
+- Do the damn supp (1-2 below included and outline for it above). 
+(1) suppneedtofix file -- ASCII issues here that I should fix and add this back to the supp (maybe)
+(2) If we keep the example, see Work on the Supp below for my ideas on this. 
 
-B) Keeping some good notes from Mike here (they are also in a PDF somewhere). 
+
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
+<> Notes from working on co-author feedback (started 1 Jan 2024) <>
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
+
+Keeping some good notes from Mike here (they are also in a PDF somewhere). 
 
 - Perhaps ironically one of the important lessons of the paper — carefully analyzing assumptions and their consequences kind of requires a detailed discussion to explain.
 
 This is much less critical, but there's an interesting discussion to be had about the problem of higher-order interactions.  Back in the day the identifiability of higher-order interactions in fixed effect and random effects models was a systematically studied problem (see for example Box, Hunter, and Hunter "Statistics for Experimenters") that involved crafting careful experimental designs so that the data could pin down these behaviors.  Much of that is no longer taught and so people end up applying the tools in situations where they silently fail.  The advantage of the recommended workflow is that these problems can be identified empirically so that even without all of that old-school experimental design knowledge one can use the tools more robustly.  That said this does tangent a bit from the main discussion, requiring a historical context that many are not likely to have, but it was striking enough to me that I thought it was worth mentioning even if it may not be appropriate for the manuscript.
-
 
 DONE:
 - Added in comments from JD (see PDF in comments folder)
@@ -36,7 +36,7 @@ DONE:
 - Added in Will's comments.
 - Dealt with Mike's bigger comments. 
 
-My musings:
+My musings (sadly, none of these fit):
 - We may find we know way less than we think we did -- which is the path to learn a lot more. 
 - Bayesian is often presented as an alternative approach to do the same thing you do in Fisherman with slight tweaks; in our experience it's a different way to do science.  
 - Maybe. ... We need to get what is at once a nitty-gritty and fascinatingly insightful task out of the way first ... check your code. 
