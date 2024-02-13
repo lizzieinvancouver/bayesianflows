@@ -14,21 +14,25 @@ setwd("/Users/lizzie/Documents/git/projects/misc/miscmisc/bayesianflows/examples
 
 ## flags
 # You must set to true and RUN the models once for setting this to FALSE to work
-runmodels <- FALSE
+runmodels <- TRUE
 
 ## libraries
+library(truncnorm)
 library(rstan)
+options(mc.cores = parallel::detectCores())
 
-###########################
-## Step 1 simulate data ##
-###########################
+## Step 1: Develop your model (done before we get here)
+
+#################################################
+## Simulate data to test code (part of Step 2) ##
+#################################################
 
 # Create the species-level parameters
 Nspp <- 50
 mu_doy <- 125
 sigma_doy <- 20
 mu_shift <- 0.5
-sigma_shift <- 5
+sigma_shift <- 1
 species_doy <- rnorm(Nspp, mu_doy, sigma_doy)
 species_trend <- rnorm(Nspp, mu_shift, sigma_shift)
 
@@ -66,14 +70,11 @@ for (sp in 1:Nspp)
 # dev.off()
 
 
-##############################
-## Model fitting for Step 1 ##
-##############################
+#################################################
+## Run the code on test data (part of Step 2) ##
+#################################################
 
-library("rstan")
-options(mc.cores = 4)
-
-fit <- stan("stan/twolevelrandomslopeint.stan", data=c("N","y","Nspp","species","year"), iter=1000, chains=4)
+fit <- stan("stan/twolevelhierslopeint.stan", data=c("N","y","Nspp","species","year"), iter=1000, chains=4)
 
 # grep stan output
 sumer <- summary(fit)$summary
@@ -83,11 +84,30 @@ spslopes <- sumer[grep("b\\[", rownames(sumer)), "mean"]
 plot(spslopes~species_trend)
 abline(0,1)
 
-###########################
-## Step 2: Prior checks ##
-###########################
+####################################
+## Prior checks (part of Step 2) ##
+####################################
 
-# To do ... 
+# Let's check what the predicted slopes look like
+# Iterating over mu and sigma for intercepts and slopes
+
+reps <- 30
+mu_doy <- rnorm(reps, 100,30)
+sigma_doy <- rtruncnorm(a=0, b=Inf, reps, 0, 20)
+mu_shift <- rnorm(reps, 0,5)
+sigma_shift <- rtruncnorm(a=0, b=Inf, reps, 0,15)
+
+par(mfrow=c(5,6))
+for(i in 1:reps){
+    plot(range(year), range(y), xlab="Year", ylab="Day of year",
+        xlim=c(-50,40),ylim=c(-50,400), type="n")
+    species_doy <- rnorm(Nspp, mu_doy[i], sigma_doy[i])
+    species_trend <- rnorm(Nspp, mu_shift[i], sigma_shift[i])
+    for(sp in 1:Nspp){
+        abline(species_doy[sp], species_trend[sp], col="lightgray")
+    }
+    abline(mu_doy[i], mu_shift[i], col="black")
+}
 
 #######################
 ## Step 3: real data ##
@@ -103,35 +123,27 @@ Nspp <- length(unique(rawlong.tot2$species)) #newid is character !
 species <- as.numeric(as.factor(rawlong.tot2$species))
 year <- rawlong.tot2$yr1981
 
-
-
 if(runmodels){
 # See the stan code on this model for notes on what it does
-syncmodel <- stan("stan/twolevelrandomslope.stan", data=c("N","Nspp","y","species","year"),
+syncmodelhis <- stan("stan/twolevelhierslopeint.stan", data=c("N","Nspp","y","species","year"),
                    iter=4000, warmup=3000, chains=4, cores=4)
-save(syncmodel, file="output/syncmodel.Rdata")
-
-# See the stan code on this model for notes on what it does
-syncmodel2 <- stan("stan/twolevelrandomslopeint.stan", data=c("N","Nspp","y","species","year"),
-                   iter=4000, warmup=3000, chains=4, cores=4)
-save(syncmodel2, file="output/syncmodel2.Rdata")
+save(syncmodelhis, file="output/syncmodelhis.Rdata")
 }
 
 if(!runmodels){
-load("output/syncmodel.Rdata")
-load("output/syncmodel2.Rdata")
+load("output/syncmodelhis.Rdata")
 }
 
-################################
-## Posterior predictive checks ##
-################################
+##########################################
+## Posterior predictive checks (Step 4) ##
+##########################################
 
 Nreal <- nrow(rawlong.tot2)
 yreal <- rawlong.tot2$phenovalue
 
 
 # First, plot the real data used in the model
-pdf("graphs/realdata_formodel.pdf", height=4, width=6)
+# pdf("graphs/realdata_formodel.pdf", height=4, width=6)
 par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(yreal), type="n", xlab="Year",
      ylab="Day of year", bty="l", main="Raw real data")
@@ -139,18 +151,18 @@ for (j in 1:Nspp){
   lines(year[species==j], yreal[species==j])
 }
 hist(yreal, xlab="Day of year", main="Real data")
-dev.off()
+# dev.off()
 
 # What does a similar plot look like using the model output?
-syncmodel2post <- extract(syncmodel2) 
-# hist(syncmodel2post$mu_b, xlab="Change per year")
+syncmodelhispost <- extract(syncmodelhis) 
+# hist(syncmodelhispost$mu_b, xlab="Change per year")
 
 # extract means for now (other ways to extract the mean)
-sigma_y <- mean(syncmodel2post$sigma_y) 
-sigma_a <- mean(syncmodel2post$sigma_a) 
-sigma_b <- mean(syncmodel2post$sigma_b) 
-mu_b <- mean(syncmodel2post$mu_b) 
-mu_a <- mean(syncmodel2post$mu_a) 
+sigma_y <- mean(syncmodelhispost$sigma_y) 
+sigma_a <- mean(syncmodelhispost$sigma_a) 
+sigma_b <- mean(syncmodelhispost$sigma_b) 
+mu_b <- mean(syncmodelhispost$mu_b) 
+mu_a <- mean(syncmodelhispost$mu_a) 
 
 a <- rnorm(Nspp, mean=mu_a, sd=sigma_a)
 b <- rnorm(Nspp, mean=mu_b, sd=sigma_b)
@@ -255,19 +267,36 @@ hist(dr$intfits, breaks=20, main="No pool intercepts", xlab="intercept")
 hist(a, breaks=20, main="Partial pool intercepts")
 
 
-# Random slopes only model:
-syncmodelpost <- extract(syncmodel)
-sigma_brsmodel <- mean(syncmodelpost$sigma_b) 
-mu_brsmodel <- mean(syncmodelpost$mu_b) 
+###############
+## Feedbacks ##
+###############
 
-arsmodel <- colMeans(syncmodelpost$a) 
-brsmodel <- rnorm(Nspp, mean=mu_brsmodel, sd=sigma_brsmodel)
+if(runmodels){
+# See the stan code on this model for notes on what it does
+syncmodelhs <- stan("stan/twolevelhierslope.stan", data=c("N","Nspp","y","species","year"),
+                   iter=4000, warmup=3000, chains=4, cores=4)
+save(syncmodelhs, file="output/syncmodelhs.Rdata")
+}
+
+if(!runmodels){
+load("output/syncmodelhs.Rdata")
+}
+
+
+# Random slopes only model:
+syncmodelhspost <- extract(syncmodelhs)
+sigma_bhsmodel <- mean(syncmodelhspost$sigma_b) 
+mu_bhsmodel <- mean(syncmodelhspost$mu_b) 
+
+ahsmodel <- colMeans(syncmodelhspost$a) 
+bhsmodel <- rnorm(Nspp, mean=mu_bhsmodel, sd=sigma_bhsmodel)
 
 par(mfrow=c(2,3))
 hist(dr$intfits, breaks=20, main="No pool intercepts", xlab="intercept")
 hist(a, breaks=20, main="Partial pool intercepts", xlab="intercept")
-hist(arsmodel, breaks=20, main="No pool intercepts (with PP slopes)", xlab="intercept")
+hist(ahsmodel, breaks=20, main="No pool intercepts (with PP slopes)", xlab="intercept")
 
 hist(dr$slopefits, breaks=20, main="No pool slopes", xlab="change over time")
 hist(b, breaks=20, main="Partial pool slopes (and intercepts)", xlab="change over time")
-hist(brsmodel, breaks=20, main="PP slopes (w/ no pool intercepts)", xlab="change over time")
+hist(bhsmodel, breaks=20, main="PP slopes (w/ no pool intercepts)", xlab="change over time")
+

@@ -9,6 +9,7 @@
 *.DS_Store
 *.xlsx
 *.pptx
+.Rapp.history
 
 *.log
 *.aux
