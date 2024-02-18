@@ -13,12 +13,19 @@ Work on the Supp:
 
 
 NEXT UP!
-- Sent to co-authors on Jan 17. 
 - Fix the figures: Maybe add a part that shows what pitfalls or problems they address (and maybe a part on what changes we need in ecological training). 
-- Do the damn supp (1-2 below included and outline for it above). 
-(1) suppneedtofix file -- ASCII issues here that I should fix and add this back to the supp (maybe)
-(2) If we keep the example, see Work on the Supp below for my ideas on this. 
+- Finish the damn supp
+- Finish email (below) and send new version to co-authors
 
+
+<><><><><><><><><><><><><><><>
+<> Feb email to co-authors <>
+<><><><><><><><><><><><><><><>
+
+
+Hi all,
+
+If you have ideas for a short conclusion to reinforce the messages of the paper, please go for it and add one -- but please keep it short. 
 
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
 <> Notes from working on co-author feedback (started 1 Jan 2024) <>
