@@ -1,5 +1,10 @@
 # An example workflow
 
+Our example comes from a project aiming to estimate levels of trophic (a)synchrony with climate change. Using observational time-series data, we wanted to estimate changes in the relative timing of species pairs. Our first step was to obtain estimates of each species change over time, which we review here. 
+
+## How we started
+We thought we should fit a mixed-model linear regression, with day of year (calendar day, so 1-366) of event as the response and year as the predictor. The data had uneven sampling across species (different time series lengths), as you can see:
+
 ```{r}
 ## housekeeping
 rm(list=ls()) 
@@ -8,12 +13,219 @@ options(stringsAsFactors = FALSE)
 ## set working directory if you need to
 setwd("/Users/lizzie/Documents/git/projects/misc/miscmisc/bayesianflows/examples/synchrony")
 
+d <- read.csv("output/rawlong.tot2.csv")
+table(d$species)
+```
+
+Given this uneven sampling of species, we thought we should set species as a `random effect' (or a grouping factor with partial pooling). Given our interest in obtaining estimates of each species change over time, we wanted to have species as a random effect on both the intercept and slope. However, when we tried this in lme4, we found the model did not converge:
+
+```{r}
 ## libraries
 library(lme4)
 
-d <- read.csv("output/rawlong.tot2.csv")
+modelwanted <- lmer(phenovalue~(year|species), data=d) 
+summary(modelwanted)
+```
+We considered simplifying the model to get it to run. We could get the same model with species as a randome effect on the intercept only to run:
 
-modelwanted <- lmer(phenovalue~(year|species), data=d) # singular
+```{r}
 modelconverged <- lmer(phenovalue~year+(1|species), data=d)
-# summary(modelwanted)
+```
+But we knew this was not right: our understanding of climate change impacts suggested it was highly unlikely all species have a common change over time. So we tried a Bayesian approach to ideally fit separate slopes for each species over time, but drawn from a common distribution (which is what the term `random effect' generally refers to in ecology) and started thinking about our model. 
+
+## A four-step workflow Bayesian approach
+
+### Step 1:  Develop your model
+
+We realized our verbal model did not agree with the statistical model we expected to fit. We planned to fit a simple linear model, but that would assume climate change has been ongoing across all our years and that's not what most science on anthropogenic warming suggests: it suggests instead a large uptick in warming around 1980. So instead we developed a `hinge' model to fit the linear regression after 1980 and a mean before 1980 (here we did this by subtracting 1980 from the predictor---year---data). This highlights a reality throughout the workflow: effective model building is about efficient brainstorming. It's a constant back and forth between asking questions about what we know and what we should know.
+
+
+### Step 2: Check your model on simulated data
+
+Next we simulated data to test our model code. To do this we set the parameters in our model firt, then we simulated the data  from these set parameters. In simulation, we know the `truth'---which here is a our model parameters---and we can then compare those with what we estimated to what we started with.
+
+```{r}
+## libraries
+library(truncnorm)
+
+# Create the species-level parameters
+Nspp <- 100
+mu_doy <- 125
+sigma_doy <- 20
+mu_shift <- 0.5
+sigma_shift <- 1
+species_doy <- rnorm(Nspp, mu_doy, sigma_doy)
+species_trend <- rnorm(Nspp, mu_shift, sigma_shift)
+
+# Create the overall `error'
+sigma_y <- 5
+
+# Keep the parameters together to compare to model output
+paramsgiven <- c(mu_doy, mu_shift, sigma_shift, sigma_doy, sigma_y)
+
+# Create the data
+year_0 <- 1980
+n_data_per_species <- round(runif(Nspp, 5, 40))
+species <- rep(1:Nspp, n_data_per_species)
+N <- length(species)
+year <- rep(NA, N)
+
+for (sp in 1:Nspp){
+  year[species==sp] <- rev(2009 - 1:(n_data_per_species[sp])) - year_0
+}
+
+ypred <- length(N)
+
+for (n in 1:N){
+  s <- species[n]
+  ypred[n] <- species_doy[s] + species_trend[s]*year[n]
+}
+
+y <- rnorm(N, ypred, sigma_y)
+
+# Plot the data
+par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
+plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
+     bty="l", main="Test data")
+for (sp in 1:Nspp)
+  lines(year[species==sp], y[species==sp])
+```
+
+Now that we have a simulated dataset, we code the underlying model in Stan, then run it on the simulated data to check how well the model returns the parameters we set.
+```{r}
+## more libraries
+library(rstan)
+options(mc.cores = parallel::detectCores())
+
+fit <- stan("stan/twolevelhierslopeint.stan", data=c("N","y","Nspp","species","year"), iter=1000, chains=4)
+
+# grep stan output
+sumer <- summary(fit)$summary
+muparams <- sumer[grep("mu", rownames(sumer)), c("mean", "2.5%", "25%", "50%", "75%", "97.5%")]
+sigmaparams <- sumer[grep("sigma", rownames(sumer)), c("mean", "2.5%","25%", "50%", "75%", "97.5%")]
+
+# compare given versus modeled
+paramsgiven
+muparams
+sigmaparams
+```
+
+We can also look at the species-level estimates:
+```{r}
+spslopes <- sumer[grep("b\\[", rownames(sumer)), "mean"]
+
+plot(spslopes~species_trend, xlab="Given species-level slopes", ylab="Modeled species-level slopes")
+abline(0,1)
+```
+
+
+And now we need to look at our priors ...
+```{r}
+# Let's check what the predicted slopes look like
+# Iterating over mu and sigma for intercepts and slopes
+reps <- 12
+mu_doy <- rnorm(reps, 100,30)
+sigma_doy <- rtruncnorm(a=0, b=Inf, reps, 0, 20)
+mu_shift <- rnorm(reps, 0,5)
+sigma_shift <- rtruncnorm(a=0, b=Inf, reps, 0,15)
+
+par(mfrow=c(3,4))
+par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
+for(i in 1:reps){
+    plot(range(year), range(y), xlab="Year", ylab="Day of year",
+        xlim=c(-50,40),ylim=c(-50,400), type="n")
+    species_doy <- rnorm(Nspp, mu_doy[i], sigma_doy[i])
+    species_trend <- rnorm(Nspp, mu_shift[i], sigma_shift[i])
+    for(sp in 1:Nspp){
+        abline(species_doy[sp], species_trend[sp], col="lightgray")
+    }
+    abline(mu_doy[i], mu_shift[i], col="black")
+}
+```
+
+### Step 3: Run your model on your empirical data
+
+```{r}
+# Formatting for R stan
+N <- nrow(d)
+y <- d$phenovalue
+Nspp <- length(unique(d$species)) #newid is character !
+species <- as.numeric(as.factor(d$species))
+year <- d$yr1981
+syncmodelhis <- stan("stan/twolevelhierslopeint.stan", data=c("N","Nspp","y","species","year"),
+                   iter=4000, warmup=3000, chains=4, cores=4)
+```
+
+### Step 4: Check your model on data simulated from your empirical model output (also known as posterior retrodictive checks)
+
+```{r}
+Nreal <- nrow(d)
+yreal <- d$phenovalue
+
+# First, plot the real data used in the model
+par(mfrow=c(1,2))
+par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
+plot(range(year), range(yreal), type="n", xlab="Year",
+     ylab="Day of year", bty="l", main="Raw real data")
+for (j in 1:Nspp){
+  lines(year[species==j], yreal[species==j])
+}
+hist(yreal, xlab="Day of year", main="Real data")
+
+# What does a similar plot look like using the model output?
+syncmodelhispost <- extract(syncmodelhis) 
+# extract means for now (other ways to extract the mean)
+sigma_y <- mean(syncmodelhispost$sigma_y) 
+sigma_a <- mean(syncmodelhispost$sigma_a) 
+sigma_b <- mean(syncmodelhispost$sigma_b) 
+mu_b <- mean(syncmodelhispost$mu_b) 
+mu_a <- mean(syncmodelhispost$mu_a) 
+
+a <- rnorm(Nspp, mean=mu_a, sd=sigma_a)
+b <- rnorm(Nspp, mean=mu_b, sd=sigma_b)
+
+N <- Nreal
+
+ypred <- length(N) 
+for (n in 1:N){
+    s <- species[n]
+    ypred[n] <- a[s] + b[s]*year[n]
+}
+y <- rnorm(N, ypred, sigma_y)
+
+par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
+plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
+    bty="l", main="Data from posterior means")
+for (j in 1:Nspp)
+  lines(year[species==j], y[species==j])
+hist(y, xlab="Day of year", main="Data from posterior means")
+```
+
+Okay, but that's just one new draw ... PPCs should be done with many draws...
+But then you need to decide on what summary statistics matter because you cannot just look at each plot
+Below I do: SD of y (using the means, should also consider using other draws of the posterior)
+```{r}
+# Create the data using new a and b for each of the species, simshere times
+simshere <- 1000
+y.sd100 <- matrix(0, ncol=simshere, nrow=Nspp)
+for (i in 1:simshere){
+    for (n in 1:N){
+        s <- species[n]
+        ypred[n] <- a[s] + b[s]*year[n] 
+    }
+  y <- rnorm(N, ypred, sigma_y)
+  y.df <- as.data.frame(cbind(y, species))
+  y.sd <- aggregate(y.df["y"], y.df["species"], FUN=sd)
+  y.sd100[,i] <- y.sd[,2] 
+}
+
+# and here's the real data
+real.sd <- aggregate(d["phenovalue"], d[c("studyid", "species")],
+    FUN=sd)
+
+par(mfrow=c(1,1))
+hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14), 
+    main="",
+    xlab="Mean SD of response from 1000 sim. datasets (light blue) \n versus empirical data (dark blue line)")
+abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
 ```

@@ -1,6 +1,14 @@
 Started 13 August 2023
 Most of these files taken from git/teaching/hotstats/examples
 
+<><><><><><><><><><>
+How to compile Rmd (from https://rowannicholls.github.io/sublime_text/r_markdown.html)
+Render it with the Build System!
+    Open an R Markdown file with the .Rmd extension
+    From the menu bar, go to Tools > Build With…
+    From then on you can just build with Ctrl+B/Cmd+B as the default build system will have been set when you used “Build With…”
+<><><><><><><><><><>
+
 I pulled some random stuff (says Lizzie), need to ORGANIZE! And clean up a ton ... or just find better examples. 
 
 UPDATE 12 February 2024:

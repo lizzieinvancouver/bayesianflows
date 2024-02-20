@@ -28,7 +28,7 @@ options(mc.cores = parallel::detectCores())
 #################################################
 
 # Create the species-level parameters
-Nspp <- 100 # 88 in the data
+Nspp <- 50
 mu_doy <- 125
 sigma_doy <- 20
 mu_shift <- 0.5
@@ -38,10 +38,6 @@ species_trend <- rnorm(Nspp, mu_shift, sigma_shift)
 
 # Create the overall `error'
 sigma_y <- 5
-
-# Keep the parameters together to compare to model output
-paramsgiven <- c(mu_doy, mu_shift, sigma_shift, sigma_doy, sigma_y)
-
 
 # Create the data
 year_0 <- 1980
@@ -64,11 +60,14 @@ for (n in 1:N){
 y <- rnorm(N, ypred, sigma_y)
 
 # Plot the data
+
+# pdf("testdata.pdf", height=4, width=6)
 par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
      bty="l", main="Test data")
 for (sp in 1:Nspp)
   lines(year[species==sp], y[species==sp])
+# dev.off()
 
 
 #################################################
@@ -79,16 +78,10 @@ fit <- stan("stan/twolevelhierslopeint.stan", data=c("N","y","Nspp","species","y
 
 # grep stan output
 sumer <- summary(fit)$summary
-muparams <- sumer[grep("mu", rownames(sumer)), c("25%", "mean", "75%")]
-sigmaparams <- sumer[grep("sigma", rownames(sumer)), c("25%", "mean", "75%")]
-
-# compare given versus modeled
-paramsgiven
-muparams
-sigmaparams
-
+muparams <- sumer[grep("mu", rownames(sumer)), "mean"]
 spslopes <- sumer[grep("b\\[", rownames(sumer)), "mean"]
-plot(spslopes~species_trend, xlab="Given species-level slopes", ylab="Modeled species-level slopes")
+
+plot(spslopes~species_trend)
 abline(0,1)
 
 ####################################
@@ -97,6 +90,7 @@ abline(0,1)
 
 # Let's check what the predicted slopes look like
 # Iterating over mu and sigma for intercepts and slopes
+
 reps <- 30
 mu_doy <- rnorm(reps, 100,30)
 sigma_doy <- rtruncnorm(a=0, b=Inf, reps, 0, 20)
@@ -120,14 +114,14 @@ for(i in 1:reps){
 #######################
 
 # get the data
-d <- read.csv("output/rawlong.tot2.csv")
+rawlong.tot2 <- read.csv("output/rawlong.tot2.csv")
 
 # Formatting for R stan (several ways to do this, this is one)
-N <- nrow(d)
-y <- d$phenovalue
-Nspp <- length(unique(d$species)) #newid is character !
-species <- as.numeric(as.factor(d$species))
-year <- d$yr1981
+N <- nrow(rawlong.tot2)
+y <- rawlong.tot2$phenovalue
+Nspp <- length(unique(rawlong.tot2$species)) #newid is character !
+species <- as.numeric(as.factor(rawlong.tot2$species))
+year <- rawlong.tot2$yr1981
 
 if(runmodels){
 # See the stan code on this model for notes on what it does
@@ -140,20 +134,16 @@ if(!runmodels){
 load("output/syncmodelhis.Rdata")
 }
 
-sumerreal  <- summary(syncmodelhis)$summary
-sumerreal[grep("mu", rownames(sumerreal)), c("mean", "2.5%", "25%", "50%", "75%", "97.5%")]
-sumerreal[grep("sigma", rownames(sumerreal)), c("mean", "2.5%", "25%", "50%", "75%", "97.5%")]
-
-
 ##########################################
 ## Posterior predictive checks (Step 4) ##
 ##########################################
 
-Nreal <- nrow(d)
-yreal <- d$phenovalue
+Nreal <- nrow(rawlong.tot2)
+yreal <- rawlong.tot2$phenovalue
+
 
 # First, plot the real data used in the model
-par(mfrow=c(1,2))
+# pdf("graphs/realdata_formodel.pdf", height=4, width=6)
 par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(yreal), type="n", xlab="Year",
      ylab="Day of year", bty="l", main="Raw real data")
@@ -161,9 +151,12 @@ for (j in 1:Nspp){
   lines(year[species==j], yreal[species==j])
 }
 hist(yreal, xlab="Day of year", main="Real data")
+# dev.off()
 
 # What does a similar plot look like using the model output?
 syncmodelhispost <- extract(syncmodelhis) 
+# hist(syncmodelhispost$mu_b, xlab="Change per year")
+
 # extract means for now (other ways to extract the mean)
 sigma_y <- mean(syncmodelhispost$sigma_y) 
 sigma_a <- mean(syncmodelhispost$sigma_a) 
@@ -183,17 +176,33 @@ for (n in 1:N){
 }
 y <- rnorm(N, ypred, sigma_y)
 
+pdf("graphs/onepredictivecheck.pdf", height=4, width=6)
 par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
     bty="l", main="Data from posterior means")
 for (j in 1:Nspp)
   lines(year[species==j], y[species==j])
 hist(y, xlab="Day of year", main="Data from posterior means")
+dev.off()
 
+
+pdf("graphs/rawvsonepredictivecheck.pdf", height=8, width=6)
+par(mfrow=c(2,1))
+par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
+plot(range(year), range(yreal), type="n", xlab="Year",
+      ylab="Day of year (empirical data)", bty="l", main="")
+for (j in 1:Nspp){
+  lines(year[species==j], yreal[species==j])
+ }
+plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year (simulated from posterior means)",
+     bty="l", main="")
+for (j in 1:Nspp)
+   lines(year[species==j], y[species==j])
+dev.off()
 
 # Okay, but that's just one new draw ... PPCs should be done with many draws...
 # But then you need to decide on what summary statistics matter because you cannot just look at each plot
-# Below I do: SD of y (using the means, should also consider using other draws of the posterior)
+# Below I do: SD of y (using the means, I should also consider using other draws of the posterior)
 
 # Create the data using new a and b for each of the species, simshere times
 simshere <- 1000
@@ -211,30 +220,27 @@ for (i in 1:simshere){
 
 # ... and here's the real data, includes studyid -- which we discussed adding to model
 # real.sd <- aggregate(rawlong.nodups["phenovalue"], rawlong.nodups[c("studyid", "spp")], FUN=sd)
-real.sd <- aggregate(d["phenovalue"], d[c("studyid", "species")],
+real.sd <- aggregate(rawlong.tot2["phenovalue"], rawlong.tot2[c("studyid", "species")],
     FUN=sd)
 
 par(mfrow=c(1,1))
+pdf("graphs/retroSDsync.pdf", height=7, width=6)
 hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14), 
     main="",
     xlab="Mean SD of response from 1000 sim. datasets (light blue) \n versus empirical data (dark blue line)")
 abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
-
-
-##
-## Below is not yet part of Rmd workflow
-##
+dev.off()
 
 # Okay, let's look at other aspects of the model
-comppool <- lm(phenovalue~yr1981, data=d)
+comppool <- lm(phenovalue~yr1981, data=rawlong.tot2)
 
 # no pooling
-uniquespp <- unique(d$species)
+uniquespp <- unique(rawlong.tot2$species)
 slopefits <- rep(NA< length(uniquespp))
 varfits <- rep(NA< length(uniquespp))
 intfits <- rep(NA< length(uniquespp))
 for(eachsp in 1:length(uniquespp)){
-	lmhere <- lm(phenovalue~yr1981, data=subset(d, species==uniquespp[eachsp]))
+	lmhere <- lm(phenovalue~yr1981, data=subset(rawlong.tot2, species==uniquespp[eachsp]))
 	slopefits[eachsp] <- coef(lmhere)[2]
 	varfits[eachsp] <- (summary(lmhere)$sigma)**2
 	intfits[eachsp] <- coef(lmhere)[1]
