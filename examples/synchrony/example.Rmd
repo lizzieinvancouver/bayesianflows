@@ -40,6 +40,7 @@ But we knew this was not right: our understanding of climate change impacts sugg
 We realized our verbal model did not agree with the statistical model we expected to fit. We planned to fit a simple linear model, but that would assume climate change has been ongoing across all our years and that's not what most science on anthropogenic warming suggests: it suggests instead a large uptick in warming around 1980. So instead we developed a `hinge' model to fit the linear regression after 1980 and a mean before 1980 (here we did this by subtracting 1980 from the predictor---year---data). This highlights a reality throughout the workflow: effective model building is about efficient brainstorming. It's a constant back and forth between asking questions about what we know and what we should know.
 
 
+
 ### Step 2: Check your model on simulated data
 
 Next we simulated data to test our model code. To do this we set the parameters in our model firt, then we simulated the data  from these set parameters. In simulation, we know the `truth'---which here is a our model parameters---and we can then compare those with what we estimated to what we started with.
@@ -47,6 +48,8 @@ Next we simulated data to test our model code. To do this we set the parameters 
 ```{r}
 ## libraries
 library(truncnorm)
+library(rstan)
+options(mc.cores = parallel::detectCores())
 
 # Create the species-level parameters
 Nspp <- 100
@@ -91,12 +94,54 @@ for (sp in 1:Nspp)
   lines(year[species==sp], y[species==sp])
 ```
 
-Now that we have a simulated dataset, we code the underlying model in Stan, then run it on the simulated data to check how well the model returns the parameters we set.
-```{r}
-## more libraries
-library(rstan)
-options(mc.cores = parallel::detectCores())
+Now that we have a simulated dataset, we code the underlying model in Stan:
 
+
+```{stan output.var = "twolevelhierslopeintcompiled"}
+// Two-level (1 hierarchical grouping) `random' slope and intercept model
+// Partial pooling on intercepts and slopes 
+
+data{
+int<lower=0> N;     // number of total observations
+int<lower=0> Nspp;  // number of species (grouping factor)
+int species[N];     // species identity, coded as int
+vector[N] year;     // year of data point (predictor for slope)
+real y[N];      // day of year of phenological event (response)
+}
+
+parameters{
+real mu_a;      // mean intercept across species
+real<lower=0> sigma_a;  // variation of intercept across species    
+real mu_b;      // mean slope across species
+real<lower=0> sigma_b;  // variation of slope across species
+real<lower=0> sigma_y;  // measurement error, noise etc.    
+real a[Nspp];       //the intercept for each species
+real b[Nspp];       //the slope for each species 
+
+}
+
+transformed parameters{
+real ypred[N];
+for (i in 1:N){
+    ypred[i]=a[species[i]]+b[species[i]]*year[i];
+}
+}
+
+model{  
+b ~ normal(mu_b, sigma_b); // this creates the partial pooling on slopes
+a ~ normal(mu_a, sigma_a); // this creates the partial pooling on intercepts
+y ~ normal(ypred, sigma_y); // this creates an error model where error is normally distributed
+// Priors ...
+mu_a ~ normal(100,30);
+sigma_a ~ normal(0,20);
+mu_b ~ normal(0,5);
+sigma_b ~ normal(0,15);
+sigma_y ~ normal(0,15);
+}   
+```
+
+And then run it on the simulated data to check how well the model returns the parameters we set.
+```{r}
 fit <- stan("stan/twolevelhierslopeint.stan", data=c("N","y","Nspp","species","year"), iter=1000, chains=4)
 
 # grep stan output

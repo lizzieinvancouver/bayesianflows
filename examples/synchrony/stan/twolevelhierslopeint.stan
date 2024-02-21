@@ -29,12 +29,12 @@ for (i in 1:N){
 
 model{	
 b ~ normal(mu_b, sigma_b); // this creates the partial pooling on slopes
-a~normal(mu_a, sigma_a); // this creates the partial pooling on intercepts
+a ~ normal(mu_a, sigma_a); // this creates the partial pooling on intercepts
 y ~ normal(ypred, sigma_y); // this creates an error model where error is normally distributed
 // Priors ...
-mu_a~normal(100,30);
-sigma_a~normal(0,20);
-mu_b~normal(0,5);
-sigma_b~normal(0,15);
-sigma_y~normal(0,15);
+mu_a ~ normal(100,30);
+sigma_a ~ normal(0,20);
+mu_b ~ normal(0,5);
+sigma_b ~ normal(0,15);
+sigma_y ~ normal(0,15);
 }	
