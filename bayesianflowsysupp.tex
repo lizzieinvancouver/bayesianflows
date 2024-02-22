@@ -61,7 +61,6 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 
 % Ultimately it may be helpful to advocate for workflows, plural.  Bayesian methodologies can be used to systematically investigate the consequences of a given model, such as an estimator calibration workflow.  They can also be used to formalize heuristic residual checking with posterior retrodictive check and implement an iterative model development workflow.  Etc, etc.  The goal is to identify what you want to do and organize the steps to achieve that output as systematically as possible.
 
-
 \section*{An example workflow}
 
 Our workflow is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabalistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). \\ % to write bespoke Bayesian models and underpins the \textsf{R} packages \textsf{brms} and \textsf{rstanarm}, which fit a suite of specific (pre-defined) models
@@ -72,25 +71,9 @@ one of the common problems, especially for people who are used to building analy
 The benefit of a longer presentation with comprehensive examples is that the reader directly sees how all of these conceptual pieces fall into a practical implementation and how straightforward that implementation can be in the context of a particular application.  Generalizing to bespoke applications will still be frustrating, but at least they're walking in the right direction.
 
 
-We review our workflow using an example from the first Bayesian model one of us ever fit. The resulting model is not ideal (as we'll show), but we use it to highlight the reality of the learning the skills of this workflow. Much like learning a foreign language you improve over time, to where you almost cannot fathom where you started. And when you're first learning a foreign language the stories you can tell will be crude and  clunky, but as you become more proficient they'll become more elaborate.
 
-Our example comes from a project aiming to estimate levels of trophic (a)synchrony with climate change. Using observational time-series data, we wanted to estimate changes in the relative timing of species pairs. We had data on Acartia hudsonica unique species from 1951 to 2013  and thought we should fit a mixed-model linear regression, with day of year (calendar day, so 1-366) of event as the response and year as the predictor. Given variable time-series length we thought we should set species as a `random effect' of species on the intercept and slope and so tried:
 
-\begin{Schunk}
-\begin{Sinput}
-> modelwanted <- lmer(phenovalue~(year|species), data=d) 
-\end{Sinput}
-\end{Schunk}
 
-but that did not work; the model returned: \textt{boundary (singular) fit: see help('isSingular')}. We could get the same model with a `random effect' of species on the intercept only and that's what we would often have put in a paper. In the language of the day, we had `controlled' for non-independence in our data and so could have reported this model:
-
-\begin{Schunk}
-\begin{Sinput}
-> modelconverged <- lmer(phenovalue~year+(1|species), data=d)
-\end{Sinput}
-\end{Schunk}
-
-But we knew this was not right: our understanding of climate change impacts suggested it was highly unlikely all species have a common change over time. So we tried a Bayesian approach to ideally fit separate slopes for each species over time, but drawn from a common distribution (which is what the term `random effect' generally refers to in ecology) and started thinking about our model. 
 
 Even before we arrived at the data simulation step, we realized our verbal model did not agree with the statistical model we expected to fit. We planned to fit a simple linear model, but that would assume climate change has been ongoing across all our years and that's not what most science on anthropogenic warming suggests: it suggests instead a large uptick in warming around 1980 \citep[likely do to effects of aerosols,][]{Booth2012}. So instead we developed a `hinge' model to fit the linear regression after 1980 and a mean before 1980. This highlights a reality throughout the workflow: effective model building is about efficient brainstorming. It's a constant back and forth between asking questions about what we know and what we should know. 
 
@@ -98,48 +81,6 @@ Even before we arrived at the data simulation step, we realized our verbal model
  
 Next we simulated data to test our model code. To do this we set the parameters as our first step, then we simulate the data  from these set parameters. In simulation, we know the `truth'---which here is a our model parameters---and we then compare those with what we estimated to what we started with.
  
-\begin{Schunk}
-\begin{Sinput}
->  # Create the species-level parameters
-> Nspp <- 50
-> mu_doy <- 125
-> sigma_doy <- 20
-> mu_shift <- 0.5
-> sigma_shift <- 5
-> species_doy <- rnorm(Nspp, mu_doy, sigma_doy)
-> species_trend <- rnorm(Nspp, mu_shift, sigma_shift)
-> # Create the overall `error'
-> sigma_y <- 5
-> # Create the data
-> year_0 <- 1980
-> n_data_per_species <- round(runif(Nspp, 5, 40))
-> species <- rep(1:Nspp, n_data_per_species)
-> N <- length(species)
-> year <- rep(NA, N)
-> for (sp in 1:Nspp){
-+   year[species==sp] <- rev(2009 - 1:(n_data_per_species[sp])) - year_0
-+ }
-> ypred <- length(N)
-> for (n in 1:N){
-+   s <- species[n]
-+   ypred[n] <- species_doy[s] + species_trend[s]*year[n]
-+ }
-> y <- rnorm(N, ypred, sigma_y)
-\end{Sinput}
-\end{Schunk}
-
- And checked that it returned our results:
- 
- ....
-
-
-These sorts of simulation studies are  exactly how power is formally defined. Thus, these simulations allow us to estimate power in more general conditions that what is typically assumed for analytic results.
-
-\emph{Step 2}
-
-\emph{Step 3}
-
-\emph{Step 4}
 
 At this step, we actually realized the partial pooling on our intercept was not a good fit to the data (Fig. \ref{fig:ppmodels}). We assumed from the beginning that we should partially pool on the intercepts because that is how fixing `non-independence' with `random effects' is taught in ecology, but our retrodictive checks made us think twice. We realized that we had data from diverse events across locations and their average values were unlikely to be normally distributed (though they may be if we had focused on a certain more local area, such as temperate sites in Europe. We ended up with partial pooling only on the slopes and not intercepts---a model that made biological sense, but we never would have considered without this workflow. 
 
@@ -147,6 +88,8 @@ At this step, we actually realized the partial pooling on our intercept was not 
 \section{References}
 \vspace{-5ex}
 \bibliography{refs/bayesrefsmini.bib}
+
+\end{document}
 
 \clearpage
 \section{Figures}
@@ -157,9 +100,6 @@ At this step, we actually realized the partial pooling on our intercept was not 
 \caption{Comparison of three types of models we fit: no pooling (right), partial pooling on slopes and intercept (middle) and partial pooling on slopes only (left).}
 \label{fig:ppmodels}
 \end{figure}
-
-\end{document}
-
 
 \section{Where to next?}
 

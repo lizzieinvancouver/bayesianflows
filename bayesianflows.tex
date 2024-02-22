@@ -90,7 +90,7 @@ This very basic model checking step is uncommon for many ecologists, but critica
 Once done with this basic check of your code, you need to further explore the model world to which you're planning to fit your data via prior predictive checks. For these, you draw values from your prior distribution (usually randomly in your code) and then explore how your model performs under those draws. Seeing how this influences your resulting output reveals the extent to which your model can capture known variation in your data, and gives insight into whether your model is capable of distinguishing among competing hypotheses. It also serves as a check on the priors you're using (addressing one of the common concerns of those inexperienced with Bayesian models). How exactly to do this depends on your question, model and aims, but many guides can help you think through this \citep{betanprior,wesner2021,winter2023}. \\
 
 
- \subsection*{Step 3: Run your model on your empirical data.} 
+ \subsection*{Step 3: Run your model on your empirical data} 
  
 The next step is to run the model---you've now validated, test-run and have ready to go---on your exciting new empirical data. Check diagnostics so you know it's running well and adjust until it is \citep[this includes a suite of convergence and efficiency metrics that are well-discussed elsewhere,][]{betanworkflow,gelman2020bayesian,vandeschoot2021,gabryvis}. A model that doesn't converge, or seems to suggest coefficients that are completely at odds with the data, can result from a model that was mis-specified and could never capture real-world variation, thus for big issues you may want to return to  Steps 1 and 2.
  
