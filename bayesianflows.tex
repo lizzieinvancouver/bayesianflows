@@ -25,7 +25,6 @@
 %% To do %%
 %%%%%%%
 % https://github.com/lizzieinvancouver/gelmanhill/wiki/Vocabulary
-% Will's student Nell sent comments: Review and add her/they to acknow.
 
 \title{A four-step Bayesian workflow for improving ecological science}
 % Simulation as a best practice in Bayesian workflows and beyond
@@ -196,14 +195,13 @@ The answer is training in workflows designed for careful model building, model f
 
 \clearpage
 
-\section{Glossary}
-
+\section{Tables \& Figures}
 % Words to define in table/glossary
 % Classical approaches/methods. 
 
 \begin{table}
-\caption{A set of major terms used and simplified definitions, organized alphabetically.}
-\begin{tabular}{ p{3 cm}  p{12 cm} }  \hline \hline
+\caption{A set of major terms used with their simplified definitions.}
+\begin{tabular}{ p{3 cm}  p{13 cm} }  \hline \hline
  \emph{Term}   & \emph{Definition}\\ 
 \hline \hline
 calibration & analyzing how often an estimate is close to the true value over an ensemble of hypothetical observations.  An exact calibration would requires knowing the true data generating process which is impossible in practice.  We can, however, calibrate to data simulated from the configurations of models we plan use to fit to our data (\emph{Steps 1-2}) so we understand the models better, including their limits given data similar to ours. We emphasize simulations to calibrate model behaviors consistent with our ecological systems and understanding (e.g., working within a limited set of parameter ranges through prior predictive checks). In contrast to this approach, frequentist method are calibrated against all possible behaviors, which is not only impractical in most circumstances it’s also irrelevant given that the most extreme behaviors are unlikely to manifest in reality. \\\hline
@@ -220,12 +218,11 @@ workflow & a set of steps to achieve a goal, with those steps designed to help o
 
 
 \newpage
-\section{Figures (NONE are updated to match new text; and all need work)}
 
 \begin{figure}[ht]
 \centering
 \noindent \includegraphics[width=1\textwidth]{figures/workflow.png}
-\caption{A very basic workflow for Bayesian model fitting includes four major steps with potential feedbacks (pink dashed arrows) and begins with testing your model through simulated (test) data.}
+\caption{The four-step workflow we outline helps design bespoke models---developed for specific ecological question, data and aim---which makes this a statistical workflow that can naturally become a scientific workflow. It includes four steps with potential feedbacks (pink dashed arrows). It improves the step that many of us focus on---running your model on your empirical data (Step 3)---by using simulations both before (Step 2) and after (Step 3) it to better understand the model and data together.}
 \label{fig:workflow}
 \end{figure}
 
@@ -241,14 +238,6 @@ workflow & a set of steps to achieve a goal, with those steps designed to help o
 \noindent \includegraphics[width=0.6\textwidth]{examples/synchrony/graphs/rawvsonepredictivecheck.pdf}
 \caption{Example of a single retrodictive check from time-series data of phenological events over time. The raw data (top) looks similar to one simulated dataset (bottom), based on existing species number, their respective $x$ data, and simulating from the parameters for each species. More predictive checks based on repeated simulations from the posterior, however, suggested issues in the model (see Fig. \ref{fig:retrodictivecheckSD}). See `An example workflow' in the Supplement for more details.}
 \label{fig:retrodictivecheck}
-\end{figure}
-
-
-\begin{figure}[ht]
-\centering
-\noindent \includegraphics[width=0.5\textwidth]{examples/synchrony/graphs/retroSDsync.pdf}
-\caption{Example of a retrodictive check, averaging across 1000 simulations (pink histogram), for a model of time-series data of phenological events over time, showed the model consistently over-predicted variance compared to the empirical data (blue line SD). See `An example workflow' in the Supplement for more details.}
-\label{fig:retrodictivecheckSD}
 \end{figure}
 
 \end{document}

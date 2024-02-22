@@ -231,6 +231,12 @@ hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14),
 abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
 dev.off()
 
+
+##
+## Below is not yet part of Rmd workflow
+##
+
+
 # Okay, let's look at other aspects of the model
 comppool <- lm(phenovalue~yr1981, data=rawlong.tot2)
 
@@ -292,12 +298,51 @@ mu_bhsmodel <- mean(syncmodelhspost$mu_b)
 ahsmodel <- colMeans(syncmodelhspost$a) 
 bhsmodel <- rnorm(Nspp, mean=mu_bhsmodel, sd=sigma_bhsmodel)
 
-par(mfrow=c(2,3))
-hist(dr$intfits, breaks=20, main="No pool intercepts", xlab="intercept")
-hist(a, breaks=20, main="Partial pool intercepts", xlab="intercept")
-hist(ahsmodel, breaks=20, main="No pool intercepts (with PP slopes)", xlab="intercept")
 
-hist(dr$slopefits, breaks=20, main="No pool slopes", xlab="change over time")
-hist(b, breaks=20, main="Partial pool slopes (and intercepts)", xlab="change over time")
-hist(bhsmodel, breaks=20, main="PP slopes (w/ no pool intercepts)", xlab="change over time")
+xlimhereint <- c(0,365)
+xlimheres <- c(-3,3)
+par(mfrow=c(2,3))
+hist(dr$intfits, breaks=20, main="No pooling", xlab="intercept", xlim=xlimhereint,
+    col="lightblue")
+hist(a, breaks=20, main="Partial pooling (intercepts and slopes)", xlab="intercept", xlim=xlimhereint,
+    col="lightblue")
+hist(ahsmodel, breaks=20, main="Partial pooling (slopes only)", xlab="intercept", xlim=xlimhereint,
+    col="lightblue")
+
+hist(dr$slopefits, breaks=20, main="No pooling", xlab="change over time", xlim=xlimheres,
+    col="lightblue")
+hist(b, breaks=20, main="Partial pooling (intercepts and slopes)", xlab="change over time", xlim=xlimheres,
+    col="lightblue")
+hist(bhsmodel, breaks=15, main="Partial pooling (slopes only)", xlab="change over time", xlim=xlimheres,
+    col="lightblue")
+
+
+
+## Redo the prior check above ... 
+
+# extract means for now (other ways to extract the mean)
+sigma_y_hsmodel <- mean(syncmodelhspost$sigma_y) 
+
+# Create the data using new a and b for each of the species, simshere times
+simshere <- 1000
+y.sd100 <- matrix(0, ncol=simshere, nrow=Nspp)
+for (i in 1:simshere){
+    for (n in 1:N){
+        s <- species[n]
+        ypred[n] <- ahsmodel[s] + bhsmodel[s]*year[n] 
+    }
+  y <- rnorm(N, ypred, sigma_y_hsmodel)
+  y.df <- as.data.frame(cbind(y, species))
+  y.sd <- aggregate(y.df["y"], y.df["species"], FUN=sd)
+  y.sd100[,i] <- y.sd[,2] 
+}
+
+par(mfrow=c(1,1))
+pdf("graphs/retroSDsync_noppint.pdf", height=7, width=6)
+hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14), 
+    main="",
+    xlab="Mean SD of response from 1000 sim. datasets (light blue) \n versus empirical data (dark blue line)")
+abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
+dev.off()
+
 
