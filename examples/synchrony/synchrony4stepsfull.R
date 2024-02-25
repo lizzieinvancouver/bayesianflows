@@ -233,7 +233,7 @@ dev.off()
 
 
 ##
-## Below is not yet part of Rmd workflow
+## START Below is not part of Rmd workflow
 ##
 
 
@@ -274,6 +274,10 @@ hist(dr$intfits, breaks=20, main="No pool intercepts", xlab="intercept")
 hist(a, breaks=20, main="Partial pool intercepts")
 
 
+##
+## END above is not part of Rmd workflow
+##
+
 ###############
 ## Feedbacks ##
 ###############
@@ -298,6 +302,9 @@ mu_bhsmodel <- mean(syncmodelhspost$mu_b)
 ahsmodel <- colMeans(syncmodelhspost$a) 
 bhsmodel <- rnorm(Nspp, mean=mu_bhsmodel, sd=sigma_bhsmodel)
 
+##
+## START Below is not part of Rmd workflow
+##
 
 xlimhereint <- c(0,365)
 xlimheres <- c(-3,3)
@@ -316,7 +323,9 @@ hist(b, breaks=20, main="Partial pooling (intercepts and slopes)", xlab="change 
 hist(bhsmodel, breaks=15, main="Partial pooling (slopes only)", xlab="change over time", xlim=xlimheres,
     col="lightblue")
 
-
+##
+## END above is not part of Rmd workflow
+##
 
 ## Redo the prior check above ... 
 

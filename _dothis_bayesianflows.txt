@@ -17,6 +17,8 @@ Hi all,
 
 If you have ideas for a short conclusion to reinforce the messages of the paper, please go for it and add one -- but please keep it short. 
 
+Also, this is my first attempt at using markdown, so if you see fixes, let me know. I am particularly interested in a better way to insert the stan code and reference it later. I also will switch to relative paths when I submit.  
+
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
 <> Notes from working on co-author feedback (started 1 Jan 2024) <>
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
