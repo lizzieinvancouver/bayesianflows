@@ -1,6 +1,7 @@
 ## Copied from git/teaching/stan/priorpost/priorpost.R ##
-## With edits .. // 
+## With edits ..  
 ## 3 November 2023 ##
+## And many more updates for looks on 25 Feb 2024 ##
 
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -16,17 +17,34 @@ a <- 5
 sigma_y <- 2
 N <- 5
 
-par(mfrow=c(4, 1))
-hist(rnorm(1000, priormean_a, priorsigma_a), xlim=c(0,50), xlab="", 
-    main="a prior")
-abline(v=a, col="red")
+# Plot true value and base prior
+sampleprior <- rnorm(10000, priormean_a, priorsigma_a)
+xrange <- c(1,38)
+ylimhere <- c(0, 0.25)
+hist(sampleprior, prob=TRUE, xlim=xrange, xlab="", main="the prior and the true value",
+    col = "white", border = "white") 
+lines(density(sampleprior), col="dodgerblue3", lwd=2, lty=3)
+abline(v=a, col="dodgerblue3", lwd=2)
+
+pdf("priorpostforflows.pdf", height=8, width=4)
+par(mfrow=c(3, 1))
 for (i in c(5, 10, 100)){
     N <- i
     usedat <- rnorm(N, a, sigma_y)
     # run the model 
     fit  <- stan("simple.stan", data=list(N=N, y=usedat), iter=2000, chains=4)
     posterior <- extract(fit, pars = c("a"))
-    hist(posterior$a, xlab="", xlim=c(0,50), 
-        main=paste("Posterior when ", "N=", N, sep=""))
-    abline(v=a, col="red")
+    if(N<100){
+    hist(posterior$a, xlab="", prob=TRUE, xlim=xrange, ylim=ylimhere, 
+        col="lightsalmon", border = NULL,
+        main=paste("With ", N, " data points", sep=""))
+    lines(density(sampleprior), col="dodgerblue3", lwd=2, lty=3)
+    } else {
+        hist(posterior$a, xlab="", prob=TRUE, xlim=xrange, ylim=c(0,2), 
+        col="lightsalmon", border = NULL,
+        main=paste("With ", N, " data points", sep=""))
+        lines(density(sampleprior), col="dodgerblue3", lwd=2, lty=3)
     }
+    abline(v=a, col="dodgerblue3", lwd=2) 
+    }
+dev.off()

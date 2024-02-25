@@ -10,6 +10,7 @@
 *.xlsx
 *.pptx
 .Rapp.history
+*Rapp.history
 
 *.log
 *.aux
