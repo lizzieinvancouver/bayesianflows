@@ -9,6 +9,7 @@
 \usepackage{parskip}
 \usepackage{xcolor}
 \usepackage{xr-hyper}
+\usepackage{hyperref} 
 \externaldocument{bayesianflows}
 
 \def\labelitemi{--}
@@ -63,29 +64,12 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 
 \section*{An example workflow}
 
-Our workflow is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabalistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). \\ % to write bespoke Bayesian models and underpins the \textsf{R} packages \textsf{brms} and \textsf{rstanarm}, which fit a suite of specific (pre-defined) models
+Our workflow in the main text is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabalistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). \\ 
 
-% From Mike: To adjust and add this general caveat:
-one of the common problems, especially for people who are used to building analyses from black box components, is that transitioning to more flexible techniques is often overwhelming.  Even if the ideas are compelling the open-endedness in the implementation can discourage people who experiment, causing them to default back to the status quo.
+For our example workflow we use \textsf{Stan} and \textsf{R}. For now, you can download the workflow here:
+\url{https://github.com/lizzieinvancouver/bayesianflows/blob/main/examples/synchrony/example.html}.
 
-The benefit of a longer presentation with comprehensive examples is that the reader directly sees how all of these conceptual pieces fall into a practical implementation and how straightforward that implementation can be in the context of a particular application.  Generalizing to bespoke applications will still be frustrating, but at least they're walking in the right direction.
-
-
-
-
-
-
-Even before we arrived at the data simulation step, we realized our verbal model did not agree with the statistical model we expected to fit. We planned to fit a simple linear model, but that would assume climate change has been ongoing across all our years and that's not what most science on anthropogenic warming suggests: it suggests instead a large uptick in warming around 1980 \citep[likely do to effects of aerosols,][]{Booth2012}. So instead we developed a `hinge' model to fit the linear regression after 1980 and a mean before 1980. This highlights a reality throughout the workflow: effective model building is about efficient brainstorming. It's a constant back and forth between asking questions about what we know and what we should know. 
-
-\emph{Step 1:}
- 
-Next we simulated data to test our model code. To do this we set the parameters as our first step, then we simulate the data  from these set parameters. In simulation, we know the `truth'---which here is a our model parameters---and we then compare those with what we estimated to what we started with.
- 
-
-At this step, we actually realized the partial pooling on our intercept was not a good fit to the data (Fig. \ref{fig:ppmodels}). We assumed from the beginning that we should partially pool on the intercepts because that is how fixing `non-independence' with `random effects' is taught in ecology, but our retrodictive checks made us think twice. We realized that we had data from diverse events across locations and their average values were unlikely to be normally distributed (though they may be if we had focused on a certain more local area, such as temperate sites in Europe. We ended up with partial pooling only on the slopes and not intercepts---a model that made biological sense, but we never would have considered without this workflow. 
-
-
-\section{References}
+\section*{References}
 \vspace{-5ex}
 \bibliography{refs/bayesrefsmini.bib}
 

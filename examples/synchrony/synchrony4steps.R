@@ -219,3 +219,56 @@ hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14),
     main="",
     xlab="Mean SD of response from 1000 sim. datasets (light blue) \n versus empirical data (dark blue line)")
 abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
+
+
+###############
+## Feedbacks ##
+###############
+
+if(runmodels){
+# See the stan code on this model for notes on what it does
+syncmodelhs <- stan("stan/twolevelhierslope.stan", data=c("N","Nspp","y","species","year"),
+                   iter=4000, warmup=3000, chains=4, cores=4)
+save(syncmodelhs, file="output/syncmodelhs.Rdata")
+}
+
+if(!runmodels){
+load("output/syncmodelhs.Rdata")
+}
+
+
+# Random slopes only model:
+syncmodelhspost <- extract(syncmodelhs)
+sigma_bhsmodel <- mean(syncmodelhspost$sigma_b) 
+mu_bhsmodel <- mean(syncmodelhspost$mu_b) 
+
+ahsmodel <- colMeans(syncmodelhspost$a) 
+bhsmodel <- rnorm(Nspp, mean=mu_bhsmodel, sd=sigma_bhsmodel)
+
+# Redo the prior check above ... 
+
+# extract means for now (other ways to extract the mean)
+sigma_y_hsmodel <- mean(syncmodelhspost$sigma_y) 
+
+# Create the data using new a and b for each of the species, simshere times
+simshere <- 1000
+y.sd100 <- matrix(0, ncol=simshere, nrow=Nspp)
+for (i in 1:simshere){
+    for (n in 1:N){
+        s <- species[n]
+        ypred[n] <- ahsmodel[s] + bhsmodel[s]*year[n] 
+    }
+  y <- rnorm(N, ypred, sigma_y_hsmodel)
+  y.df <- as.data.frame(cbind(y, species))
+  y.sd <- aggregate(y.df["y"], y.df["species"], FUN=sd)
+  y.sd100[,i] <- y.sd[,2] 
+}
+
+par(mfrow=c(1,1))
+pdf("graphs/retroSDsync_noppint.pdf", height=7, width=6)
+hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14), 
+    main="",
+    xlab="Mean SD of response from 1000 sim. datasets (light blue) \n versus empirical data (dark blue line)")
+abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
+dev.off()
+

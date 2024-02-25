@@ -290,7 +290,7 @@ This is okay, but clearly the data has a lower standard deviation than our model
 
 ### Feedbacks
 
-In this case, we had a hypothesis that the partial pooling on the intercepts was perhaps not an accurate model. Our data spanned a mix of biomes (marine, terrestrial, aquatic) and events (pollination, predation) and we were not sure these should actually be normally distributed. We decided to remove the partial pooliing on the intercepts. We then repeated steps 2-3 and looked again at the retrodictive checks (we show only the final one here):
+At this step, we actually realized the partial pooling on our intercept was not a good fit to the data. We had assumed from the beginning that we should partially pool on the intercepts because that is how fixing `non-independence' with `random effects' is often taught in ecology, but our retrodictive checks made us think twice. We realized that we had data from diverse events across locations and their average values were unlikely to be normally distributed (though they may be if we had focused on a certain more local area, such as temperate sites in Europe). We decided to remove the partial pooliing on the intercepts---a model that made biological sense, but we never would have considered without this workflow.  We then repeated steps 2-3 and looked again at the retrodictive checks (we show only the final one here):
 
 ```{r}
 syncmodelhs <- stan("stan/twolevelhierslope.stan", data=c("N","Nspp","y","species","year"),
