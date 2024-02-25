@@ -64,7 +64,7 @@ Statistical analyses are designed for inference---to learn about some process, e
 
 We argue that robust analyses comes from explicitly building and challenging a model (or set of models) in an organized sequence of steps---a workflow. We outline this workflow using a Bayesian approach because we believe this makes the steps more straightforward (with an example in the supplement shown in \textsf{R} and \textsf{Stan}). Our general approach, however, extends to other statistical inference methods. 
 
-In ecology, Bayesian methods often shift focus away from null hypothesis testing (what is $p(\mathrm{data} \mid \mathrm{model})$ versus not) and towards evaluating how well a model fits the data ($p(\mathrm{model} \mid \mathrm{data})$)---often a specific model designed for the system and question at hand. These bespoke models can be fit by applying Bayes' theorem, which generates a $posterior$ distribution from a combination of a $likelihood$ and a $prior$ distribution (an initial uncertainty estimate derived from basic ecological knowledge), and using iterative algorithms (e.g. MCMC, Markov Chain Monte Carlo) that provide samples that can be used to extract information from the posterior distribution (for more, see \emph{A brief review of statistical inference using Bayesian approaches} in the Supplement).
+In ecology, Bayesian methods often shift focus away from null hypothesis testing and point estimates and towards evaluating more fully a model's output, including uncertainty---often using a specific model designed for the system and question at hand. These bespoke models can be fit by applying Bayes' theorem, which generates a $posterior$ distribution from a combination of a $likelihood$ and a $prior$ distribution (an initial uncertainty estimate derived from basic ecological knowledge), and using iterative algorithms (e.g. MCMC, Markov Chain Monte Carlo) that provide samples that can be used to extract information from the posterior distribution (for more, see \emph{A brief review of statistical inference using Bayesian approaches} in the Supplement).
 
 We outline a workflow that includes what we consider the major steps for Bayesian model fitting (Fig. \ref{fig:workflow}). The workflow includes model development (Step 1) and calibration (Step 2), inference (Step 3) and then model improvement (Step 4). Many of these steps will be familiar to statistical ecologists, but are often overlooked, whereas other steps may appear particular to Bayesian (e.g. prior predictive checks), but are actually useful for anyone---using Bayesian models or not---to challenge their models of how the world works. Parts of this workflow could be dropped, or expanded as workflows in themselves, given other aims (see Supplement: Which workflow?). Relatedly, as we do not explain exactly how to implement each step, many of the smaller but still critical steps are omitted, including visualization, which is required at every step \citep[and for which there are many good resources, e.g.][]{gabryvis}. 
 
@@ -72,7 +72,7 @@ We outline a workflow that includes what we consider the major steps for Bayesia
 
 We start the workflow with what can feel like the biggest step---build a model (or, potentially at this step, models) that you want to fit your data to based on your aims. By developing a model designed for your biological question, data and aims, your statistical workflow naturally becomes a scientific workflow. You will more clearly see the assumptions and mechanisms in your model, which is especially valuable given how often our intuition of how models `work' is wrong \citep{kokko2005useful}.  
 
-You likely already have a model, though it may only verbal or conceptual. For this workflow, however, you’ll need to convert such models into mathematical versions. This step is better approached before you collect your data. After data collection, it becomes far more tempting to focus on the particular details in the data and not the latent processes and biological models from which the data were generated. 
+You likely already have a model, though it may only verbal or conceptual. For this workflow, however, you’ll need to convert such models into mathematical versions \citep{servedio2014not}. This step is better approached before you collect your data. After data collection, it becomes far more tempting to focus on the particular details in the data and not the latent processes and biological models from which the data were generated. 
 
 Getting to the point where this step is part of your data design and collection, however, requires starting somewhere---with some model (or models) in hand. A suite of resources for `generative' or `narratively generative' modeling can help \citep{statrethink,betangen}, along with two points. First, you must start somewhere, so know that you can and will improve on this skill. Second, as you start, ask lots of questions---and push yourself on your answers---about what you expect and what's reasonable biologically from your model. For example, instead of simply identifying which distribution your response variable looks most similar to, ask yourself what ecological processes generate that distribution and how they influence its properties (e.g., its mean, minimum and maximum). Do you expect data below zero? Up to infinity? If not, why not? Effective model building is about efficient brainstorming and this is a critical part of the process (see Supplement). 
 
@@ -222,28 +222,23 @@ workflow & a set of steps to achieve a goal, with those steps designed to help o
 \begin{figure}[ht]
 \centering
 \noindent \includegraphics[width=1\textwidth]{figures/workflow.png}
-\caption{The four-step workflow we outline helps design bespoke models---developed for specific ecological question, data and aim---which makes this a statistical workflow that can naturally become a scientific workflow. It includes four steps with potential feedbacks (pink dashed arrows). It improves the step that many of us focus on---running your model on your empirical data (Step 3)---by using simulations both before (Step 2) and after (Step 3) it to better understand the model and data together.}
+\caption{The four-step workflow we outline can help design models for specific ecological questions, data and aims---which makes this a statistical workflow that can naturally become a scientific workflow. It makes the step that many of us focus on---running your model on your empirical data (Step 3)---far more straightforward and insightful by using simulations both before (Step 2) and after (Step 3) it to better understand the model and data together.}
 \label{fig:workflow}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
 \noindent \includegraphics[width=0.5\textwidth]{examples/misspecifiedmodel/priorpostforflows.pdf}
-\caption{A simple example of how we can use simulated data to understand calibration issues in a simple mis-specified model example. Here we know the true model underlying the data is $y=\alpha + \text{normal}(0, \sigma)$ where $\alpha$ is 5 (shown as red vertical line) and $\sigma$ is 2. The model, however, is mis-specified by a prior for $\alpha$ of $\text{normal}(25, 2)$ (in our experience, it is quite rare to have a prior informed by ecological knowledge be so far off, but this is an example). How mis-calibrated the model will be depends on the data: we show examples with a sample size ($N$) of 5, 10 and 100. }
+\caption{A simple example of how to use simulated data to understand calibration issues in a mis-specified model. Here we know the true model underlying the data is $y=\alpha + \text{normal}(0, \sigma)$ where $\alpha$ is 5 (shown as blue vertical line) and $\sigma$ is 2. The model, however, is mis-specified by a prior for $\alpha$ of $\text{normal}(25, 2)$ (dashed blue line), resulting in a posterior (salmon-colored histogram) not centered on the true value. In our experience it is quite rare to have a prior informed by ecological knowledge be so far off, but this is an example. How mis-calibrated the model will be depends on the data: we show examples with a sample size ($N$) of 5, 10 and 100 data points. }
 \label{fig:misspecifyprior}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
 \noindent \includegraphics[width=0.6\textwidth]{examples/synchrony/graphs/rawvsonepredictivecheck.pdf}
-\caption{Example of a single retrodictive check from time-series data of phenological events over time. The raw data (top) looks similar to one simulated dataset (bottom), based on existing species number, their respective $x$ data, and simulating from the parameters for each species. More predictive checks based on repeated simulations from the posterior, however, suggested issues in the model (see Fig. \ref{fig:retrodictivecheckSD}). See `An example workflow' in the Supplement for more details.}
+\caption{Example of a single retrodictive check from time-series data of phenological events over time. The raw data (top) looks similar to one simulated dataset (bottom), based on existing species number, their respective $x$ data, and simulating from the parameters for each species. See `An example workflow' in the Supplement for more details.}
 \label{fig:retrodictivecheck}
 \end{figure}
 
 \end{document}
 
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
-%%% End:

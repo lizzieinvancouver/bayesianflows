@@ -2,11 +2,8 @@ Started 22 August 2023
 
 
 NEXT UP!
-- Fix prior/posterior fig a little
-- Skim new paper (and find math one)
 - Finish the example (basically just give synopsis of what we did in the end) and match it to supp.
 - Finish the damn supp
-- Tweak the paragraph with p(model|data) ... hopefully after Mike gets back to me
 - Get J to review it
 - Finish email (below) and send new version to co-authors
 
