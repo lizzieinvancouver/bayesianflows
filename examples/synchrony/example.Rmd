@@ -9,6 +9,7 @@ We thought we should fit a mixed-effects linear regression, with day of year (ca
 ## housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
+set.seed(3777)
 
 ## set working directory if you need to
 setwd("/Users/lizzie/Documents/git/projects/misc/miscmisc/bayesianflows/examples/synchrony")
@@ -150,7 +151,7 @@ for (sp in 1:Nspp)
 
 Now that we have a simulated dataset and code for the underlying model in Stan, we can run the model on the simulated data to check how well the model returns the parameters we set.
 ```{r}
-fit <- stan("stan/twolevelhierslopeint.stan", data=c("N","y","Nspp","species","year"), iter=1000, chains=4)
+fit <- stan("stan/twolevelhierslopeint.stan", data=c("N","y","Nspp","species","year"), iter=1000, chains=4, seed=377)
 
 # grep stan output
 sumer <- summary(fit)$summary
@@ -208,7 +209,7 @@ Nspp <- length(unique(d$species)) #newid is character !
 species <- as.numeric(as.factor(d$species))
 year <- d$yr1981
 syncmodelhis <- stan("stan/twolevelhierslopeint.stan", data=c("N","Nspp","y","species","year"),
-                   iter=4000, warmup=3000, chains=4, cores=4)
+                   iter=4000, warmup=3000, chains=4, cores=4, seed=777)
 ```
 
 ### Step 4: Check your model on data simulated from your empirical model output (also known as posterior retrodictive checks)
@@ -294,7 +295,7 @@ At this step, we actually realized the partial pooling on our intercept was not 
 
 ```{r}
 syncmodelhs <- stan("stan/twolevelhierslope.stan", data=c("N","Nspp","y","species","year"),
-                   iter=4000, warmup=3000, chains=4, cores=4)
+                   iter=4000, warmup=3000, chains=4, cores=4, seed=577)
 
 # Random slopes only model:
 syncmodelhspost <- extract(syncmodelhs)
@@ -328,4 +329,4 @@ hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14),
 abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
 ```
 
-This model showed a lower standard deviation (and a far lumpier one), though it was still well away from the empirical data. What could be going on? We had hypotheses about the species, biomes and event types, we went on to test in our research program. 
+This model showed a slightly lower standard deviation, though it was still well away from the empirical data. What could be going on? We had hypotheses about the species, biomes and event types, we went on to test in our research program. 
