@@ -28,7 +28,7 @@ abline(v=a, col="dodgerblue3", lwd=2)
 
 pdf("priorpostforflows.pdf", height=8, width=4)
 par(mfrow=c(3, 1))
-for (i in c(5, 10, 100)){
+for (i in c(5, 10, 40)){
     N <- i
     usedat <- rnorm(N, a, sigma_y)
     # run the model 
@@ -36,12 +36,12 @@ for (i in c(5, 10, 100)){
     posterior <- extract(fit, pars = c("a"))
     if(N<100){
     hist(posterior$a, xlab="", prob=TRUE, xlim=xrange, ylim=ylimhere, 
-        col="lightsalmon", border = NULL,
+        col="lightsalmon", border = FALSE,
         main=paste("With ", N, " data points", sep=""))
     lines(density(sampleprior), col="dodgerblue3", lwd=2, lty=3)
     } else {
         hist(posterior$a, xlab="", prob=TRUE, xlim=xrange, ylim=c(0,2), 
-        col="lightsalmon", border = NULL,
+        col="lightsalmon", border = FALSE,
         main=paste("With ", N, " data points", sep=""))
         lines(density(sampleprior), col="dodgerblue3", lwd=2, lty=3)
     }

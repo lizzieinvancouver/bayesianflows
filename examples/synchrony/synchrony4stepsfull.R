@@ -197,7 +197,7 @@ for (j in 1:Nspp){
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year (simulated from posterior means)",
      bty="l", main="")
 for (j in 1:Nspp)
-   lines(year[species==j], y[species==j])
+   lines(year[species==j], y[species==j], col="hotpink3")
 dev.off()
 
 # Okay, but that's just one new draw ... PPCs should be done with many draws...

@@ -146,7 +146,7 @@ par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
      bty="l", main="Test data")
 for (sp in 1:Nspp)
-  lines(year[species==sp], y[species==sp])
+  lines(year[species==sp], y[species==sp], col="hotpink3")
 ```
 
 Now that we have a simulated dataset and code for the underlying model in Stan, we can run the model on the simulated data to check how well the model returns the parameters we set.
@@ -256,8 +256,8 @@ par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
     bty="l", main="Data from posterior means")
 for (j in 1:Nspp)
-  lines(year[species==j], y[species==j])
-hist(y, xlab="Day of year", main="Data from posterior means")
+  lines(year[species==j], y[species==j], col="hotpink4")
+hist(y, xlab="Day of year", col="hotpink4", main="Data from posterior means")
 ```
 
 Okay, but that's just one new draw from our posteuior, so it could be an outlier. To address this, these retrodictive checks should be done with many draws. To do this, you need to decide on what summary statistics matter because you cannot just look at each plot. Below we take the standard deviation of y (using the means, but we could and should also consider using other draws of the posterior):

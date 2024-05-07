@@ -1,6 +1,12 @@
 Started 22 August 2023 
 
 
+Now it's May ...
+- We now have edits from Mike and Will
+- I have put in Mike's easy edits. 
+- NEXT: Put in Will's edits
+- Then, return to Mike's overview edits ... 
+
 Edits (deletions) from J on 13 March, not yet DELETED that I may want to re-consider:
 
 - DELETE: using a number of skills often reserved in ecology more for ‘theorists’ than empiricalecologists. We argue this theoretical-vs-empirical divide is antiquated and limits progressby isolating the insights stimulated from model building. Further, it ignores that the averagemodern ecologist is computational, and thus already has many of the basic skills to build bespokemodels.
@@ -10,24 +16,10 @@ Edits (deletions) from J on 13 March, not yet DELETED that I may want to re-cons
 
 
 NEXT UP!
-- Re-read one quick time
-- Finish email (below) and send new version to co-authors
 - Reconsider deletions I did not include from JD (above)
 - Submit to MEE as a review which seems to cover all versions of crazy (https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14270 and https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14108) or submit to ELE (https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2) as a method. Though we don’t really have a case-study … maybe we should just be a perspective? 
 
 
-<><><><><><><><><><><><><><><>
-<> Feb email to co-authors <>
-<><><><><><><><><><><><><><><>
-
-
-Hi all,
-
-If you have ideas for a short conclusion to reinforce the messages of the paper, please go for it and add one -- but please keep it short. 
-
-Also, this is my first attempt at using markdown, so if you see fixes, let me know. I am particularly interested in a better way to insert the Stan code and reference it later. I also will switch to relative paths when I submit.  
-
-Also, not sure we want to show the end but about turning off partial pooling on intercepts .... Thoughts?
 
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
 <> Notes from working on co-author feedback (started 1 Jan 2024) <>
