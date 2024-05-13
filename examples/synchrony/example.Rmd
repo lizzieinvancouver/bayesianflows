@@ -168,12 +168,24 @@ We can also look at the species-level estimates. Since there are many we will pl
 ```{r}
 spslopes <- sumer[grep("b\\[", rownames(sumer)), "mean"]
 
-plot(spslopes~species_trend, xlab="Given species-level slopes", ylab="Modeled species-level slopes")
+plot(spslopes~species_trend, xlab="Given species-level slopes", ylab="Modeled species-level slopes", col="hotpink3")
 abline(0,1)
 ```
 
 
-Next we want to consider our priors. Here we show one way to visulize what the priors allow, looking at 12 plots where we drew different possible hyperparameters for the intercept and slope from the priors:
+Next we want to consider our priors. We can start by simply plotting some of them. Below are simple histograms of the mean priors we set above for the mean intercept and slope. 
+```{r}
+par(mfrow=c(1,2))
+hist(rnorm(5000, 100,30), main="Intercept mean prior", col="lightpink")
+segments(91,25,213,25, lwd=5, col="hotpink4") # April 1 to August 1
+hist(rnorm(5000, 0, 5), main="Slope (days per year) mean prior", col="lightpink")
+segments(-10,25,0,25, lwd=5, col="hotpink4")
+```
+
+
+Are there reasonable? It depends on the system. In this case we know that most phenological events for data collected so far happen in the spring and summer in the northern hemisphere. We show 1 April to 1 August as darker horizontal lines on the intercept plot, and see that it captures this (and this is before the variance parameter for the intercept). Similarly previous studies on trends over time in phenological change (slope) find advances of 2-5 days per year, but sometimes higher; here we show a darker horizontal line for advances of 0 to 10 days is well within the prior and, because we are not sure directionaly for sure, we also equally allow positive numbers (though, as some point when there is enough evidence, shifting the prior more towards advances could make sense).
+
+Here we show one way to visulize what types of model output the priors allow, looking at 12 plots where we drew different possible hyperparameters for the intercept and slope from the priors:
 ```{r}
 # Let's check what the predicted slopes look like
 # Iterating over mu and sigma for intercepts and slopes
@@ -191,11 +203,13 @@ for(i in 1:reps){
     species_doy <- rnorm(Nspp, mu_doy[i], sigma_doy[i])
     species_trend <- rnorm(Nspp, mu_shift[i], sigma_shift[i])
     for(sp in 1:Nspp){
-        abline(species_doy[sp], species_trend[sp], col="lightgray")
+        abline(species_doy[sp], species_trend[sp], col="lightblue")
     }
     abline(mu_doy[i], mu_shift[i], col="black")
 }
 ```
+
+
 These plots highlight the extreme variability in outcomes our model would allow. This might be far more than is realistic given what we understand currently about climate change and how species respond, but in this case we will leave the priors as they are. 
 
 ### Step 3: Run your model on your empirical data
