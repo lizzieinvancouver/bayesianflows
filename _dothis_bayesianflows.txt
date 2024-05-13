@@ -1,24 +1,26 @@
 Started 22 August 2023 
 
+Email co-authors:
 
-Now it's May ...
-- We now have edits from Mike and Will
-- I have put in Mike's easy edits, and I have put in  Will's edits
-- Then, return to Mike's overview edits (have done supp, on the main text now)
+Hi all,
 
-Edits (deletions) from J on 13 March, not yet DELETED that I may want to re-consider:
+Thanks for all your feedback on the last draft! I have integrated most of it and have a new draft that I think is close to ready for submission. I'd like to try submitting to Ecology Letters as a `method' article to start for a couple reasons. First, it takes less formatting and second, it's a new section (I believe) so they may be more excited to take our piece (hope springs eternal). 
 
-- DELETE: using a number of skills often reserved in ecology more for ‘theorists’ than empiricalecologists. We argue this theoretical-vs-empirical divide is antiquated and limits progressby isolating the insights stimulated from model building. Further, it ignores that the averagemodern ecologist is computational, and thus already has many of the basic skills to build bespokemodels.
-- DELETE: After outlining the workflow, we discuss how it can benefit Bayesian inference generally, has improved our own science, and suggests a new way to train in ecology.
-- DELETE (very end of paper): This workflow depends strongly on simulating data---for testing your model (Step 2), and understanding your model results (Step 4)---an area we actively under-train in ecology. It makes clear how relevant and important simulation is, but the relevance of simulation extends well beyond Bayesian model fitting. Simulation approaches allow interactive learning, build intuition, and stress exploring a model in its relevant---ecological---context. Ecologists are much better at thinking about ecological problems than statistical ones, and grounding our approach in ecology will likely bring the best out of our statistical modelling.
+What I need your help with:
+(1) Edits to the cover letter. We need approval to submit a 'Method' so the cover letter is currently one asking for an invitation. 
+(2) Your affiliation info so I can start formatting for a journal.
+(3) Some indication you are okay with this paper for submission. If you want to review the text again, I'd appreciate if you try to focus on only sending: (a) ideas to cut text and (b) typos or major errors. (You can also skip reviewing it and I will get it double-checked for typos.)
+
+* Please reply by 17 May with edits to the letter so I can submit it. Ideally, send everything else by 24 May.*
+
+Thank you!
+Lizzie
 
 
 
 NEXT UP!
-- Reconsider deletions I did not include from JD (above)
+- Submit to ELE 
 - Submit to MEE as a review which seems to cover all versions of crazy (https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14270 and https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14108) or submit to ELE (https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2) as a method. Though we don’t really have a case-study … maybe we should just be a perspective? 
-
-
 
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
 <> Notes from working on co-author feedback (started 1 Jan 2024) <>
@@ -134,3 +136,19 @@ L
 <><><><><><><><><><>
 
 Great quote from Will's rant: Everything matters: it is the role of statistics to shine a light on what matters most.
+
+
+<><><><><><><><><><><><><><><><><><><><><><><>
+<> How I handled March-April 2024 feedback <>
+<><><><><><><><><><><><><><><><><><><><><><><>
+
+Made the edits from Mike and Will. Trickiest was Mike mentioning we leap around from we/us/our to you/your ... I decided best was we to start, then you in workflow steps (mostly, one spot was us talking about us, I left that), then a mix (I tried switching to we after steps, but it did not work so I stuck with a mix). This was a GOOD change! I found a lot of weird 'we' in the steps, which was text I had pasted in too directly from Mike. 
+
+Edits (deletions) from J on 13 March, not yet DELETED that I may want to re-consider:
+
+- DELETE: using a number of skills often reserved in ecology more for ‘theorists’ than empiricalecologists. We argue this theoretical-vs-empirical divide is antiquated and limits progressby isolating the insights stimulated from model building. Further, it ignores that the averagemodern ecologist is computational, and thus already has many of the basic skills to build bespokemodels.
+
+DELETED (noted in ms as: % DELETED 13MAY2024 for length): 
+- After outlining the workflow, we discuss how it can benefit Bayesian inference generally, has improved our own science, and suggests a new way to train in ecology.
+- (very end of paper): This workflow depends strongly on simulating data---for testing your model (Step 2), and understanding your model results (Step 4)---an area we actively under-train in ecology. It makes clear how relevant and important simulation is, but the relevance of simulation extends well beyond Bayesian model fitting. Simulation approaches allow interactive learning, build intuition, and stress exploring a model in its relevant---ecological---context. Ecologists are much better at thinking about ecological problems than statistical ones, and grounding our approach in ecology will likely bring the best out of our statistical modelling.
+
