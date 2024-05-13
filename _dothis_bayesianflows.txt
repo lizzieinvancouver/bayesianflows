@@ -1,13 +1,11 @@
 Started 22 August 2023 
 
-Email co-authors:
+Email co-authors on 13 May:
 
-Hi all,
-
-Thanks for all your feedback on the last draft! I have integrated most of it and have a new draft that I think is close to ready for submission. I'd like to try submitting to Ecology Letters as a `method' article to start for a couple reasons. First, it takes less formatting and second, it's a new section (I believe) so they may be more excited to take our piece (hope springs eternal). 
+Thanks for all your feedback on the last draft! I have integrated most of it (some was conflicting, so I made executive decisions) and have a new draft that I think is close to ready for submission. I'd like to try submitting to Ecology Letters as a `method' article to start for a couple reasons. First, it takes less formatting than MEE, and second, it's a new section (I think?) so they may be more excited to take our piece (hope springs eternal). If you suggest we not do this, let me know.
 
 What I need your help with:
-(1) Edits to the cover letter. We need approval to submit a 'Method' so the cover letter is currently one asking for an invitation. 
+(1) Edits to the cover letter (bayesflows_ELEmethod). We need approval to submit a 'Method' so the cover letter is currently one asking for an invitation.
 (2) Your affiliation info so I can start formatting for a journal.
 (3) Some indication you are okay with this paper for submission. If you want to review the text again, I'd appreciate if you try to focus on only sending: (a) ideas to cut text and (b) typos or major errors. (You can also skip reviewing it and I will get it double-checked for typos.)
 
@@ -16,9 +14,12 @@ What I need your help with:
 Thank you!
 Lizzie
 
+PS: Just found this, so perhaps I will hack the letter down -- or not ... https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14304
+
 
 
 NEXT UP!
+- Fix the cover letter -- see 'How to publish a ‘Method’ article in Ecology Letters' https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14304 -- mention the case study, the high quality code etc. And probably SHORTEN some. 
 - Submit to ELE 
 - Submit to MEE as a review which seems to cover all versions of crazy (https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14270 and https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14108) or submit to ELE (https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2) as a method. Though we don’t really have a case-study … maybe we should just be a perspective? 
 
