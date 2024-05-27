@@ -146,7 +146,7 @@ par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
      bty="l", main="Test data")
 for (sp in 1:Nspp)
-  lines(year[species==sp], y[species==sp], col="hotpink3")
+  lines(year[species==sp], y[species==sp], col="darkblue")
 ```
 
 Now that we have a simulated dataset and code for the underlying model in Stan, we can run the model on the simulated data to check how well the model returns the parameters we set.
@@ -168,7 +168,7 @@ We can also look at the species-level estimates. Since there are many we will pl
 ```{r}
 spslopes <- sumer[grep("b\\[", rownames(sumer)), "mean"]
 
-plot(spslopes~species_trend, xlab="Given species-level slopes", ylab="Modeled species-level slopes", col="hotpink3")
+plot(spslopes~species_trend, xlab="Given species-level slopes", ylab="Modeled species-level slopes", col="darkblue")
 abline(0,1)
 ```
 
@@ -176,10 +176,10 @@ abline(0,1)
 Next we want to consider our priors. We can start by simply plotting some of them. Below are simple histograms of the mean priors we set above for the mean intercept and slope. 
 ```{r}
 par(mfrow=c(1,2))
-hist(rnorm(5000, 100,30), main="Intercept mean prior", col="lightpink")
-segments(91,25,213,25, lwd=5, col="hotpink4") # April 1 to August 1
-hist(rnorm(5000, 0, 5), main="Slope (days per year) mean prior", col="lightpink")
-segments(-10,25,0,25, lwd=5, col="hotpink4")
+hist(rnorm(5000, 100,30), main="Intercept mean prior", col="lightblue")
+segments(91,25,213,25, lwd=5, col="lightblue") # April 1 to August 1
+hist(rnorm(5000, 0, 5), main="Slope (days per year) mean prior", col="lightblue")
+segments(-10,25,0,25, lwd=5, col="lightblue")
 ```
 
 
@@ -205,7 +205,7 @@ for(i in 1:reps){
     for(sp in 1:Nspp){
         abline(species_doy[sp], species_trend[sp], col="lightblue")
     }
-    abline(mu_doy[i], mu_shift[i], col="black")
+    abline(mu_doy[i], mu_shift[i], col="darkblue")
 }
 ```
 
@@ -241,9 +241,9 @@ par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(yreal), type="n", xlab="Year",
      ylab="Day of year", bty="l", main="Empirical data")
 for (j in 1:Nspp){
-  lines(year[species==j], yreal[species==j])
+  lines(year[species==j], yreal[species==j], col="pink3")
 }
-hist(yreal, xlab="Day of year", main="Empirical data")
+hist(yreal, xlab="Day of year", main="Empirical data", col="pink3")
 
 # What does a similar plot look like using the model output?
 syncmodelhispost <- extract(syncmodelhis) 
@@ -270,8 +270,8 @@ par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
     bty="l", main="Data from posterior means")
 for (j in 1:Nspp)
-  lines(year[species==j], y[species==j], col="mediumpurple3")
-hist(y, xlab="Day of year", col="mediumpurple3", main="Data from posterior means")
+  lines(year[species==j], y[species==j], col="plum3")
+hist(y, xlab="Day of year", col="plum3", main="Data from posterior means")
 ```
 
 Okay, but that's just one new draw from our posteuior, so it could be an outlier. To address this, these retrodictive checks should be done with many draws. To do this, you need to decide on what summary statistics matter because you cannot just look at each plot. Below we take the standard deviation of y (using the means, but we could and should also consider using other draws of the posterior):
@@ -295,10 +295,10 @@ real.sd <- aggregate(d["phenovalue"], d[c("studyid", "species")],
     FUN=sd)
 
 par(mfrow=c(1,1))
-hist(colMeans(y.sd100), col="mediumpurple1", breaks=20, xlim=c(10,14), 
+hist(colMeans(y.sd100), col="plum3", breaks=20, xlim=c(10,14), 
     main="",
-    xlab="Mean SD of response from 1000 sim. datasets (light purple) \n versus empirical data (dark blue line)")
-abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
+    xlab="Mean SD of response from 1000 sim. datasets (purple) \n versus empirical data (pink)")
+abline(v = mean(real.sd$phenovalue), col = "pink3", lwd = 2)
 ```
 
 This is okay, but clearly the data has a lower standard deviation than our model expects it. We could decide we are okay with this, but if we have ideas of what might be causing this we could consider adjusting our model. 
@@ -337,10 +337,10 @@ for (i in 1:simshere){
 }
 
 par(mfrow=c(1,1))
-hist(colMeans(y.sd100), col="mediumpurple1", breaks=20, xlim=c(10,14), 
+hist(colMeans(y.sd100), col="plum3", breaks=20, xlim=c(10,14), 
     main="",
-    xlab="Mean SD of response from 1000 sim. datasets (light purple) \n versus empirical data (dark blue line)")
-abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
+    xlab="Mean SD of response from 1000 sim. datasets (purple) \n versus empirical data (pink)")
+abline(v = mean(real.sd$phenovalue), col = "pink3", lwd = 2)
 ```
 
 This model showed a slightly lower standard deviation, though it was still well away from the empirical data. What could be going on? We had hypotheses about the species, biomes and event types, we went on to test in our research program. 

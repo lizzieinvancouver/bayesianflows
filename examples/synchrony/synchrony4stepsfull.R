@@ -192,12 +192,12 @@ par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(yreal), type="n", xlab="Year",
       ylab="Day of year (empirical data)", bty="l", main="")
 for (j in 1:Nspp){
-  lines(year[species==j], yreal[species==j])
+  lines(year[species==j], yreal[species==j], col="pink3")
  }
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year (simulated from posterior means)",
      bty="l", main="")
 for (j in 1:Nspp)
-   lines(year[species==j], y[species==j], col="mediumpurple3")
+   lines(year[species==j], y[species==j], col="plum4")
 dev.off()
 
 # Okay, but that's just one new draw ... PPCs should be done with many draws...

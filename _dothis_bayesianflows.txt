@@ -1,30 +1,15 @@
 Started 22 August 2023 
 
-Email co-authors on 13 May:
-
-Thanks for all your feedback on the last draft! I have integrated most of it (some was conflicting, so I made executive decisions) and have a new draft that I think is close to ready for submission. I'd like to try submitting to Ecology Letters as a `method' article to start for a couple reasons. First, it takes less formatting than MEE, and second, it's a new section (I think?) so they may be more excited to take our piece (hope springs eternal). If you suggest we not do this, let me know.
-
-What I need your help with:
-(1) Edits to the cover letter (bayesflows_ELEmethod). We need approval to submit a 'Method' so the cover letter is currently one asking for an invitation.
-(2) Your affiliation info so I can start formatting for a journal.
-(3) Some indication you are okay with this paper for submission. If you want to review the text again, I'd appreciate if you try to focus on only sending: (a) ideas to cut text and (b) typos or major errors. (You can also skip reviewing it and I will get it double-checked for typos.)
-
-* Please reply by 17 May with edits to the letter so I can submit it. Ideally, send everything else by 24 May.*
-
-Thank you!
-Lizzie
-
-PS: Just found this, so perhaps I will hack the letter down -- or not ... https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14304
-
-
 
 NEXT UP!
 - Waiting to hear on proposal from ELE (emailed 27 may 2024)
+- figure out what suppneedtofix is and delete I think
 - ADD affiliations!
+- Quick read of example (make sure colors work) and captions in main text
 - Read the whole thing incl. supp once more 
-- Decide if I want to tweak colors of simulated data versus real versus PPC etc. to match workflow any more?
 - Submit to TREE next (JD suggestion): though main text needs to slim to 3500 to submit as Review (which is the longest format): https://www.cell.com/trends/ecology-evolution/authors
 - Submit to MEE as a review which seems to cover all versions of crazy (https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14270 and https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14108) or submit to ELE (https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2) as a method. Though we don’t really have a case-study … maybe we should just be a perspective? 
+
 
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>
 <> Notes from working on co-author feedback (started 1 Jan 2024) <>
@@ -156,3 +141,36 @@ DELETED (noted in ms as: % DELETED 13MAY2024 for length):
 - After outlining the workflow, we discuss how it can benefit Bayesian inference generally, has improved our own science, and suggests a new way to train in ecology.
 - (very end of paper): This workflow depends strongly on simulating data---for testing your model (Step 2), and understanding your model results (Step 4)---an area we actively under-train in ecology. It makes clear how relevant and important simulation is, but the relevance of simulation extends well beyond Bayesian model fitting. Simulation approaches allow interactive learning, build intuition, and stress exploring a model in its relevant---ecological---context. Ecologists are much better at thinking about ecological problems than statistical ones, and grounding our approach in ecology will likely bring the best out of our statistical modelling.
 
+
+<><><><><><><><><><><><><><>
+<> May 2024: comments etc. <>
+<><><><><><><><><><><><><><>
+- JD emailed some typos. I entered them and took his edits on cover letter
+- Will wanted some figure changes -- DONE.
+- Mike was fine on submission -- see also text from his email below on TikZ
+
+
+
+19 May 2024 from Mike: 
+(1) I’ll have to cede to everyone’s expertise here as I have little experience trying to navigate these particular publication waters, 
+(2) Symplectomorphic, LLC, New York, NY 10026.
+(3) No objections from me.  Submit at will!  Or submit at Will.
+
+I’ll second Lizzie’s hesitancy about AI art.  I’m happy to go over the figures with TikZ to make them pop a bit more visually if anyone thinks that would help.  Another option besides trying to find clipart that matches each section would be to take Lizzie’s flowchart but split it up into four figures, each highlighting the steps relevant to each section of the paper.  This would be trivial for me to do if I were cleaning up, but also not too hard for anyone to implement given the figure code.
+
+
+Email co-authors on 13 May:
+
+Thanks for all your feedback on the last draft! I have integrated most of it (some was conflicting, so I made executive decisions) and have a new draft that I think is close to ready for submission. I'd like to try submitting to Ecology Letters as a `method' article to start for a couple reasons. First, it takes less formatting than MEE, and second, it's a new section (I think?) so they may be more excited to take our piece (hope springs eternal). If you suggest we not do this, let me know.
+
+What I need your help with:
+(1) Edits to the cover letter (bayesflows_ELEmethod). We need approval to submit a 'Method' so the cover letter is currently one asking for an invitation.
+(2) Your affiliation info so I can start formatting for a journal.
+(3) Some indication you are okay with this paper for submission. If you want to review the text again, I'd appreciate if you try to focus on only sending: (a) ideas to cut text and (b) typos or major errors. (You can also skip reviewing it and I will get it double-checked for typos.)
+
+* Please reply by 17 May with edits to the letter so I can submit it. Ideally, send everything else by 24 May.*
+
+Thank you!
+Lizzie
+
+PS: Just found this, so perhaps I will hack the letter down -- or not ... https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14304
