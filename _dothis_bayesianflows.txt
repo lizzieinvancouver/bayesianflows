@@ -19,10 +19,11 @@ PS: Just found this, so perhaps I will hack the letter down -- or not ... https:
 
 
 NEXT UP!
-- Fix the cover letter -- see 'How to publish a ‘Method’ article in Ecology Letters' https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14304 -- mention the case study, the high quality code etc. And probably SHORTEN some. 
+- Waiting to hear on proposal from ELE (emailed 27 may 2024)
 - ADD affiliations!
+- Read the whole thing incl. supp once more 
 - Decide if I want to tweak colors of simulated data versus real versus PPC etc. to match workflow any more?
-- Submit to ELE 
+- Submit to TREE next (JD suggestion): though main text needs to slim to 3500 to submit as Review (which is the longest format): https://www.cell.com/trends/ecology-evolution/authors
 - Submit to MEE as a review which seems to cover all versions of crazy (https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14270 and https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14108) or submit to ELE (https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2) as a method. Though we don’t really have a case-study … maybe we should just be a perspective? 
 
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>

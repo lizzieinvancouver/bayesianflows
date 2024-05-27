@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{4}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Anderson \emph{et~al.}(2021)Anderson, Elsen, Hughes, Tonietto, Bletz,
@@ -8,14 +8,6 @@ Anderson, S.C., Elsen, P.R., Hughes, B.B., Tonietto, R.K., Bletz, M.C., Gill,
   D.A., Holgerson, M.A., Kuebbing, S.E., McDonough~MacKenzie, C., Meek, M.H.
   \emph{et~al.} (2021) Trends in ecology and conservation over eight decades.
   \emph{Frontiers in Ecology and the Environment} \textbf{19}, 274--282.
-
-\bibitem[{Betancourt(2020)}]{betanworkflow}
-Betancourt, M. (2020) {Towards A Principled Bayesian Workflow}.
-  \url{https://betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html}.
-
-\bibitem[{Box(1976)}]{box1976science}
-Box, G.E. (1976) Science and statistics. \emph{Journal of the American
-  Statistical Association} pp. 791--799.
 
 \bibitem[{Grinsztajn \emph{et~al.}(2021)Grinsztajn, Semenova, Margossian \&
   Riou}]{grinsztajn2021}
