@@ -270,8 +270,8 @@ par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
 plot(range(year), range(y), type="n", xlab="Year", ylab="Day of year",
     bty="l", main="Data from posterior means")
 for (j in 1:Nspp)
-  lines(year[species==j], y[species==j], col="hotpink4")
-hist(y, xlab="Day of year", col="hotpink4", main="Data from posterior means")
+  lines(year[species==j], y[species==j], col="mediumpurple3")
+hist(y, xlab="Day of year", col="mediumpurple3", main="Data from posterior means")
 ```
 
 Okay, but that's just one new draw from our posteuior, so it could be an outlier. To address this, these retrodictive checks should be done with many draws. To do this, you need to decide on what summary statistics matter because you cannot just look at each plot. Below we take the standard deviation of y (using the means, but we could and should also consider using other draws of the posterior):
@@ -295,9 +295,9 @@ real.sd <- aggregate(d["phenovalue"], d[c("studyid", "species")],
     FUN=sd)
 
 par(mfrow=c(1,1))
-hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14), 
+hist(colMeans(y.sd100), col="mediumpurple1", breaks=20, xlim=c(10,14), 
     main="",
-    xlab="Mean SD of response from 1000 sim. datasets (light blue) \n versus empirical data (dark blue line)")
+    xlab="Mean SD of response from 1000 sim. datasets (light purple) \n versus empirical data (dark blue line)")
 abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
 ```
 
@@ -337,9 +337,9 @@ for (i in 1:simshere){
 }
 
 par(mfrow=c(1,1))
-hist(colMeans(y.sd100), col="lightblue", breaks=20, xlim=c(10,14), 
+hist(colMeans(y.sd100), col="mediumpurple1", breaks=20, xlim=c(10,14), 
     main="",
-    xlab="Mean SD of response from 1000 sim. datasets (light blue) \n versus empirical data (dark blue line)")
+    xlab="Mean SD of response from 1000 sim. datasets (light purple) \n versus empirical data (dark blue line)")
 abline(v = mean(real.sd$phenovalue), col = "darkblue", lwd = 2)
 ```
 
