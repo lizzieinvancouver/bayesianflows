@@ -1,0 +1,32 @@
+\begin{thebibliography}{4}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Anderson \emph{et~al.}(2021)Anderson, Elsen, Hughes, Tonietto, Bletz,
+  Gill, Holgerson, Kuebbing, McDonough~MacKenzie, Meek
+  \emph{et~al.}}]{anderson2021trends}
+Anderson, S.C., Elsen, P.R., Hughes, B.B., Tonietto, R.K., Bletz, M.C., Gill,
+  D.A., Holgerson, M.A., Kuebbing, S.E., McDonough~MacKenzie, C., Meek, M.H.
+  \emph{et~al.} (2021) Trends in ecology and conservation over eight decades.
+  \emph{Frontiers in Ecology and the Environment} \textbf{19}, 274--282.
+
+\bibitem[{Grinsztajn \emph{et~al.}(2021)Grinsztajn, Semenova, Margossian \&
+  Riou}]{grinsztajn2021}
+Grinsztajn, L., Semenova, E., Margossian, C.C. \& Riou, J. (2021) Bayesian
+  workflow for disease transmission modeling in stan. \emph{Statistics in
+  Medicine} \textbf{40}, 6209--6234.
+
+\bibitem[{Muff \emph{et~al.}(2022)Muff, Nilsen, O'Hara \&
+  Nater}]{muff2022rewriting}
+Muff, S., Nilsen, E.B., O'Hara, R.B. \& Nater, C.R. (2022) Rewriting results
+  sections in the language of evidence. \emph{Trends in ecology \& evolution}
+  \textbf{37}, 203--210.
+
+\bibitem[{van~de Schoot \emph{et~al.}(2021)van~de Schoot, Depaoli, King,
+  Kramer, Maertens, Tadesse, Vannucci, Gelman, Veen, Willemsen \&
+  Yau}]{vandeschoot2021}
+van~de Schoot, R., Depaoli, S., King, R., Kramer, B., Maertens, K., Tadesse,
+  M.C., Vannucci, M., Gelman, A., Veen, D., Willemsen, J. \& Yau, C. (2021)
+  Bayesian statistics and modelling. \emph{Nature Reviews Methods Primers}
+  \textbf{1}.
+
+\end{thebibliography}
