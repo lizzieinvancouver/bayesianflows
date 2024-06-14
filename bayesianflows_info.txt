@@ -1,0 +1,43 @@
+Started 14 June 2024
+
+A four-step Bayesian workflow for improving ecological science
+
+Growing anthropogenic pressures have increased the need for robust predictive models. Meeting this demand requires approaches that can handle bigger data to yield forecasts that capture the variability and underlying uncertainty of ecological systems. Bayesian models are especially adept at this and are growing in use in ecology. Yet many ecologists today are not trained to take advantage of the bigger ecological data needed to generate more flexible robust models. Here we describe a broadly generalizable workflow for statistical analyses and show how it can enhance training in ecology. Building on the increasingly computational toolkit of many ecologists, this approach leverages simulation to integrate model building and testing for empirical data more fully with ecological theory.  In turn this workflow can fit models that are more robust and well-suited to provide new ecological insights--allowing us to refine where to put resources for better estimates, better models, and better forecasts.
+
+
+<><><><><><>
+File labels
+
+1) Supplemental file including three short additional sections.
+
+Three sections are: 'A brief review of statistical inference using Bayesian approaches' and `Which workflow?' and `An example workflow'
+
+2) Example workflow in Markdown
+
+3) Example workflow output from Markdown in html
+
+<><><><><><>
+
+Coauthors:
+will.pearse@imperial.ac.uk
+j.davies@ubc.ca
+betan@symplectomorphic.com
+
+Reviewers:
+
+Nathan Lemoine: https://www.marquette.edu/biology/directory/lemoine.php 
+nathan.lemoine@marquette.edu
+Marquette University
+
+Jeff Diez https://ie2.uoregon.edu/people/diez/ 
+jdiez@uoregon.edu
+University of Oregon
+
+Jacob Socolar?
+Richard MacElreath?
+
+Inez Ibanez https://seas.umich.edu/research/faculty/ines-ibanez
+iibanez@umich.edu
+University of Michigan
+
+Stefanie Muff (https://www.ntnu.edu/employees/stefanie.muff)
