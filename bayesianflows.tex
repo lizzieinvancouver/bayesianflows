@@ -32,14 +32,24 @@
 % How to fit Bayesian models and influence people
 % How to do Bayesian model fitting in ecology 
 % The best way to be a Bayesian in ecology today
-\date{\today}
-\author{EM Wolkovich, TJ Davies, WD Pearse \& M Betancourt}
+% \date{\today}
+\author{EM Wolkovich$^{1*}$, T Jonathan Davies$^{1,2}$, William D Pearse$^{3,4}$ \& Michael Betancourt$^{5}}
 \maketitle
 
-% Symplectomorphic, LLC, New York, NY 10026
-% Department of Life Sciences, Imperial College London, Ascot SL5 7PY, United Kingdom. 
-% Alan Turing Institute, British Library, 96 Euston Road, London NW1 2DB, United Kingdom.
+\noindent $^{1}$ Forest and Conservation Sciences, University of British Columbia, Vancouver, BC V6T 1Z4, Canada\\
+$^{2}$ Botany, University of British Columbia, Vancouver, BC V6T 1Z4, Canada\\
+$^{3}$ Department of Life Sciences, Imperial College London, Ascot SL5 7PY, United Kingdom \\
+$^{4}$ Alan Turing Institute, British Library, 96 Euston Road, London NW1 2DB, United Kingdom \\
+$^{5}$ Symplectomorphic, LLC, New York, NY 10026, USA \\
+$^{*}$ \url{mailto: e.wolkovich@ubc.ca}
 
+\vspace{3ex}
+\noindent \emph{Keywords:} big data; scientific workflow; data simulation; forecasting; null hypothesis testing
+\vspace{3ex}
+
+\noindent \emph{Data availability:} No new data, but full code and raw data are provided in the supplement for an example workflow.
+
+\newpage
 \linenumbers
 % approx. 150 words (200 max for NEE); main text is 4,000; 3-4K for a perspective, see https://www.nature.com/natecolevol/content
 % Or submit to ELE as method: https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2
@@ -57,7 +67,7 @@ In recent years, as ecologists have worked to develop global predictive models, 
 
 Common embedded statistical approaches do not often align with ecology's aims today. Beyond the reality that most traditional methods are fragile when used beyond the cleaner, simpler experiments these methods assume (e.g. spatial, temporal and phylogenetic correlations often violate common independence assumptions), they will usually fail to produce robust, reproducible results. Multi-way interaction terms can make main effects hard to interpret and require much larger sample sizes to estimate reliably. Null hypotheses are rarely true and can lead to confusion over what is scientifically important versus `significant' \citep{gelmanhill,muff2022rewriting}. Many model comparison and machine learning approaches prefer models whose inferences match the idiosyncrasies and biases in the available data, but don’t generalize. The disconnect between the traditional statistical tools available in ecology and the field's fundamental theory is being made ever-clearer as the need for robust ecological forecasts grows. 
 
-Bayesian approaches provide a pathway to build powerful models that can transform how we understand our systems as large scale ecological data become increasingly available. Recognizing this, many in ecology are increasingly using Bayesian methods \citep{anderson2021trends}. New algorithms \citep[e.g. Hamiltonian Monte Carlo,][]{nuts2014,betan2019} that have made fitting and implementing Bayesian models faster, more robust and---in many ways---easier \citep{Carpenter:2017stan}. Fitting larger and sometimes more complex models, however, presents challenges that are frequently not addressed in traditional ecological training. We suggest that many of these challenges can be overcome by approaching analyses through specific workflows \citep{betanworkflow,grinsztajn2021,vandeschoot2021}, which themselves are built on a process of how to do not just statistics, but how to do science \citep{box1976science}. 
+Bayesian approaches provide a pathway to build powerful models that can transform how we understand our systems as largescale ecological data become increasingly available. Recognizing this, many in ecology are increasingly using Bayesian methods \citep{anderson2021trends}. New algorithms \citep[e.g. Hamiltonian Monte Carlo,][]{nuts2014,betan2019} that have made fitting and implementing Bayesian models faster, more robust and---in many ways---easier \citep{Carpenter:2017stan}. Fitting larger and sometimes more complex models, however, presents challenges that are frequently not addressed in traditional ecological training. We suggest that many of these challenges can be overcome by approaching analyses through specific workflows \citep{betanworkflow,grinsztajn2021,vandeschoot2021}, which themselves are built on a process of how to do not just statistics, but how to do science \citep{box1976science}. 
 
 Such approaches move away from a focus on null hypothesis testing, towards estimating effect sizes, using models calibrated (see Table \ref{tab:glossary}) and better understood through simulating data at multiple steps---using a number of skills often reserved in ecology more for `theorists' than empirical ecologists.  But this theoretical-vs-empirical divide ignores that the average modern ecologist is computational, and thus already has many of the basic skills to build bespoke models. 
 
@@ -111,7 +121,7 @@ Once you have your posterior based on your model and new empirical data, it's ti
 
 This is where simulating from your model can be especially insightful. It will not only indicate that the model isn't adequately fitting the data but also can suggest what the problems might be. Steps 1-2 have set you up well for this, as you have a sense of what different parameter estimates do to the model, and test data provide a sense of how it works on data similar to yours. Now with the parameter estimates from your posterior you can simulate new data from them and see how that new world compares to the observed data---called posterior retrodictive checks (or posterior predictive checks, Fig. \ref{fig:retrodictivecheck}). Exactly how to do these depend---again---on your question, model and aims \citep[see][]{held2010,gelman200ppc,conn2018}. 
 
-Often here you may find big differences from your empirical data, and can start to generate hypotheses for why. For example, you may find patterns that suggest missing grouping factors (e.g. site or biome) through visual posterior retrodictive checks, or you may quickly realize your model predicts impossible numbers for your biological reality. You may begin to see inadequacies in your model, or even potentially your data.  This is one of main benefits of the workflow: models don't fail silently, they fail with a wealth of context the helps to generate new models and better experiments.
+Often here you may find big differences from your empirical data, and can start to generate hypotheses for why. For example, you may find patterns that suggest missing grouping factors (e.g. site or biome) through visual posterior retrodictive checks, or you may quickly realize your model predicts impossible numbers for your biological reality. You may begin to see inadequacies in your model, or even potentially your data.  This is one of the main benefits of the workflow: models don't fail silently, they fail with a wealth of context the helps to generate new models and better experiments.
 % it helps generate new models and experiments. 
 
 \subsection*{Feedbacks \& workflows}\\
@@ -143,7 +153,7 @@ A statistical kin of non-identifiability is degeneracy.  Degeneracy concerns the
 Nonidentifiability and degeneracy can come up in many ways in ecology, and be hard to see if you rush through model fitting. But if you have to write out your model and simulate data (Steps 1-2), you may suddenly realize lots of places for nonidentifiability and degenercies to live. For example, when species do not occur across most sites, a model including separate parameters for site and species is often degenerate, but there's often no warning in packages to tell you this. We have become far better at noticing nonidentifiability and degenercies based on this workflow---and we have adjusted how we collect data and interpret results because of it. 
 
  \subsection*{Knowing our limits}  % Dive into the simplified complexity conundrum
-Once we noticed how pervasive non-identifiability and degeneracies are how our approach to building complex models also changed
+Once we noticed how pervasive non-identifiability and degeneracies are how our approach to building complex models also changed.
 %Whereas previously when we had data that qualitatively appeared complexly nested, crossed, split or twisted, we would have initially tried to fit all of these intricacies (on the intercept), we are now more slow to add these to our models. By both understanding these terms better (including the many different ways each can be modeled), and understanding them better depending on the data and model in each unique context, we now work more carefully through what to include. 
 Before using this workflow, we might start with more complex models, then simplify them until their fits converged in our given software package. Often these were hierarchical models with many levels---for example, including every column of site, plot, transect and quadrat in our dataframe, without stopping to check how well sampled they were, or what degeneracies they might introduce. % These models we built were based more on fear of missing an important interaction term or on a dogma of non-independence (and, somewhat relatedly, correct degrees of freedom) than an understanding of the model and the system's ecology. Our approach was driven far more by a weak set of statistical assumptions constrained by our software package, rather than by our ecological understanding or ultimate aims. 
 We also often fit a suite of interactions: multiple two-way interactions and the occasional three-way interaction were common fare. But in simulating data, and fitting models to real, messy, imbalanced data using the workflow we came to see how much we were asking of our data and models together. Fitting a two-way interaction with half the effect size of a main effect takes a 16X sample size, compared to fitting the main effects alone \citep[the main effects then average over the interactions, see][for more details]{regotherstories}. This is sobering. It's more sobering when you see it played out again and again through this workflow. % WDP (Apr2024): The above is grammatically perfect, but a bit tricky to parse, because you're using the present tense to describe what was done before. I see you're doing it to have greater impact and clarity in most of the paragraph, which I like, but then the final bit becomes unclear and implies we have issues in our workflow "see it played out again and again through *this* workflow". Can you modify a bit?
@@ -203,13 +213,13 @@ The answer is training in workflows designed for careful model building, model f
 \fi 
 
 \newpage
-\section{References}
+\section*{References}
 \vspace{-5ex}
 \bibliography{refs/bayesrefsmini.bib}
 
 \clearpage
 
-\section{Tables \& Figures}
+\section*{Tables \& Figures}
 % Words to define in table/glossary
 % Classical approaches/methods. 
 
@@ -243,7 +253,7 @@ workflow & a set of steps to achieve a goal, with those steps designed to help o
 \begin{figure}[ht]
 \centering
 \noindent \includegraphics[width=0.5\textwidth]{examples/misspecifiedmodel/priorpostforflows.pdf}
-\caption{A simple example of how to use simulated data to understand calibration issues in a mis-specified model. Here we know the true model underlying the data is $y=\alpha + \text{normal}(0, \sigma)$ where $\alpha$ is 5 (shown as blue vertical line) and $\sigma$ is 2. The model, however, is mis-specified by a prior for $\alpha$ of $\text{normal}(25, 2)$ (dashed blue line), resulting in a posterior (salmon-colored histogram) not centered on the true value. In our experience it is quite rare to have a prior informed by ecological knowledge be so far off, but this is an example. How mis-calibrated the model will be depends on the data: we show examples with a sample size ($N$) of 5, 10 and 40 data points. In practice these studies would allow us to determine how much data we would need to be robust to suspect prior models. (Note the change in $y$ axis range for bottom plot.) }
+\caption{A simple example of how to use simulated data to understand calibration issues in a mis-specified model. Here we know the true model underlying the data is $y=\alpha + \text{normal}(0, \sigma)$ where $\alpha$ is 5 (shown as blue vertical line) and $\sigma$ is 2. The model, however, is mis-specified by a prior for $\alpha$ of $\text{normal}(25, 2)$ (dashed blue line), resulting in a posterior (salmon-colored histogram) not centered on the true value. In our experience it is quite rare to have a prior informed by ecological knowledge be so far off, but this is an example. How mis-calibrated the model will be depends on the data: we show examples with a sample size ($N$) of 5, 10 and 40 data points. In practice these studies would allow us to determine how much data we would need to be robust to suspect prior models. }
 \label{fig:misspecifyprior}
 \end{figure}
 
