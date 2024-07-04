@@ -17,3 +17,9 @@ synchrony4steps.R runs well and has all the basic steps now, but we should proba
 	- Maybe make a new file with the minimal to take over to markdown. 
 
 Manuscript figure: rawvsonepredictivecheck.pdf is built in synchrony4stepsfull.R.
+
+<><><><><><><><><><>
+Update 3 July 2024:
+
+example_rel is a folder I made with the .Rmd set up to work with relative paths (all the files you need; so DUPLICATING everything in examples/synchrony). It runs on my computer.
+

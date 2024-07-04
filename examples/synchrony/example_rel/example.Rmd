@@ -11,9 +11,6 @@ rm(list=ls())
 options(stringsAsFactors = FALSE)
 set.seed(3777)
 
-## set working directory if you need to
-setwd("/Users/lizzie/Documents/git/projects/misc/miscmisc/bayesianflows/examples/synchrony")
-
 d <- read.csv("output/rawlong.tot2.csv")
 table(d$species)
 ```
