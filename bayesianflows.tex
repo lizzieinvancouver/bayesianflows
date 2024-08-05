@@ -33,7 +33,7 @@
 % How to do Bayesian model fitting in ecology 
 % The best way to be a Bayesian in ecology today
 % \date{\today}
-\author{EM Wolkovich$^{1*}$, T Jonathan Davies$^{1,2}$, William D Pearse$^{3,4}$ \& Michael Betancourt$^{5}}
+\author{EM Wolkovich$^{1*}$, T Jonathan Davies$^{1,2}$, William D Pearse$^{3,4}$ \& Michael Betancourt$^{5}$}
 \maketitle
 
 \noindent $^{1}$ Forest and Conservation Sciences, University of British Columbia, Vancouver, BC V6T 1Z4, Canada\\
@@ -124,7 +124,7 @@ This is where simulating from your model can be especially insightful. It will n
 Often here you may find big differences from your empirical data, and can start to generate hypotheses for why. For example, you may find patterns that suggest missing grouping factors (e.g. site or biome) through visual posterior retrodictive checks, or you may quickly realize your model predicts impossible numbers for your biological reality. You may begin to see inadequacies in your model, or even potentially your data.  This is one of the main benefits of the workflow: models don't fail silently, they fail with a wealth of context the helps to generate new models and better experiments.
 % it helps generate new models and experiments. 
 
-\subsection*{Feedbacks \& workflows}\\
+\subsection*{Feedbacks \& workflows}
 A key feature of this workflow is that it can be iterated.  If you find that you want to tweak your model then you just return to the beginning, adjust your model, and repeat the rest of the workflow. In this way, fitting multiple models is encouraged, but this is distinct from the quest for a minimum adequate model or one `best' fit. Feedbacks in this workflow are focused far more on what is biologically reasonable, and understanding the utility---and limits---of inference from your data for your model.  And there are big benefits to it. 
 
 This process more fully integrates mathematical modeling into statistical modeling. To complete Steps 1-2, you have to understand the underlying math of your model enough to simulate data from it. This can be challenging at first (e.g. recalling how to simulate $y$ data for a simple linear regression is not straightforward when you rarely do it), but is immensely beneficial to forcing you to understand your model and its consequences. Indeed, we have found the greatest insights come not from the step we all know best---fitting the model with empirical data (Step 3)---but from every other step in this workflow. % Further, it exploits many of the benefits of Bayesian approaches, while systematically avoiding major pitfalls. 

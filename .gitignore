@@ -15,9 +15,15 @@
 *.log
 *.aux
 *.blg
+*.bbl
 *.synctex.gz
 *.out 
 
 \notposting
+\comments
+versionforarxivExtras/EmailMikeFixMyErrors.pdf
+versionforarxivExtras/screenshotofsuccess.png
 \versionforarxivExtras\FileProcessingResult.pdf
 \versionforarxivExtras\EmailMikeHowTo.pdf
+
+figures/justinIdeas/2024May23_EMailFigJustin.pdf
