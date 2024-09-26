@@ -2,11 +2,9 @@ Started 22 August 2023
 
 
 NEXT UP!
-- Fix supp the way S. Schmitt suggested. 
+- Fix supp the way S. Schmitt suggested. And maybe add a line about how this is super not perfect, things we would change now and is not a complex bespoke model, but we show it to show how one can start...
 
 - Submit to MEE as a review which seems to cover all versions of crazy (https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14270 and https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14108) or submit to ELE (https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2) as a method. Though we don’t really have a case-study … maybe we should just be a perspective? 
-
-
 
 
 Frontiers (https://esajournals.onlinelibrary.wiley.com/hub/journal/15409309/resources/author-guidelines-FEE_)
@@ -28,6 +26,7 @@ All the best,
 L
 
 - 25 September 2024 -- down to 2800 words-ish!
+- Added INLA (Rue) ref to bib after reading R1, but realized it really feels out of scope here.
 - Slimmed this puppy a good bit in commit on 26 August 2024 (commit #41ce514c19755bec38ed2f3ddb7c9d442740cb95), though would be god to cut ANOTHER 300 words
 - Rejected by TREE: 
 https://www.cell.com/trends/ecology-evolution/presubmission#:~:text=Proposals%20for%20Trends%20in%20Ecology,name%20in%20the%20subject%20line.
