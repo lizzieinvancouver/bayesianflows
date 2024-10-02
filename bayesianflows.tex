@@ -47,7 +47,8 @@ $^{*}$ \url{mailto: e.wolkovich@ubc.ca}
 \noindent \emph{Keywords:} big data; scientific workflow; data simulation; forecasting; null hypothesis testing
 \vspace{3ex}
 
-\noindent \emph{Data availability:} No new data, but full code and raw data are provided in the supplement for an example workflow.
+% \noindent \emph{Data availability:} No new data, but full code and raw data are provided in the supplement for an example workflow.
+\noindent\emph{Statement of compliance:} This manuscript complies with ESA’s Open Research Policy. We provide an example of the workflow with complete code in the supplement; the data used for the example is provided and full metadata on it is available via its published form on the Knowledge Network for Biocomplexity: \verb|doi:10.5063/F12J69B2|.
 
 \newpage
 \linenumbers
@@ -61,16 +62,22 @@ Here we describe a broadly generalizable workflow for statistical analyses and s
 Building on the increasingly computational toolkit of many ecologists, this approach leverages simulation to integrate model building and testing for empirical data more fully with ecological theory.  In turn this workflow can fit models that are more robust and well-suited to provide new ecological insights---allowing us to refine where to put resources for better estimates, better models, and better forecasts.}
 % OLD version of second half (including our Bayesian beach): Here we present a Bayesian workflow---centered on simulating data from models---that represents a ground shift of not just how to fit Bayesian models, but how we should approach model fitting to advance our science. This workflow integrates mechanistic and statistical models with a computational toolkit, which we argue can accelerate ecological science. By interrogating our methods through generative models, we can refine where to put resources for better estimates, better models, and better forecasts. While we outline these methods from the happy surf of our Bayesian beach, the ocean we describe works for anyone fitting models to ecological data.
 
-\emph{In a nutshell:} 
+\vspace{5ex}
+\noindent \emph{In a nutshell:} 
+
 \begin{itemize}
-\item Climate change, habitat degradation, biodiversity loss and other human-caused pressures on ecological systems have increased the need for accurate forecasts that can help managers and policy-makers mitigate negative impacts. 
-\item At the same time, larger ecological datasets provide a major opportunity for improved models that underlie better forecasts, but building the most useful models that can handle these larger, messier datasets generally requires skills most ecologists were not trained in.
-\item Here, we outline a workflow of how to approach this challenge. It builds on new insights from statistics and data science for how to better integrate simulating data at multiple points to gain insights into how systems work and where forecasts may be most useful. While we outline this workflow using a Bayesian approach, it can be applied to many methods. 
-\item We conclude by reviewing how this workflow could improve training in ecology, making the steps from model development to forecasts more tractable for diverse practitioners in ecology and conservation biology. 
-\end{itemizer}
+\item Climate change, habitat degradation and other human-caused pressures have increased the need for accurate forecasts to help managers and policy-makers mitigate negative impacts on ecological systems. 
+\item At the same time, larger ecological datasets provide an opportunity for improved models, but building models that can handle larger, messier datasets generally requires skills most ecologists were not trained in.
+\item Here, we outline a workflow to address this challenge, which builds on new insights from statistics and data science. % for how to better integrate simulating data at multiple points to gain insights into how systems work and where forecasts may be most useful. While we outline this workflow using a Bayesian approach, it can be applied to many methods. 
+\item Integrating this workflow into training could make the steps from model development to forecasts more tractable for practitioners in ecology and conservation biology today. 
+\end{itemize}
+
+
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{7pt}
+
+\newpage
 
 \section*{Introduction}
 In recent years, as ecologists have worked to develop global predictive models, they have developed ever larger datasets \citep{Hampton2013}. These bigger data, however, are also messier data. Such data generally requires a model of both the underlying biological processes and how the measurements were made. Some fields have long used these types of models \citep[generally in fields focused on inferring population sizes of things people want to eat or manage,][]{muthuku2008,zheng2007,trijoulet2018,strinella2020potential}. Most, however, have not. This has left many researchers to try to adapt what they were trained in---traditional statistical methods (e.g. $F$ and $t$ tests) and a strong focus on null hypothesis testing---to increasingly complex datasets. 
@@ -82,7 +89,7 @@ Yet many common statistical approaches do not align with ecology's aims today. B
 Bayesian approaches provide a pathway to build powerful models that can transform how we understand our systems as largescale ecological data become increasingly available. Recognizing this, many in ecology are increasingly using Bayesian methods \citep{anderson2021trends}. New algorithms \citep[e.g. Hamiltonian Monte Carlo,][]{nuts2014,betan2019} that have made fitting and implementing Bayesian models faster, more robust and---in many ways---easier \citep{Carpenter:2017stan}. Fitting larger and sometimes more complex models, however, presents challenges that are frequently not addressed in traditional ecological training. We suggest that many of these challenges can be overcome by approaching analyses through specific workflows \citep{betanworkflow,grinsztajn2021,vandeschoot2021}, which themselves are built on a process of how to do not just statistics, but how to do science \citep{box1976science}. 
 
 Such approaches move away from a focus on null hypothesis testing, towards estimating effect sizes, using models calibrated (see Table \ref{tab:glossary}) and better understood through simulating data at multiple steps. %---using a number of skills often reserved in ecology more for `theorists' than empirical ecologists.  But this theoretical-vs-empirical divide ignores that the average modern ecologist is computational, and thus already has many of the basic skills to build bespoke models. 
-Here we outline a simplified---but powerful---workflow that builds on new insights from statistics  \citep{betanworkflow,vandeschoot2021} and the increasingly computational nature of ecology today. Our aim is to provide an approachable rubric for those new to fitting complex models, and is not intended to be a comprehensive overview. We introduce our workflow assuming a Bayesian statistical framework (with an example in the supplement shown in \textsf{R} and \textsf{Stan}); however, it can be applied to other statistical inference methods. 
+Here we outline a simplified---but powerful---workflow that builds on new insights from statistics  \citep{betanworkflow,vandeschoot2021} and the increasingly computational nature of ecology today. Our aim is to provide an approachable rubric for those new to fitting complex models, and is not intended to be a comprehensive overview (see `Next steps' for suggestions in the Supplement). We introduce our workflow assuming a Bayesian statistical framework (with an example in the supplement shown in \textsf{R} and \textsf{Stan}); however, it can be applied to other statistical inference methods. 
 % Our aim is not to provide a comprehensive overview, but instead to provide an approachable rubric for those new to fitting complex models. 
 % By integrating bespoke model building more fully with ecological theory and understanding---and vice versa---this approach can fit models that are more robust and better-suited to providing new ecological insights and improved predictions.% After outlining the workflow, we discuss how it has improved our own science, and suggests a new way to train in ecology.
 % Once you start doing this workflow, your scientific life will never be the same. 

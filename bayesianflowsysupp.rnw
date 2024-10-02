@@ -32,6 +32,11 @@
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
 
+\section*{Next steps}
+ Our aim is to provide an approachable rubric for those new to fitting complex models, and is not intended to be a comprehensive overview...
+ 
+ I wonder if it would be helpful to end with a short “Next Steps” section/paragraph, not more than a few sentences, emphasizing that this manuscript is only presenting the basics with some recommendations for longer/more-in-depth references that would be useful for interested readers to consider.  Definitely a soft requirement and I have no problems with submission as is!
+
 \section*{A brief review of statistical inference using Bayesian approaches}
 
 % Robust analyses rely on our inferences being consistent with the underlying truth more often than not.  Quantifying this consistency is calibration---analyzing how often a parameter estimate is close to the true value---a critical part of using models for inference. A major problem with traditional (frequentist) approaches in ecology today is their inferences are unpredictable when their foundational assumptions are not met, but ecologists are not usually trained in how to recognize or deal with this.
