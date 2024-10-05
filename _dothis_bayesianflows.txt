@@ -2,13 +2,14 @@ Started 22 August 2023
 
 
 NEXT UP!
-- Fix supp the way S. Schmitt suggested. And maybe add a line about how this is super not perfect, things we would change now and is not a complex bespoke model, but we show it to show how one can start...
-- Add supp section on other resources, as suggested by Mike. 
+
+- Make code more available! Definitely post to a GitHub repo and then send to Zenodo. Also, see S. Schmitt review for ideas, though I emailed about whether docker may be better than renv package which I suspect will not work well with RStan... Some pages I looked at: 
+https://github.com/sylvainschmitt/bayesian_workflow -- his version of our workflow
+https://rstudio.github.io/renv/articles/renv.html
+https://www.reddit.com/r/Rlanguage/comments/11yy5yt/best_way_to_maintain_old_r_script_renv_docker/
 
 - Submit to MEE as a review which seems to cover all versions of crazy (https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14270 and https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14108) or submit to ELE (https://onlinelibrary.wiley.com/page/journal/14610248/homepage/forauthors.html#tips2) as a method. Though we don’t really have a case-study … maybe we should just be a perspective? 
 
-
-Frontiers (https://esajournals.onlinelibrary.wiley.com/hub/journal/15409309/resources/author-guidelines-FEE)
 
 
 <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>>

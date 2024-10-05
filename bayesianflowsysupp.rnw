@@ -33,9 +33,12 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 
 \section*{Next steps}
- Our aim is to provide an approachable rubric for those new to fitting complex models, and is not intended to be a comprehensive overview...
- 
- I wonder if it would be helpful to end with a short “Next Steps” section/paragraph, not more than a few sentences, emphasizing that this manuscript is only presenting the basics with some recommendations for longer/more-in-depth references that would be useful for interested readers to consider.  Definitely a soft requirement and I have no problems with submission as is!
+Our aim is to provide an approachable succinct description of a basic adaptable workflow for those new to fitting complex models. Thus anyone wanting to implement it would likely benefit from more reading, training and/or community support. We highlight some resources in the main text, but more are being produced often and our suggestions are in no way intended to be comprehensive, so we recommend checking for additional resources. For those interested in this workflow and looking for somewhere to start, we suggest:
+\begin{itemize}
+\item A number of books and online resources provide approachable introductions to fitting Bayesian models that include a similar workflow to the one we outline here. These include: \emph{Statistical Rethinking} \citep{statrethink}, M. Betancourt's organized writing covering probability theory to modeling and inference \url{https://betanalpha.github.io/writing/}, \emph{Regression and Other Stories} \citep{regotherstories}. Many of these have related resources including additional examples, videos of courses taught using the materials and more (see, for example: \url{https://github.com/rmcelreath/stat_rethinking_2023} and \url{https://avehtari.github.io/ROS-Examples/}). 
+\item \citet{BDA} provides a comprehensive review of Bayesian inference, including many modeling approaches. 
+\item A number of communities support learning these approaches, but tracking them down can take some inquiries depending on your specific interests and aims. We suggest attending conferences and visiting online support sites (e.g., \url{https://discourse.mc-stan.org/} or \url{https://www.r-inla.org/discussion-group}) and asking about how people connect. For example, ask about Slack or Discord servers or check for Meetup groups. 
+\end{itemize}
 
 \section*{A brief review of statistical inference using Bayesian approaches}
 
@@ -70,10 +73,9 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 
 \section*{An example workflow}
 
-Our workflow in the main text is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabilistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). \\ 
+Our workflow in the main text is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabilistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). 
 
-\pagebreak
-For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (\verb|example.md|).
+For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (\verb|example.md|). As our goal is to introduce people to this approach, we present a simple---but real-world---example to walk through the basic steps. Like all models, it is a work in progress, and could easily be adjusted, expanded and likely improved (all data and code will be fully and freely available on Zenodo before publication).
 % For now, you can download the workflow here:
 % \url{https://github.com/lizzieinvancouver/bayesianflows/blob/main/examples/synchrony/example.html}.
 
@@ -97,15 +99,7 @@ For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markd
 
 % Our workflow and its description is brisk, and thus anyone wanting to implement it would benefit from more reading. There are new good resources on this sort of workflow, and more being published often, but for now we especially recommend: 
 
-Our workflow and its description is brisk, and thus anyone wanting to implement it would benefit from more reading. We highlight some good resources on this sort of workflow in the main text. More are being published often, so we recommend checking for new resources, but here's a smattering of things to check out currently:
 
-Mike's workflow
-
-Any good vingettes?
-
-Aki's course on ROS?
-
-\cite{esfahani2021bayesian,schad2021,schad2022workflow}
 
 
 I think that it would also be useful to mention residual analysis. Overall we need to compare model retrodictions to the observed data, projected onto the features relevant to the analysis. Classical residual analysis compares point predictions to the observe data. R2 summarizes this comparison as a linear correlation. Posterior retrodictive checks compare an entire distribution of predictions to the observed data, allowing us to not only identify any inconsistencies but also use the probabilistic spread of the predictions to qualify how important any inconsistencies are.
