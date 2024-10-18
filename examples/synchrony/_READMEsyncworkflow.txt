@@ -48,3 +48,4 @@ I move the relative example to lizzieinvancouver/bayesianflowsexample
 Because ESA asked and I need to anyway. I will update the files there. 
 To keep things simple I will delete a ton of the related code here. 
 Wish me luck!
+Deletions in f40df01013d594dd9a895ddc85718fdd2e8d6edb mostly.
