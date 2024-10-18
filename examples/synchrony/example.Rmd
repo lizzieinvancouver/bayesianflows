@@ -1,6 +1,6 @@
 # An example workflow
 
-Our example comes from a project aiming to estimate levels of trophic (a)synchrony with climate change. Using observational time-series data, we wanted to estimate changes in the relative timing of species pairs. Our first step was to obtain estimates of each species' change over time, which we review here. 
+Our simple example comes from a project aiming to estimate levels of trophic (a)synchrony with climate change. Using observational time-series data, we wanted to estimate changes in the relative timing of species pairs. Our first step was to obtain estimates of each species' change over time, which we review here. 
 
 ## How we started
 We thought we should fit a mixed-effects linear regression, with day of year (calendar day, values of 1-366) of event (leafout, reproduction etc.) as the response and year as the predictor. The data had uneven sampling across species (different time series lengths), as you can see:
@@ -343,4 +343,4 @@ hist(colMeans(y.sd100), col="plum3", breaks=20, xlim=c(10,14),
 abline(v = mean(real.sd$phenovalue), col = "pink3", lwd = 2)
 ```
 
-This model showed a slightly lower standard deviation, though it was still well away from the empirical data. What could be going on? We had hypotheses about the species, biomes and event types, we went on to test in our research program. 
+This model showed a slightly lower standard deviation, though it was still well away from the empirical data. What could be going on? We had hypotheses about the species, biomes and event types, we went on to test in our research program. For example, new models we built partially pool species depending on their evolutionary distance, which could improve this model as well. This model, however, was already an improvement from where we started and where we end this example. 
