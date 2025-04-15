@@ -20,14 +20,17 @@
 \fancyhead[RO]{}
 
 \begin{document}
-\bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
+\bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/amnat}
 
 \renewcommand{\refname}{\CHead{}}
 
+{\Large Supplement: A four-step Bayesian workflow for improving ecological science}
+\iffalse
 \title{Supplement: A four-step Bayesian workflow for improving ecological science}
 % \date{\today}
 \author{EM Wolkovich, TJ Davies, WD Pearse \& M Betancourt}
 \maketitle
+\fi 
 
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
@@ -35,7 +38,7 @@
 \section*{Next steps}
 Our aim is to provide an approachable succinct description of a basic adaptable workflow for those new to fitting complex models. Thus anyone wanting to implement it would likely benefit from more reading, training and/or community support. We highlight some resources in the main text, but more are being produced often and our suggestions are in no way intended to be comprehensive, so we recommend checking for additional resources. For those interested in this workflow and looking for somewhere to start, we suggest:
 \begin{itemize}
-\item A number of books and online resources provide approachable introductions to fitting Bayesian models that include a similar workflow to the one we outline here. These include: \emph{Statistical Rethinking} \citep{statrethink}, M. Betancourt's organized writing covering probability theory to modeling and inference \url{https://betanalpha.github.io/writing/}, \emph{Regression and Other Stories} \citep{regotherstories}. Many of these have related resources including additional examples, videos of courses taught using the materials and more (see, for example: \url{https://github.com/rmcelreath/stat_rethinking_2023} and \url{https://avehtari.github.io/ROS-Examples/}). 
+\item A number of books and online resources provide approachable introductions to fitting Bayesian models that include a similar workflow to the one we outline here. These include: \emph{Statistical Rethinking} \citep{statrethink}, M. Betancourt's organized writing covering probability theory to modeling and inference \url{https://betanalpha.github.io/writing/}, \emph{Regression and Other Stories} \citep{regotherstories}. Many of these have related resources including additional examples, videos of courses taught using the materials and more (see, for example: \url{https://github.com/rmcelreath/stat_rethinking_2023} and \\ \url{https://avehtari.github.io/ROS-Examples/}). 
 \item \citet{BDA} provides a comprehensive review of Bayesian inference, including many modeling approaches. 
 \item A number of communities support learning these approaches, but tracking them down can take some inquiries depending on your specific interests and aims. We suggest attending conferences and visiting online support sites (e.g., \url{https://discourse.mc-stan.org/} or \url{https://www.r-inla.org/discussion-group}) and asking about how people connect. For example, ask about Slack or Discord servers or check for Meetup groups. 
 \end{itemize}
@@ -75,7 +78,8 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 
 Our workflow in the main text is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabilistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). 
 
-For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (\verb|example.md| available at: \url{https://github.com/lizzieinvancouver/bayesianflowsexample}). As our goal is to introduce people to this approach, we present a simple---but real-world---example to walk through the basic steps. Like all models, it is a work in progress, and could easily be adjusted, expanded and likely improved (all data and code will be fully and freely available on Zenodo before publication).
+% For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (\verb|example.md| available at: \url{https://github.com/lizzieinvancouver/bayesianflowsexample}). 
+For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (see files). As our goal is to introduce people to this approach, we present a simple---but real-world---example to walk through the basic steps. Like all models, it is a work in progress, and could easily be adjusted, expanded and likely improved (all data and code will be fully and freely available on Zenodo before publication).
 % For now, you can download the workflow here:
 % \url{https://github.com/lizzieinvancouver/bayesianflows/blob/main/examples/synchrony/example.html}.
 
