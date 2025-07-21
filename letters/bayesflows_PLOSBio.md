@@ -1,0 +1,12 @@
+Dear Drs. Gabhann and Pitzer,
+
+We would be grateful for your consideration of which article type a manuscript we are working on, ``A four-step simulation-based workflow for improving biological models and forecasting,'' may fit in PLOS Computational Biology. This short (2500 words) manuscript outlines a simple but powerful workflow focused on data simulation to build models that can better address many of demands on biological science and adapt to changing methods (e.g., machine learning). We show how integrating simulation more fully in model building and testing can yield models that are more robust and well-suited to provide new biological insights---allowing us to refine where to put resources for more data, better estimates, and better forecasts.
+
+Given the increasing aims of forecasting and prediction today, many biologists are using more complex models to leverage larger datasets. Many researchers---ourselves included---were not trained in best statistical practice for these approaches, which can lead to poor models and incorrect predictions and decisions. To address this gap, we outline a generalizable workflow that is built on fundamental scientific principles and new insights from statistics and data science. This approach  moves away from a focus on null hypothesis testing, towards estimating effect sizes, using models calibrated and better understood through simulating data at multiple steps---using a number of skills more often associated with theoretical than empirical biology. We conclude by highlighting how adopting this workflow has changed our science and how it may improve statistical and mathematical training in biology. 
+
+The manuscript is authored by an international and interdisciplinary group of ecologists, evolutionary biologists and statisticians. The workflow follows the basics of how authors EM Wolkovich, TJ Davies and WD Pearse approach model building and leverages the insights and skills of computational statistician M Betancourt who has developed fundamental statistical workflows for diverse scientific disciplines. We have designed it to be highly practical, including relevant examples of forecasting shifts in animals and plants over time.
+
+We believe this manuscript could fit in the Education section or as a Perspective, but are open to all possibilities. 
+
+Many thanks for your consideration.
+Lizzie Wolkovich
