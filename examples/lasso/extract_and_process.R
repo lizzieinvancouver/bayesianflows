@@ -141,6 +141,9 @@ names(newclim_wide) <- c( "lat", "lon", "year",
   "totalprec",
   "chillwinter")
 simdat <- merge(newclim_wide, lodf, by="year")
+simdat <- subset(simdat, is.na(tminwinter)==FALSE) # delete a row since we don't have the winter temperatures (we don't have the data of the year before)
+newclim_wide <- subset(newclim_wide, is.na(tminwinter)==FALSE) # ibid
 
-
+write.csv(moreclim_df, file.path(wd, "output/climdattmean.csv"), row.names=FALSE)
+write.csv(newclim_wide, file.path(wd, "output/climdatwide.csv"), row.names=FALSE)
 write.csv(simdat, file.path(wd, "output/simuldateddat.csv"), row.names=FALSE)

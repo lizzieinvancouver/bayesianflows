@@ -11,8 +11,9 @@ setwd("/Users/lizzie/Documents/git/projects/misc/miscmisc/bayesianflows/examples
 # libraries
 library(glmnet) # for lasso
 
+# get the data 
 simdat <- read.csv("output/simuldateddat.csv")
-simdat <- simdat[-1,]
+
 
 ###
 ### Attention! Lasso code from chatGPT (8 August 2025)
