@@ -44,6 +44,8 @@ Our aim is to provide an approachable succinct description of a basic adaptable 
 
 \section*{A brief review of statistical inference using Bayesian approaches}
 
+To fit bespoke models we usually apply Bayes' theorem, which generates a $posterior$ distribution from a combination of a $likelihood$ and a $prior$ distribution (an initial uncertainty estimate derived from basic ecological knowledge), and using iterative algorithms (e.g. MCMC, Markov Chain Monte Carlo) that provide samples that can be used to extract information from the posterior distribution (for more, see \emph{A brief review of statistical inference using Bayesian approaches} in the Supplement). 
+
 % Robust analyses rely on our inferences being consistent with the underlying truth more often than not.  Quantifying this consistency is calibration---analyzing how often a parameter estimate is close to the true value---a critical part of using models for inference. A major problem with traditional (frequentist) approaches in ecology today is their inferences are unpredictable when their foundational assumptions are not met, but ecologists are not usually trained in how to recognize or deal with this.
 % Most ecologists are trained primarily in frequentist methods, which are focused on calibration (this is is why training in frequentist methods includes so much discussion of significance, power, mean squared error, and the like). Bayesian methods typically focus on inference, but can be equally well calibrated (see Step 1, below). 
 

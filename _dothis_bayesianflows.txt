@@ -11,6 +11,9 @@ To do ...
 - Sneak in something about a this workflow overcoming a history terminology-laden new approaches that become fads until they are ill-used and shown to be problematic (AIC, path analysis, new DAGs) ... \cite{getz2018making} is a crazy example of terminology!!!. Ecologists must break the cycle! 
 - Maybe cite: hobbs2006alternatives
 - MAM -- \cite{getz2018making} -- are a total disaster: \cite{leroux2019prevalence}
+- Something about stats people need to work as scientists as much as scientists need to use a workflow??
+- Maybe add in heuristic model to Step 1 (generative models are where your code=model, but a heuristic model is a simple model of how the world works)
+- % ADD REF to fig?
 
 
 <><><><><><><><>

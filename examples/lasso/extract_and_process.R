@@ -1,5 +1,6 @@
 ## From Victor VderM ##
 ## Rec'd by email with the output/clim_extract.rds file on 12 Aug 2025 ##
+## Edits by Lizzie started on 15 August 2025 ##
 
 # Extract climate data for Lizzie
 rm(list = ls())
@@ -48,7 +49,8 @@ clim_df[clim_df$var %in% c( "tmean","tmin","tmax","tdew"), 'value'] <- clim_df[c
 # but it should work most of the time! 
 vars_def <-
   rbind(c(var = c('tmin'), fun = c('min'), from = '11-01', to = '03-31', range = NA, name = 'min_tmin_NDJFM'),
-        c(var = c('tmean'), fun = c('sum'), from = '05-01', to = '07-31', range = '5-35', name = 'gdd_MJJ'),
+        c(var = c('tmean'), fun = c('mean'), from = '03-01', to = '05-31', range = NA, name = 'mean_MAM'),
+        c(var = c('tmean'), fun = c('sum'), from = '03-01', to = '05-31', range = '5-31', name = 'gdd_MAM'),
         c(var = c('prec'), fun = c('sum'), from = '03-01', to = '05-31', range = NA, name = 'prec_MAM'),
         c(var = c('prec'), fun = c('sum'), from = '01-01', to = '12-31', range = NA, name = 'totalprec'),
         c(var = c('tmean'), fun = c('sum'), from = '10-01', to = '02-28', range = '0-7', name = 'chill_ONDJF'))
@@ -61,12 +63,18 @@ for(i in 1:nrow(vars_def)){
   
   # should we look in previous year?
   if(as.Date(paste0('1950-', vars_def[i,'from'])) > as.Date(paste0('1950-', vars_def[i,'to']))){
-    seqdates <- lapply((min(clim_here$year)+1):max(clim_here$year), function(y){as.character(seq.Date(as.Date(paste0(y-1, '-', vars_def[i,'from'])), as.Date(paste0(y, '-', vars_def[i,'to'])), by = 1))})
+    seqdates <- lapply((min(clim_here$year)+1):max(clim_here$year), 
+      function(y){as.character(seq.Date(as.Date(paste0(y-1, '-', vars_def[i,'from'])), 
+        as.Date(paste0(y, '-', vars_def[i,'to'])), by = 1))})
     clim_here <- clim_here[clim_here$date %in% unlist(seqdates), ]
-    seqdates_prev <- lapply(min(clim_here$year):(max(clim_here$year)-1), function(y){as.character(seq.Date(as.Date(paste0(y, '-', vars_def[i,'from'])), as.Date(paste0(y, '-', '12-31')), by = 1))})
+    seqdates_prev <- lapply(min(clim_here$year):(max(clim_here$year)-1), 
+      function(y){as.character(seq.Date(as.Date(paste0(y, '-', vars_def[i,'from'])), 
+        as.Date(paste0(y, '-', '12-31')), by = 1))})
     clim_here[clim_here$date %in% unlist(seqdates_prev), 'year'] <- clim_here[clim_here$date %in% unlist(seqdates_prev), 'year'] + 1  # trick for aggregate later
   }else{
-    seqdates <- lapply(min(clim_here$year):max(clim_here$year), function(y){as.character(seq.Date(as.Date(paste0(y, '-', vars_def[i,'from'])), as.Date(paste0(y, '-', vars_def[i,'to'])), by = 1))})
+    seqdates <- lapply(min(clim_here$year):max(clim_here$year), 
+      function(y){as.character(seq.Date(as.Date(paste0(y, '-', vars_def[i,'from'])), 
+        as.Date(paste0(y, '-', vars_def[i,'to'])), by = 1))})
     clim_here <- clim_here[clim_here$date %in% unlist(seqdates), ]
   }
   
@@ -127,10 +135,11 @@ for(yearhere in unique(moreclim_df$year)) {
 newclim_wide <- reshape(newclim_df, idvar=c("lat", "lon", "year"), timevar="var", direction = "wide")
 names(newclim_wide) <- c( "lat", "lon", "year", 
   "tminwinter",
-   "gddsummer",
-   "precspring",
-   "totalprec",
-   "chillwinter")
+  "tmeanspring",
+  "gddspring",
+  "precspring",
+  "totalprec",
+  "chillwinter")
 simdat <- merge(newclim_wide, lodf, by="year")
 
 
