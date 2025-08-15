@@ -1,19 +1,24 @@
-## Simulating data ##
+---
+title: |
+ | <span style='font-size: 30px'>Short case study 1:
+ | How often a model can lead to the correct inference?
+subtitle: 'A simple data simulation example (step 2) '
+---
 
 Simulating data and then fitting your model to is a powerful way to interrogate both our statistical and scientific models, but learning how to do it means starting simple. 
 
-Here we imagine a very simple example where you are interested in whether a storm that hit several tropical islands, destroying vegetation on the islands, may have led lizards to evolve shorter toes -- since they may no longer need longer toes to run up vegetation. You plan to sample one lizard (they're hard to catch and you have limited time) on each of the five islands and one five islands that were not by a storm. 
+Here we imagine a very simple example where you are interested in whether a storm that hit several tropical islands, destroying vegetation on the islands, may have led lizards to evolve shorter toes---since they may no longer need longer toes to run up vegetation. You plan to sample one lizard per island (they're hard to catch and you have limited time), on 10 islands---including 5 of them that were not hit by the storm. 
 
 You could build a very simple linear regression model to simulate these data:
 
 ```{r}
 set.seed(7799)
 
-basetoesize <- 5
-stormeffect <- -0.5
-sigmay <- 0.5
+basetoesize <- 5 # intercept of the model (mean toe length across islands)
+stormeffect <- -0.5 # reduction of toe length caused by the storm
+sigmay <- 0.5 # measurement error
 reps <- 5
-x <- c(rep(0, reps), rep(1, reps))
+x <- c(rep(0, reps), rep(1, reps)) # 5 devastated islands, 5 spared islands
 
 y <- basetoesize + stormeffect*x + rnorm(length(x), 0, sigmay)
 ```
@@ -24,7 +29,8 @@ And then you could fit your statistical model to it and see the results:
 summary(lm(y~x))
 ```
 
-Your model is returning your parameters pretty well, but this is only one draw of all the possible ones you might get. You can repeat this process 1000 times, however: 
+Your model is returning your parameters pretty well, but this is only one draw of all the possible datasets you might simulate. 
+You can repeat this process 1000 times, however: 
 
 ```{r}
 df <- data.frame(intercept=numeric(), slope=numeric())
@@ -35,9 +41,10 @@ for(i in c(1:1000)){
 
 par(mfrow=c(1,2), mgp=c(2, 0.5, 0), tck=-0.01)
 hist(df$intercept, bty="l", ylab="Fequency", xlab="Intercept", 
-	main="1000 simulated datasets")
+	main="1000 simulated datasets", border = 'white')
 abline(v=basetoesize, col="dodgerblue", lwd=2)
-hist(df$slope, bty="l", ylab="Fequency", xlab="Slope", main="")
+hist(df$slope, bty="l", ylab="Fequency", xlab="Slope", 
+     main="", border = 'white')
 abline(v=stormeffect, col="dodgerblue", lwd=2)
 ```
 
@@ -60,9 +67,10 @@ for(i in c(1:1000)){
 
 par(mfrow=c(1,2), mgp=c(2, 0.5, 0), tck=-0.01)
 hist(df$intercept, bty="l", ylab="Fequency", xlab="Intercept", 
-	main="1000 simulated datasets \n with 10 reps")
+	main="1000 simulated datasets \n with 10 reps", border = 'white')
 abline(v=basetoesize, col="dodgerblue", lwd=2)
-hist(df$slope, bty="l", ylab="Fequency", xlab="Slope", main="")
+hist(df$slope, bty="l", ylab="Fequency", xlab="Slope", 
+     main="", border = 'white')
 abline(v=stormeffect, col="dodgerblue", lwd=2)
 nrow(subset(df, slope> 0))
 ```
