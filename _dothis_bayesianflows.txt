@@ -3,8 +3,9 @@ Started 22 August 2023
 14 August 2025
 
 To do ...
+- Add Gelman statistics as scientists ref to end!
+- Ask team for good refs on bad machine learning
 - Fix abstract! 
-- Cite for first sentence! IPCC and UN Sustainability Goals Doc
 - More cites to second paragraph (check letter to AG) 
 - Check how many times I write 'increasingly' in intro!
 - Cite stupid Byrnes & Dee 2025 paper somewhere \cite{byrnes2025causal}
