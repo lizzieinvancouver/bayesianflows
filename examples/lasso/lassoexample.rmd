@@ -1,9 +1,9 @@
 ---
-title: |
- | <span style='font-size: 30px'>Short case study 2:
- | A widely applicable workflow
-subtitle: Steps 1-2 using Lasso regression
+title: "| <span style='font-size: 30px'>Short case study 2:\n| A widely applicable
+  workflow\n"
+subtitle: "Steps 1-2 using Lasso regression"
 pagetitle: A widely applicable workflow
+output: pdf_document
 ---
 
 
@@ -75,7 +75,8 @@ X <- as.matrix(simdat[, c("tminwinter",
 	"daylength")])
 y <- simdat$loday
 
-# Run cross-validated to get lambda and plot results (the number of predictor variables is shown on the top)
+# Run cross-validated to get lambda and plot results 
+# (the number of predictor variables is shown on the top)
 cv_lasso <- cv.glmnet(X, y, alpha = 1, standardize = TRUE, nfolds = 10)
 plot(cv_lasso)
 
@@ -87,8 +88,10 @@ But we find that none of the temperature metrics matter, even though we only use
 
 ```{r}
 par(mfrow=c(1,2), mgp=c(2, 0.5, 0), tck=-0.01)
-plot(loday~daylength, simdat, bty="l", ylab="Leafout day of year", xlab="Daylength")
-plot(loday~tmeanspring, simdat, bty="l", ylab="Leafout day of year", xlab="Mean spring temperature")
+plot(loday~daylength, simdat, bty="l", ylab="Leafout day of year", 
+     xlab="Daylength")
+plot(loday~tmeanspring, simdat, bty="l", ylab="Leafout day of year", 
+     xlab="Mean spring temperature")
 ```
 
 We also see that a variable we expected to matter, mean spring temperature looks pretty weakly related to leafout. We could continue on and try dropping daylength from our model (we encourage you to try it yourself adapting the above code), but that would show us that many variables now matter, including a number of ones, such as total precipitation, that we did not use to simulate our data either. 

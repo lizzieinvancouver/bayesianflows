@@ -1,9 +1,9 @@
 ---
-title: |
- | <span style='font-size: 30px'>Short case study 1:
- | How often a model can lead to the correct inference?
+title: "| <span style='font-size: 30px'>Short case study 1:\n| How often a model can
+  lead to the correct inference?\n"
 subtitle: A simple data simulation example (step 2)
 pagetitle: Tropical storm and lizards
+output: pdf_document
 ---
 
 Simulating data and then fitting your model to is a powerful way to interrogate both our statistical and scientific models, but learning how to do it means starting simple. 
