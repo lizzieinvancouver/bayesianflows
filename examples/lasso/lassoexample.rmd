@@ -2,7 +2,8 @@
 title: |
  | <span style='font-size: 30px'>Short case study 2:
  | A widely applicable workflow
-subtitle: 'Steps 1-2 using Lasso regression'
+subtitle: Steps 1-2 using Lasso regression
+pagetitle: A widely applicable workflow
 ---
 
 

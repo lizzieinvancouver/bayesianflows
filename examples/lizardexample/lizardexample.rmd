@@ -2,7 +2,8 @@
 title: |
  | <span style='font-size: 30px'>Short case study 1:
  | How often a model can lead to the correct inference?
-subtitle: 'A simple data simulation example (step 2) '
+subtitle: A simple data simulation example (step 2)
+pagetitle: Tropical storm and lizards
 ---
 
 Simulating data and then fitting your model to is a powerful way to interrogate both our statistical and scientific models, but learning how to do it means starting simple. 
