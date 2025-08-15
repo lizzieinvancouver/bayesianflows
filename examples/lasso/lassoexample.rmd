@@ -2,13 +2,13 @@
 
 The four-step workflow we outline is designed for bespoke model building, but we argue it can be helpful for any model building. In bespoke model building we often can match the model we fit exactly to our generative model---that is, we can simulate data from the model we then fit to the simulated data. In other approaches, we may use more of a heuristic model to simulate data. This means we simulate data using a model that fits a simple understanding of our ecological system or process, but that may not match the statistical model we will then fit to simulated data. 
 
-For example, consider a case where we're interested in an ecological process driven by climate, but we are not fully sure which climate variables drive the process, though we have some basic ideas. The timing of tree leafout is a good example where many climate variables may matter; experiments show that winter cool, daylength and spring warm temperatures all matter for some tree species, but other work suggests these do not matter in natural conditions (aka, trees outside in nature) and that precipitation, clouds and other factors may matter too. 
+For example, consider a case where we're interested in an ecological process driven by climate, but we are not fully sure which climate variables drive the process, though we have some basic ideas. The timing of tree leafout is a good example where many climate variables may matter; experiments show that winter cool, daylength and spring warm temperatures all matter for some tree species, but other work suggests these do not matter in natural conditions (aka, trees outside in nature) and that precipitation, clouds and other factors may matter instead or in addition. 
 
-Using this example, we might consider lasso regression---a method that fits many possible predictors, but penalizes ones with low predictive power based on fitting a parameter ($\lambda$) using cross-validation. We can approach lasso regression for this problem by simulating data starting with a simple model. The simplest model of leafout assumes leafout happens after a certain thermal sum is reached, which is commonly called a `growing degree days' model in agriculture. Assuming plant accumulate temperatures above some baseline (say, 0 C), they are added up each day until the threshold is crossed, at which point the tree leafs out. 
+Using this example, we might consider lasso regression---a method that fits many possible predictors, but penalizes ones with low predictive power based on fitting a parameter ($\lambda$) using cross-validation. We can approach lasso regression for this problem by simulating data starting with a simple model. The simplest model of leafout assumes leafout happens after a certain thermal sum is reached, which is commonly called a `growing degree days' model in agriculture. Assuming plants accumulate temperatures above some baseline (say, 0 C), they are added up each day until the threshold is crossed, at which point the tree leafs out. 
 
-We can simulate this using simulated climate data or, as we do here, using actual climate data. We think testing out such models, at some point in the workflow, on actual climate data can be helpful as climate variables can have natural trends and correlations that may show up via this workflow. 
+We can simulate this using simulated climate data or actual climate data. We think testing out such models, at some point in the workflow, on actual climate data can be helpful as climate variables can have natural trends and correlations that may show up via this workflow, thus we use empirical climate data here. 
 
-So, we read in some climate data summaries including a few variables of interest (related to winter temperatures, spring temperatures and precipitation).
+We read in some climate data summaries including a few variables of interest (related to winter temperatures, spring temperatures and precipitation):
 
 ```{r}
 # housekeeping
@@ -26,7 +26,7 @@ climdat <- read.csv(file.path(wd, "output/climdatwide.csv"))
 tmeandaily <- read.csv(file.path(wd, "output/climdattmean.csv"))
 ```
 
-Next we want to simulate a leafout date that to occur after a thermal sum of 150 C (starting 1 January and accumulating values above 0 C). We also add in daylength on the date of leafout. Researchers commonly used this to estimate the effect of daylength in models of leafout, so we figure we should too. 
+Next we want to simulate a leafout date to occur after a thermal sum of 150 C (starting 1 January and accumulating values above 0 C). We also add in daylength on the date of leafout. Researchers commonly used this to estimate the effect of daylength in models of leafout, so we figure we should too. 
 
 ```{r}
 # add daylength
@@ -68,13 +68,11 @@ X <- as.matrix(simdat[, c("tminwinter",
 	"daylength")])
 y <- simdat$loday
 
-# Run cross-validated to get lambda and plot results
+# Run cross-validated to get lambda and plot results (the number of predictor variables is shown on the top)
 cv_lasso <- cv.glmnet(X, y, alpha = 1, standardize = TRUE, nfolds = 10)
 plot(cv_lasso)
 
-# Find the lambda with smallest cross-validated error and check out the coefficients
-best_lambda <- cv_lasso$lambda.min
-best_lambda
+# Now check out the coefficients
 coef(cv_lasso, s = "lambda.min")
 ```
 
@@ -86,6 +84,6 @@ plot(loday~daylength, simdat, bty="l", ylab="Leafout day of year", xlab="Dayleng
 plot(loday~tmeanspring, simdat, bty="l", ylab="Leafout day of year", xlab="Mean spring temperature")
 ```
 
-We also see that a variable we expected to matter, mean spring temperature looks pretty weakly related to leafout. We could continue on and try dropping daylength from our model (we encourage you to try it yourself adapting the above code), but that woudl show us that many variables now matter, including a number of ones (like total precipitation) that we did not use to simulate our data either. 
+We also see that a variable we expected to matter, mean spring temperature looks pretty weakly related to leafout. We could continue on and try dropping daylength from our model (we encourage you to try it yourself adapting the above code), but that would show us that many variables now matter, including a number of ones, such as total precipitation, that we did not use to simulate our data either. 
 
-This highlights a fundamental disconnect between the statistical model we want to use and the underlying biological model. Addressing it likely requires thinking through a better statistical approach that more closely aligns to the biology of a thermal sum model to start. 
+These two first steps in the workflow have highlighted a disconnect between the statistical model we want to use and the underlying biological model. Addressing it likely requires thinking through a better statistical approach that more closely aligns to the biology of a thermal sum model to start. 

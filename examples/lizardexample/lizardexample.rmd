@@ -2,7 +2,9 @@
 
 Simulating data and then fitting your model to is a powerful way to interrogate both our statistical and scientific models, but learning how to do it means starting simple. 
 
-Here we imagine a very simple example where you are interested in whether a storm that hit several tropical islands, destroying vegetation on the islands, may have led lizards to evolve shorter toes -- since they may longer need them to run up vegetation. If you plan to sample one lizard (they're hard to catch and you have limited time) on each of the five islands and one five islands that were not by a storm. You could build a very simple linear regression model to simulate these data:
+Here we imagine a very simple example where you are interested in whether a storm that hit several tropical islands, destroying vegetation on the islands, may have led lizards to evolve shorter toes -- since they may no longer need longer toes to run up vegetation. You plan to sample one lizard (they're hard to catch and you have limited time) on each of the five islands and one five islands that were not by a storm. 
+
+You could build a very simple linear regression model to simulate these data:
 
 ```{r}
 set.seed(7799)
@@ -40,12 +42,12 @@ abline(v=stormeffect, col="dodgerblue", lwd=2)
 ```
 
 ```{r}
-nrow(subset(df, slope> 0))
+nrow(subset(df, slope> 0)) 
 ```
 
 The statistical model gets close to your assigned slope and intercept on average but with a lot of variation. About 5% of time you see no effect or a positive effect even, when you assigned a negative effect of the storm to toe length. 
 
-What would happen if you somehow could sample more and get 10 reps of each? You can easily test this. 
+What would happen if you somehow could sample more and get 10 reps of each? You can easily test this possibility. 
 
 ```{r}
 reps <- 10 
@@ -58,11 +60,13 @@ for(i in c(1:1000)){
 
 par(mfrow=c(1,2), mgp=c(2, 0.5, 0), tck=-0.01)
 hist(df$intercept, bty="l", ylab="Fequency", xlab="Intercept", 
-	main="1000 simulated datasets")
+	main="1000 simulated datasets \n with 10 reps")
 abline(v=basetoesize, col="dodgerblue", lwd=2)
 hist(df$slope, bty="l", ylab="Fequency", xlab="Slope", main="")
 abline(v=stormeffect, col="dodgerblue", lwd=2)
 nrow(subset(df, slope> 0))
 ```
 
-Now only about 1% of time you see no effect or a positive effect. You can equally adjust other parameters to see their effect on returning your parameter estimates, or see how often your p-value is significant if that is of interest. You might also start considering other experimental designs such as sampling multiple lizards per island and adjust your simulated data and model to reflect this. This might get you to thinking about the evolution of toe length and lead you to model how that happens, which might in turn alter your simulated data and statistical model -- and it would mean you've gone from thinking about the problem as a linear regression to something closer to a biological model. 
+Now only about 1% of time you see no effect or a positive effect. 
+
+You can equally adjust other parameters to see their effect on returning your parameter estimates, or see how often your p-value is significant if that is of interest. You might also start considering other experimental designs such as sampling multiple lizards per island and adjust your simulated data and model to reflect this. This might get you to thinking about the evolution of toe length on each island, and lead you to model how that happens, which might in turn alter your simulated data and statistical model -- and it would mean you've gone from thinking about the problem as a linear regression to something closer to a biological model, all before you set off for those tropical islands! 
