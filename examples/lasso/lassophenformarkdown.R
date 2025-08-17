@@ -81,7 +81,8 @@ best_lambda <- cv_lasso$lambda.min
 best_lambda
 coef(cv_lasso, s = "lambda.min")
 
+pdf(file.path(wd,"lassograph.pdf"), height=5, width=8)
 par(mfrow=c(1,2), mgp=c(2, 0.5, 0), tck=-0.01)
 plot(loday~tmeanspring, simdat, bty="l", ylab="Leafout day of year", xlab="Mean spring temperature")
 plot(loday~daylength, simdat, bty="l", ylab="Leafout day of year", xlab="Daylength")
-
+dev.off()

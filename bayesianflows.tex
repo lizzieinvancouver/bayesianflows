@@ -238,15 +238,15 @@ workflow & a set of steps to achieve a goal, with those steps designed to help o
 
 \begin{figure}[ht]
 \centering
-\noindent \includegraphics[width=0.5\textwidth]{examples/misspecifiedmodel/priorpostforflows.pdf}
-\caption{A simple example of how to use simulated data to understand calibration issues in a mis-specified model. Here we know the true model underlying the data is $y=\alpha + \text{normal}(0, \sigma)$ where $\alpha$ is 5 (shown as blue vertical line) and $\sigma$ is 2. The model, however, is mis-specified by a prior for $\alpha$ of $\text{normal}(25, 2)$ (dashed blue line), resulting in a posterior (salmon-colored histogram) not centered on the true value. In our experience it is quite rare to have a prior informed by ecological knowledge be so far off, but this is an example. How mis-calibrated the model will be depends on the data: we show examples with a sample size ($N$) of 5, 10 and 40 data points. In practice these studies would allow us to determine how much data we would need to be robust to suspect prior models. }
-\label{fig:misspecifyprior}
+\noindent \includegraphics[width=0.9\textwidth]{figures/twoexamples.png}
+\caption{NEEDS caption!.}
+\label{fig:twoexamples}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\noindent \includegraphics[width=0.6\textwidth]{examples/synchrony/graphs/rawvsonepredictivecheck.pdf}
-\caption{Example of a single retrodictive check from time-series data of phenological events over time. The raw data (top, pink) looks similar to one simulated dataset (bottom, purple), based on existing species number, their respective $x$ data, and simulating from the parameters for each species. See `An example workflow' in the Supplement for more details.}
+\noindent \includegraphics[width=0.95\textwidth]{examples/synchrony/graphs/fourpanelforpaper.pdf} % from 1000 sim. datasets (purple) \n versus empirical data (pink)
+\caption{Example of retrodictive checks from time-series data of phenological events over time. The empirical data (top left, pink) looks similar to one simulated dataset (top right, purple), based on existing species number, their respective $x$ data, and simulating from the parameters for each species, but the spread of the simulated data seems possible higher. Repeating this retrodictive (or posterior predictive) check 1000 times, and taking the standard deviation (SD) of each simulated dataset, and looking at the resulting histogram confirms this (lower left in purple, empirical data SD in pink). This leads to to an updated model, where the same retrodictive check looks closer to the empirical data (lower right), but still could be improved. These examples are shown in full in `An example the full workflow' in the Supplement.}
 \label{fig:retrodictivecheck}
 \end{figure}
 
