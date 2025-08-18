@@ -1,9 +1,12 @@
 ---
-title: "| <span style='font-size: 30px'>Short case study 1:\n| How often a model can
-  lead to the correct inference?\n"
-subtitle: A simple data simulation example (step 2)
+title: "| <span style='font-size: 30px'>Short case study 1:\n| Is a sample size of
+  five stormy islands enough?\n"
+subtitle: "A simple data simulation example (Step 2)\n\n From: A four-step simulation-based
+  workflow for ecology"
 pagetitle: Tropical storm and lizards
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 Simulating data and then fitting your model to is a powerful way to interrogate both our statistical and scientific models, but learning how to do it means starting simple. 

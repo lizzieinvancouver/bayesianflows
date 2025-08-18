@@ -25,7 +25,7 @@
 \renewcommand{\refname}{\CHead{}}
 
 
-\title{Supplement: A four-step simulation-based workflow for improving ecological science}
+\title{Supplement: A four-step simulation-based workflow for ecology}
 % \date{\today}
 \author{EM Wolkovich, TJ Davies, WD Pearse \& M Betancourt}
 \maketitle

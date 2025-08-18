@@ -1,9 +1,12 @@
 ---
-title: "| <span style='font-size: 30px'>Short case study 2:\n| A widely applicable
-  workflow\n"
-subtitle: "Steps 1-2 using Lasso regression"
-pagetitle: A widely applicable workflow
-output: pdf_document
+title: "| <span style='font-size: 30px'>Short case study 2:\n| Identifying predictors
+  of tree leafout\n"
+subtitle: "Steps 1-2 using Lasso regression for leafout\n\n From: A four-step simulation-based
+  workflow for ecology"
+pagetitle: Lassos and leafout
+output:
+  html_document:
+    df_print: paged
 ---
 
 
@@ -22,7 +25,7 @@ We read in some climate data summaries including a few variables of interest (re
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
 
-wd <- '~/projects/bayesianflows/examples/lasso'
+wd <- '/Users/lizzie/Documents/git/projects/misc/miscmisc/bayesianflows/examples/lasso'
 
 # libraries
 library(geosphere) # get daylength
