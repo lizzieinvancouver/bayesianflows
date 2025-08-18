@@ -5,12 +5,13 @@ subtitle: "Steps 1-2 using Lasso regression for leafout\n\n From: A four-step si
   workflow for ecology"
 pagetitle: Lassos and leafout
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
 
 
-The four-step workflow we outline is designed for bespoke model building, but we argue it can be helpful for any model building. In bespoke model building we often can match the model we fit exactly to our generative model---that is, we can simulate data from the model we then fit to the simulated data. In other approaches, we may use more of a heuristic model to simulate data. This means we simulate data using a model that fits a simple understanding of our ecological system or process, but that may not match the statistical model we will then fit to simulated data. 
+The four-step workflow we outline is designed for bespoke model building, but we argue it can be helpful for any model building. In bespoke model building we often can match the model we fit exactly to our generative model---that is, we can simulate data from the model we then fit to the simulated data. In other approaches, we may use more of a heuristic model to simulate data. This means we simulate data using a model that matches a simple understanding of our ecological system or process, but that may not match the statistical model we will then fit to simulated data. 
 
 For example, consider a case where we're interested in an ecological process driven by climate, but we are not fully sure which climate variables drive the process, though we have some basic ideas. The timing of tree leafout is a good example where many climate variables may matter; experiments show that winter cool, daylength and spring warm temperatures all matter for some tree species, but other work suggests these do not matter in natural conditions (aka, trees outside in nature) and that precipitation, clouds and other factors may matter instead or in addition. 
 

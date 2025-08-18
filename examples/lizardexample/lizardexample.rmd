@@ -7,9 +7,10 @@ pagetitle: Tropical storm and lizards
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
-Simulating data and then fitting your model to is a powerful way to interrogate both our statistical and scientific models, but learning how to do it means starting simple. 
+Simulating data and then fitting your model to those simulated data is a powerful way to interrogate both our statistical and scientific models, but learning how to do it means starting simple. 
 
 Here we imagine a very simple example where you are interested in whether a storm that hit several tropical islands, destroying vegetation on the islands, may have led lizards to evolve shorter toes---since they may no longer need longer toes to run up vegetation. You plan to sample one lizard per island (they're hard to catch and you have limited time), on 10 islands---including 5 of them that were not hit by the storm. 
 

@@ -44,12 +44,10 @@ Our aim is to provide an approachable succinct description of a basic adaptable 
 
 \section*{A brief review of statistical inference using Bayesian approaches}
 
-To fit bespoke models we usually apply Bayes' theorem, which generates a $posterior$ distribution from a combination of a $likelihood$ and a $prior$ distribution (an initial uncertainty estimate derived from basic ecological knowledge), and using iterative algorithms (e.g. MCMC, Markov Chain Monte Carlo) that provide samples that can be used to extract information from the posterior distribution (for more, see \emph{A brief review of statistical inference using Bayesian approaches} in the Supplement). 
-
+To fit bespoke models we usually apply Bayes' theorem, which generates a $posterior$ distribution from a combination of a $likelihood$ and a $prior$ distribution (an initial uncertainty estimate derived from basic ecological knowledge), and using iterative algorithms (e.g. MCMC, Markov Chain Monte Carlo) that provide samples that can be used to extract information from the posterior distribution. %  (for more, see \emph{A brief review of statistical inference using Bayesian approaches} in the Supplement). 
 % Robust analyses rely on our inferences being consistent with the underlying truth more often than not.  Quantifying this consistency is calibration---analyzing how often a parameter estimate is close to the true value---a critical part of using models for inference. A major problem with traditional (frequentist) approaches in ecology today is their inferences are unpredictable when their foundational assumptions are not met, but ecologists are not usually trained in how to recognize or deal with this.
 % Most ecologists are trained primarily in frequentist methods, which are focused on calibration (this is is why training in frequentist methods includes so much discussion of significance, power, mean squared error, and the like). Bayesian methods typically focus on inference, but can be equally well calibrated (see Step 1, below). 
-
-To better understand our workflow, we provide a very brief overview of some of the fundamentals of Bayesian methods that is inherently incomplete and, by design, not very technical. This section can be skipped for those who feel already well-versed, and can be augmented for those who are new to Bayesian approaches \citep[for example,][]{statrethink,BDA,regotherstories}.
+To better understand our workflow for building bespoke models, we provide a very brief overview here of some of the fundamentals of Bayesian methods that is inherently incomplete and, by design, not very technical. This section can be skipped for those who feel already well-versed, and can be augmented for those who are new to Bayesian approaches \citep[for example,][]{statrethink,BDA,regotherstories}.
 
 Probability is often defined as ``the long-term frequency with which something happens.'' We would expect, for example that if we tossed a coin 100 times we would see roughly 50 heads. In this case we would say that the probability of tossing a coin and getting a `head' is $\frac{50}{100}$, equivalent to 50\% or $\frac{1}{2}$. At the same time we wouldn't be very surprised if we observed 49 or even 55 heads, although we would be surprised if we saw 99.
 
@@ -80,9 +78,7 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 Our workflow in the main text is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabilistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). 
 
 % For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (\verb|example.md| available at: \url{https://github.com/lizzieinvancouver/bayesianflowsexample}). 
-For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (see files). As our goal is to introduce people to this approach, we present a simple---but real-world---example to walk through the basic steps. Like all models, it is a work in progress, and could easily be adjusted, expanded and likely improved (all data and code will be fully and freely available on Zenodo before publication).
-% For now, you can download the workflow here:
-% \url{https://github.com/lizzieinvancouver/bayesianflows/blob/main/examples/synchrony/example.html}.
+For our example of the full workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (see files). As our goal is to introduce people to this approach, we present a simple---but real-world---example to walk through the basic steps. Like all models, it is a work in progress, and could easily be adjusted, expanded and likely improved (all data and code will be fully and freely available on Zenodo before publication). For now, you can download the workflow here: \url{https://github.com/lizzieinvancouver/bayesianflows/blob/main/examples/synchrony/example.html}.
 
 \section*{References}
 \vspace{-5ex}
@@ -90,7 +86,6 @@ For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markd
 
 
 \section*{Figures}
-
 \begin{figure}[ht]
 \centering
 \noindent \includegraphics[width=0.5\textwidth]{examples/misspecifiedmodel/priorpostforflows.pdf}
