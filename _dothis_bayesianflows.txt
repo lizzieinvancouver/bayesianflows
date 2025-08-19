@@ -6,8 +6,9 @@ Back at it, try Phil Trans A
 
 Started 14 August 2025
 
-To do still ...
+To do if there is a next time:
 - Phil Trans ref formatting?
+- I made the abstract 200 words for the box, but  I did not update tex (to 200 words) to this until after submitting so check changes are okay. See: https://github.com/lizzieinvancouver/bayesianflows/commit/667b3d2b3534e4b7fb9ffa575ba4bc77e6c02d2f
 
 
 Stuff I wanted to do, but did not do ...
