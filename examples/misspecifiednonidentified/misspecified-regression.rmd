@@ -1,0 +1,51 @@
+---
+title: "| <span style='font-size: 30px'>Short case study XXX:\n| A non-identifiable model that is foundational in life science\n"
+subtitle: "(With apologies to Joe Felsenstein)"
+pagetitle: Non-identifiable models in the life sciences
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+There are many kinds of non-identifiable models in statistics, and many methods have been developed to identify them. Perhaps the most common is models where non-identifiability is induced by correlation or redundancy among the explanatory variables. While such cases are often straightforward to identify when the variable are linear combinations of each other, if they are not linear combinations, or if sufficient error is introduced that the correlation is not obvious, it can be difficult to spot.
+
+Consider a case where there are three variables, each of which sequentially affects the other. This is a common consideration in path-analysis/structural-equation modelling type scenarios, and can be simulated relatively straightforwardly:
+
+```{R}
+set.seed(123456)
+a <- rnorm(1000)
+b <- a + rnorm(1000, sd=.01)
+y <- a + b + rnorm(1000)
+```
+
+Here we are using somewhat absurdly correlated data, but importantly a standard regression, if the underlying data are not properly investigated, would not flag to the user the issue:
+
+```{R}
+summary(lm(y ~ a + b))
+```
+
+Where the user would be left under the impression that neither 'a' nor 'b' were notable correlates of 'y'. Here this is a case of non-identifiability: because the model cannot distinguish between the impact of either 'a' or 'b', it assigns no importance to either. Our approach, which would involve generating candidate distributions and testing their impacts, would highlight the implausibility of generating a model that explains such a high proportion of the variance and yet has not a single statistically significant term.
+
+A slightly less contrived case of non-identifiability is essentially the reason for the entire existence of the field of comparative analysis. In 1985, Joe Felsenstein (DOI: 10.1086/284325) observed that two lineages, evolving separately, could generate data that might look as though they were correlated, when in fact they were not and simply represented two lineages evolving separately with no apparent correlation.
+
+```{R}
+# Simulate one lineage
+apples.x <- rnorm(n=100, mean=-1, sd=1)
+apples.y <- rnorm(n=100, mean=-1, sd=1)
+
+# Simulate another lineage
+oranges.x <- rnorm(n=100, mean=1, sd=1)
+oranges.y <- rnorm(n=100, mean=1, sd=1)
+
+# Merge the data
+data <- data.frame(x=c(apples.x,oranges.x), y=c(apples.y,oranges.y), fruit=rep(c("apples","oranges"),each=100))
+
+# They look correlated...
+with(data, plot(y~x))
+
+# ...and indeed a simple statistical test shows they are
+cor.test(c(apples.x,oranges.x), c(apples.y,oranges.y))
+```
+
+Joe Felsenstein's insight, which led to him writing a paper that has been cited over 11,000 times and has spawned an entire field, was to recognise that fitting this statistical model without considering the generative process, as our approach encourages the reader to do, is flawed. Felsenstein recognised that this mixture distribution is unidentifiable from a correlative process, and the entire field of evolutionary ecology dedicated to understanding how species' traits are distributed and have evolved has come about as a result of trying to identify the separation between these two.
