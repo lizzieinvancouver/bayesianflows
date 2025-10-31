@@ -3,6 +3,10 @@
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage{amsmath}
+\usepackage{lineno}
+\usepackage{xr-hyper}
+\externaldocument{..//..//bayesianflows}
+\newcommand{\lr}[1]{line~\lineref{#1}}
 \usepackage{hyperref}
 \usepackage{gensymb}
 
@@ -13,27 +17,21 @@
 %\bibliographystyle{}
 
 % TO DO items
-%  add a bit to the abstract and introduction, right at the beginning, explaining why non-ecologists should be interested in this paper.
-% see FIXABS (in this doc) -- DONE?
-% ADDREFSHERE in main text: Betancourt PPC and Minmo et al 2015 \url{https://www.pnas.org/ doi/full/10.1073/pnas.1412301112} ... also get some bad CAUSAL inference stuff. 
-% Add citation to workflow 2 (photoperiod)
 % Ask Will why the new draft is the same as the original
-% add clipart to third example and fix caption
-% Deal with last comment from R2
-% Fix R2's comments about the intro -- can people who fit complex models skip this? 
-% Deal with % FIXHERE
+% third example --  fix caption
 
-Reviewer comments (We provide below the full context of the three reviewers' comments) are in \emph{italics}, while our responses are in regular text. \\
+Reviewer comments are in \emph{italics}, while our responses are in regular text. \\
 
 {\bf Editor -- comments:} \\
 
 \emph{The main point coming from both referees is that, because this is not an ecology journal, we can expect most of the readers of the paper to not be ecologists. Thus it would be helpful to add a bit to the abstract and introduction, right at the beginning, explaining why non-ecologists should be interested in this paper. Such an explanation should not be difficult, because these workflow ideas are generalizable. You just want to do something here to reach this audience, as not everyone is going to make it all the way to page 8 to see the section, ``How this workflow extends to other fields."}\\
 
+Good point. We overhauled the introduction to more broadly position ecology as one of many fields that has shifted in its aims and resulting study design from simple approaches focused on single study systems to more global datasets and aims \lr{newintrostart}-\lr{newintroend}.\\
+
 {\bf Reviewer 1 -- comments:} \\
 \emph{Thank you for the opportunity to review your manuscript ``A four-step simulation-based workflow for ecology." I found this paper to be a useful summary of the Bayesian workflow using ecological examples, and I'm wholeheartedly on board with the value of this workflow in ecological data analysis, which often features observational studies and/or highly complex systems with complex dynamics and potential confounding.}\\
 
-Yay, thanks. \\
-
+We thank the reviewer for their time and help, which has improved the manuscript. \\
 
 \emph{As Philosophical Transactions A is primarily mathematical rather than ecological, my biggest critique of the manuscript is that it seems to be intended for an ecological audience. That is, the manuscript digests and distills concepts that are well known in the statistical literature (Gelman et al's Bayesian Workflow paper, Betancourt's Bayesian Workflow case study, etc) for ecologists. But in my opinion the manuscript doesn't successfully use ecological examples to shed light on the Bayesian workflow in a way that statisticians would find particularly novel or illuminating--probably because the manuscript doesn't *intend* to do so. However, given the likely audience for this journal, I believe the paper would have more impact for its readership if it could leverage ecological examples to drive statistical insight. Something like a dispatch from the field: ``here are some of the opportunities, successes, and complications that arise when putting these ideas into practice in the ecological domain."}\\
 
@@ -42,12 +40,15 @@ Yay, thanks. \\
 
 \emph{Title: I think it would be clarifying to ecologists (who are, I believe, the intended audience of this manuscript) to call this a workflow for ``ecological data analysis", rather than for ``ecology". True, this workflow extends beyond data analysis and across to elements of study design, but to a limited degree. For example, this is not a workflow for the development of ecological theory or the conduct of ecological fieldwork.}\\
 
-Done. \\
+We have adjusted the title to `A four-step simulation-based workflow for ecological analysis and science.' We hope that our workflow inspires new approaches to theory, fieldwork and experiments so we did not want to limit the title to `ecological data analysis,' but we also see that we did not explain this aim well enough before and so have adjusted the introduction to hopefully make this clearer (\lr{newintrostart}-\lr{newintroend}). \\
 
 
 \emph{Lines 10-11: Arguably, these lines oversell the novelty of this manuscript. To be ``Here we describe" in a paper abstract suggests that the think being described is new. ``Building on new advances" suggests that the present manuscript is doing the building. I don't think that's entirely the case here.}\\
 
-To FIXABS.
+That's a good point. We adjusted these parts of the abstract to now read:
+\begin{quote}
+Here we use show how new advances in workflows can lead to better models and enhance training in ecology, which could be followed by other fields facing similar challenges. Building on the increasingly computational toolkit of many ecologists, this approach leverages simulation to integrate model building and testing for empirical data more fully with ecological theory.
+\end{quote}
 
 
 \emph{Lines 109-121: The introduction, as well as lines 98-100, explicitly set this paper up as being about something bigger than mechanistic Bayesian modeling. Does the claim here at line 110 hold up in general, including when the model under consideration is a black-box technique from a machine learning toolkit?}\\
@@ -109,15 +110,16 @@ Yes, very commonly. We now provide one citation to a recent debate over this.\\
 
 \emph{It's easy enough for me as someone who uses the workflow to agree with the authors throughout the paper. However, it's not always clear to me from the text how the need for folks to learn and adopt more complex models for complex data requires the workflow. For instance, in the introduction: ``Such data generally require more complex models, such as those that accommodate both the underlying biological processes and how the measurements were made.`` From this, could folks who feel confident in using complex models bypass this workflow and still do good science? To me the simulation-based approach is really more like a different way of building models in general. My biggest challenge has been trying to convince folks to adopt the workflow as a way to do good science irrespective of the complexity of the data or of the model.}\\
 
-% FIXHERE
+This is a great point as we think the workflow is useful for all analysis, not just the complex one, but we did not explain this well enough before. To address this we have revamped much of the introduction, see 
+\lr{newintrostart}-\lr{newintroend}. \\
 
 \emph{- Page 3, line 50 -- Why do the authors refer to it as Bayesian methods and not Bayesian inference? I find ecologists tend to use these sorts of terms as a way to say that a 'Bayesian model/method' is better without really understanding that the data generating mechanism is not fundamentally different in a frequentist/Bayesian context. I think a clearer explanation would help clarify what the authors mean by Bayesian methods.}\\
 
-Good point, we have struggled in this paper to make it broadly approachable and thus used `methods' instead of `'inference' here, but have changed it slightly (\lr{rrinference}) ... % FIXHERE
+Good point, we have struggled in this paper to make it broadly approachable and thus used `methods' instead of `'inference' here, but have changed it slightly (\lr{rrinference}) and re-written most of this section as part of overhauling the introduction (see above).\\
 
 \emph{- Perhaps the authors can discuss that larger, messier data requiring more complex models may be more easily fit in a Bayesian framework and thus lends itself to new modeling opportunities.}\\
 
-% FIXHERE
+We have worked to add this point, see \lr{Rnewmodels}-\lr{rrinference}. \\
 
 \emph{Overall I enjoyed the paper and hope that a larger audience will start moving beyond p-values and adopt more simulation-based approaches.}\\
 

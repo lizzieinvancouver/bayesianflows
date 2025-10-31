@@ -37,7 +37,7 @@ climdat <- read.csv(file.path(wd, "output/climdatwide.csv"))
 tmeandaily <- read.csv(file.path(wd, "output/climdattmean.csv"))
 ```
 
-Next we want to simulate a leafout date to occur after a thermal sum of 150 C (starting 1 January and accumulating values above 0 C). We also add in daylength on the date of leafout. Researchers commonly used this to estimate the effect of daylength in models of leafout, so we figure we should too. 
+Next we want to simulate a leafout date to occur after a thermal sum of 150 C (starting 1 January and accumulating values above 0 C). We also add in daylength on the date of leafout. Researchers commonly used this to estimate the effect of daylength in models of leafout (see https://doi.org/10.1073/pnas.2019411117), so we figure we should too. 
 
 ```{r}
 # add daylength
