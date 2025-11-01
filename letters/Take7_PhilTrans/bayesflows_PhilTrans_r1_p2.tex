@@ -19,6 +19,7 @@
 % TO DO items
 % Ask Will why the new draft is the same as the original
 % third example --  fix caption
+% Fix Example 2 (last comment of R1) and sneak in spatial correlation to Example 3
 
 Reviewer comments are in \emph{italics}, while our responses are in regular text. \\
 
@@ -26,7 +27,7 @@ Reviewer comments are in \emph{italics}, while our responses are in regular text
 
 \emph{The main point coming from both referees is that, because this is not an ecology journal, we can expect most of the readers of the paper to not be ecologists. Thus it would be helpful to add a bit to the abstract and introduction, right at the beginning, explaining why non-ecologists should be interested in this paper. Such an explanation should not be difficult, because these workflow ideas are generalizable. You just want to do something here to reach this audience, as not everyone is going to make it all the way to page 8 to see the section, ``How this workflow extends to other fields."}\\
 
-Good point. We overhauled the introduction to more broadly position ecology as one of many fields that has shifted in its aims and resulting study design from simple approaches focused on single study systems to more global datasets and aims \lr{newintrostart}-\lr{newintroend}.\\
+Good point. We overhauled the introduction to more broadly position ecology as one of many fields that has shifted in its aims and resulting study design from simple approaches focused on single study systems to more global datasets and aims (edits throughout \lr{newintrostart}-\lr{newintroend}).\\
 
 {\bf Reviewer 1 -- comments:} \\
 \emph{Thank you for the opportunity to review your manuscript ``A four-step simulation-based workflow for ecology." I found this paper to be a useful summary of the Bayesian workflow using ecological examples, and I'm wholeheartedly on board with the value of this workflow in ecological data analysis, which often features observational studies and/or highly complex systems with complex dynamics and potential confounding.}\\
@@ -57,7 +58,7 @@ Good point, this is a delicate balance. As we state on \lr{beyondMCMCstart1}-\lr
 \begin{quote}
 Our examples include several statistical inference methods, though we focus more on implementing the workflow through a Bayesian statistical framework (with an example shown in \textsf{R} and \textsf{Stan}), because this framework allows integrating bespoke model building more fully with ecological theory and understanding.
 \end{quote}
-But we can see now that we overstate this in other places in the manuscript. To address this, we have cut and edited the text suggesting how broadly we describe the workflow (\lr{beyondMCMC2}, \lr{beyondMCMC3}) and linked more clearly to examples using other methods in places where how to do it other methods is less obvious (e.g., \lr{beyondMCMC4}). \\
+But we can see now that we overstate this in other places in the manuscript. To address this, we have cut and edited the text suggesting how broadly we describe the workflow (\lr{beyondMCMC2}, \lr{beyondMCMC3}) and linked more clearly to examples using other methods (e.g., \lr{beyondMCMC4}). We also made small changes throughout (e.g., \lr{bayesfocus}, \lr{mobe}) to clarify this. \\
 
 \emph{Line 128 ``i.e., you fix values for your model parameters, then test how well your model recovers them": This is the case only for parametric models, but again I think this paper's aim is to be more broadly applicable.}\\
 
@@ -70,11 +71,11 @@ Good point, we adjusted this (\lr{beyondMCMC5start}-\lr{beyondMCMC5end}) to be m
 \emph{Lines 181-195: I would suggest placing more emphasis here on the judicious choice of quantities (or other data summary, e.g. graphical outputs) for PPCs. Too often in ecology and elsewhere I see people using dumb quantities for their PPCs that are nearly guaranteed to fail to detect misspecification and/or to fail to provide useful insight into what model assumptions are being violated in the event that misspecification is detected. For a great example of judiciously chosen quantities that will be accessible to ecologists, see Minmo et al 2015 \url{https://www.pnas.org/ doi/full/10.1073/pnas.1412301112}
 }\\
 
-This is a great point and we very much agree. We added several sentences to this paragraph to make these points (\lr{betterppcstart}-\lr{betterppcend}).\\
+This is a great point and we very much agree. We added several sentences to this paragraph to make these points and added the suggested reference (\lr{betterppcstart}-\lr{betterppcend}).\\
 
 \emph{Line 210: suggest changing to ``non-existent calendar days beyond the 365th". I suppose it probably *is* pretty uncommon to see predictions for ordinal day 1000 in particular.}\\
 
-Done, though we used 366th to include leap years (\lr{calendarday}).\\
+Done, though we used 366 to include leap years (\lr{calendarday}).\\
 
 \emph{Line 217: ``We never noticed [non-identifiability or degeneracy] before using this workflow." What do you mean by this? Surely you got some convergence failures from lmer, or some absurd MCMC posteriors with no convergence, probably with greater frequency prior to adopting this workflow than after. Do you mean that before adopting the workflow, you didn't associate these issues with the concept of degeneracy?}\\
 
@@ -86,7 +87,7 @@ Great point, we added a third short example for this and now reference it here (
 
 \emph{Line 234: What do you mean by ``their underlying theorems"? The theorems in statistics that underpin the techniques for fitting statistical models? I'm not sure I grasp what this sentence is getting at.}\\
 
-Thanks for catching this. We changed to (\lr{huh}): ``The increasingly computational toolkit of the modern ecologist makes it easier to bridge the gap between ecological models and the field underlying mechanistic theories."
+Thanks for catching this. We changed to (\lr{huh}): ``The increasingly computational toolkit of the modern ecologist makes it easier to bridge the gap between statistical models used in ecology and the field's underlying mechanistic theories."\\
 
 \emph{Line 237-238: ``solve [an ecological model] analytically" to me suggests solving for the equilibrium in an ODE model or something, but here it seems to be applied to a statistical model, of the sort that one can simulate data from. What is meant by ``solve analytically" here? Analytically finding the Bayesian posterior?}\\
 
@@ -103,6 +104,7 @@ Yes, very commonly. We now provide one citation to a recent debate over this.\\
 
 \emph{Short Case Study 2 (again): ``but that would show us that many variables now matter, including a number of ones, such as total precipitation, that we did not use to simulate our data either." This is a great example of how the workflow can guide people to better theory-motivated data and model structures, and as such I'd love to see it fleshed out a bit more in the case study--I think this is the interesting part. I also think it's worth clarifying the following. As written, the idea that the lasso is failing because it thinks precipitation matters is confusing, because at first glance it looks like the lasso procedure is broken. We put GDD--the only thing we used to simulate the data--into the model, and it came back selecting a bunch of other stuff as important, like precip. I think it would be useful to spell out for the reader that the thing that matters causally in the simulation--GDD on the date of leaf- out--was not put in the model. Instead, the model contains variably good or poor proxies for roughly when we might expect the GDD threshold to have been reached, and it turns out that precip is a relevant proxy, alongside mean spring temp and others. The ``aha" moment, then, is realizing that by throwing mean spring temp into the model, we haven't captured the key generative structure around GDDs, and indeed precip might well be just as useful a predictor as mean spring temperature.}\\
 
+We have adjusted the text in this workflow to address these concerns.\\
 
 {\bf Reviewer 2 -- comments:} \\
 
@@ -110,7 +112,7 @@ Yes, very commonly. We now provide one citation to a recent debate over this.\\
 
 \emph{It's easy enough for me as someone who uses the workflow to agree with the authors throughout the paper. However, it's not always clear to me from the text how the need for folks to learn and adopt more complex models for complex data requires the workflow. For instance, in the introduction: ``Such data generally require more complex models, such as those that accommodate both the underlying biological processes and how the measurements were made.`` From this, could folks who feel confident in using complex models bypass this workflow and still do good science? To me the simulation-based approach is really more like a different way of building models in general. My biggest challenge has been trying to convince folks to adopt the workflow as a way to do good science irrespective of the complexity of the data or of the model.}\\
 
-This is a great point as we think the workflow is useful for all analysis, not just the complex one, but we did not explain this well enough before. To address this we have revamped much of the introduction, see 
+This is a great point as we think the workflow is useful for all analysis, not just the complex ones, but we did not explain this well enough before. To address this we have revamped much of the introduction, see 
 \lr{newintrostart}-\lr{newintroend}. \\
 
 \emph{- Page 3, line 50 -- Why do the authors refer to it as Bayesian methods and not Bayesian inference? I find ecologists tend to use these sorts of terms as a way to say that a 'Bayesian model/method' is better without really understanding that the data generating mechanism is not fundamentally different in a frequentist/Bayesian context. I think a clearer explanation would help clarify what the authors mean by Bayesian methods.}\\
@@ -119,7 +121,7 @@ Good point, we have struggled in this paper to make it broadly approachable and 
 
 \emph{- Perhaps the authors can discuss that larger, messier data requiring more complex models may be more easily fit in a Bayesian framework and thus lends itself to new modeling opportunities.}\\
 
-We have worked to add this point, see \lr{Rnewmodels}-\lr{rrinference}. \\
+We have worked to add this point, see \lr{rrinference}. \\ % lr{Rnewmodels}-
 
 \emph{Overall I enjoyed the paper and hope that a larger audience will start moving beyond p-values and adopt more simulation-based approaches.}\\
 
