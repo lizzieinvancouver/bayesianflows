@@ -44,8 +44,7 @@ simdat <- merge(climdat, lodf, by="year", all.x=TRUE)
 
 ## Now fit lasso regression with all potential variables 
 # Create matrix of predictors (X) and response (y)
-X <- as.matrix(simdat[, c("tminwinter",  
-	"gddspring",  
+X <- as.matrix(simdat[, c("tminwinter",   
 	"tmeanspring",
 	"precspring", 
 	"totalprec", 
@@ -65,7 +64,6 @@ coef(cv_lasso, s = "lambda.min")
 ##
 ## Try again without daylength
 X <- as.matrix(simdat[, c("tminwinter",  
-	"gddspring",  
 	"tmeanspring",
 	"precspring", 
 	"totalprec", 

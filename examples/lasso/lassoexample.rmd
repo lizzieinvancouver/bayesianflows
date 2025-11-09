@@ -2,7 +2,7 @@
 title: "| <span style='font-size: 30px'>Short case study 2:\n| Identifying predictors
   of tree leafout\n"
 subtitle: "Steps 1-2 using Lasso regression for leafout\n\n From: A four-step simulation-based
-  workflow for ecology"
+  workflow for ecological analysis and science"
 pagetitle: Lassos and leafout
 output:
   pdf_document: default
@@ -11,9 +11,9 @@ output:
 ---
 
 
-The four-step workflow we outline is designed for bespoke model building, but we argue it can be helpful for any model building. In bespoke model building we often can match the model we fit exactly to our generative model---that is, we can simulate data from the model we then fit to the simulated data. In other approaches, we may use more of a heuristic model to simulate data. This means we simulate data using a model that matches a simple understanding of our ecological system or process, but that may not match the statistical model we will then fit to simulated data. 
+The four-step workflow we outline is designed for bespoke model building, but we argue it can be helpful for any model building, especially by helping researchers to think through how model structures connect to their underlying concepts and theory. In bespoke model building we often can match the model that we fit exactly to our generative model---that is, we can simulate data from the model we then fit to the simulated data. In other approaches, we may use more of a heuristic model to simulate data. This means we simulate data using a model that matches a simple understanding of our ecological system or process, but that may not match the statistical model we will then fit to simulated data. 
 
-For example, consider a case where we're interested in an ecological process driven by climate, but we are not fully sure which climate variables drive the process, though we have some basic ideas. The timing of tree leafout is a good example where many climate variables may matter; experiments show that winter cool, daylength and spring warm temperatures all matter for some tree species, but other work suggests these do not matter in natural conditions (aka, trees outside in nature) and that precipitation, clouds and other factors may matter instead or in addition. 
+For example, consider a case where we're interested in an ecological process driven by climate, but we are not fully sure which climate variables drive the process, though we have some basic ideas. The timing of tree leafout is a good example where many climate variables may matter; experiments show that winter cool (also called chilling), daylength and spring warm temperatures all matter for some tree species, but other work suggests these do not matter in natural conditions (aka, trees outside in nature) and that precipitation, clouds and other factors may matter instead or in addition. 
 
 Using this example, we might consider lasso regression---a method that fits many possible predictors, but penalizes ones with low predictive power based on fitting a parameter ($\lambda$) using cross-validation. We can approach lasso regression for this problem by simulating data starting with a simple model. The simplest model of leafout assumes leafout happens after a certain thermal sum is reached, which is commonly called a `growing degree days' model in agriculture. Assuming plants accumulate temperatures above some baseline (say, 0 C), they are added up each day until the threshold is crossed, at which point the tree leafs out. 
 
@@ -37,7 +37,7 @@ climdat <- read.csv(file.path(wd, "output/climdatwide.csv"))
 tmeandaily <- read.csv(file.path(wd, "output/climdattmean.csv"))
 ```
 
-Next we want to simulate a leafout date to occur after a thermal sum of 150 C (starting 1 January and accumulating values above 0 C). We also add in daylength on the date of leafout. Researchers commonly used this to estimate the effect of daylength in models of leafout (see https://doi.org/10.1073/pnas.2019411117), so we figure we should too. 
+Next we want to simulate a leafout date to occur after a thermal sum of 150 C (starting 1 January and accumulating values above 0 C). We also calculate the daylength on the date of leafout. Researchers commonly used this to estimate the effect of daylength in models of leafout (see https://doi.org/10.1073/pnas.2019411117), so---for this example---we figure we should too. 
 
 ```{r}
 # add daylength
@@ -65,13 +65,12 @@ for(yearhere in unique(tmeandaily$year)) {
 simdat <- merge(climdat, lodf, by="year", all.x=TRUE)
 ```
 
-Now we fit the lasso regression and look at what parameters it finds are most important. We simulated leafout based on GDD so we expect GDD and metrics related to spring temperatures should be important.
+Now we fit the lasso regression and look at what parameters it finds are most important. We simulated leafout based on GDD from temperature so we may expect metrics related to temperatures, especially the warmer ones that happen in the spring, should be important.
 
 ```{r}
 ## Now fit lasso regression with all potential variables 
 # Create matrix of predictors (X) and response (y)
 X <- as.matrix(simdat[, c("tminwinter",  
-	"gddspring",  
 	"tmeanspring",
 	"precspring", 
 	"totalprec", 
@@ -88,7 +87,7 @@ plot(cv_lasso)
 coef(cv_lasso, s = "lambda.min")
 ```
 
-But we find that none of the temperature metrics matter, even though we only used mean temperature above 0, which mostly happens in the spring, to simulate our leafout. What's going on here? Hopefully at this point in the workflow we would realize that using daylength, which almost perfectly correlates with day of year in the spring, is perhaps a bad idea. 
+But we find that none of the temperature metrics matter, even though we only used mean temperature above 0, which mostly happens in the spring, to simulate our leafout. What's going on here? Hopefully at this point in the workflow we would realize that using daylength, which almost perfectly correlates with day of year in the spring, is perhaps a bad idea (see https://doi.org/10.1073/pnas.2019411117). 
 
 ```{r}
 par(mfrow=c(1,2), mgp=c(2, 0.5, 0), tck=-0.01)
@@ -100,4 +99,5 @@ plot(loday~tmeanspring, simdat, bty="l", ylab="Leafout day of year",
 
 We also see that a variable we expected to matter, mean spring temperature looks pretty weakly related to leafout. We could continue on and try dropping daylength from our model (we encourage you to try it yourself adapting the above code), but that would show us that many variables now matter, including a number of ones, such as total precipitation, that we did not use to simulate our data either. 
 
-These two first steps in the workflow have highlighted a disconnect between the statistical model we want to use and the underlying biological model. Addressing it likely requires thinking through a better statistical approach that more closely aligns to the biology of a thermal sum model to start. 
+These two first steps in the workflow have highlighted a disconnect between the statistical model we want to use and the underlying biological model. First, we did not include the actual predictor we used in our heuristic (biological) model---GDD---in our statistical model. While leaving out this metric (GDD) is a surprisingly common approach in research on tree leafout, the issues with it become more clear by using this workflow. Even if we had included GDD, we have used a linear regression model when our thermal sum model (GDD) is not actually linear. Addressing this likely requires thinking through a better statistical approach that more closely aligns to the biology of a thermal sum model to start (see  https://doi.org/10.1111/gcb.15746). 
+

@@ -1,5 +1,7 @@
 ---
 title: "| <span style='font-size: 30px'>Short case study 3:\nThree non-identifiable models, two of which are vital in biology"
+subtitle: "More data simulation examples (relating to Steps 1, 2 and 4) \n\n From: A four-step simulation-based
+  workflow for ecological analysis and science"
 pagetitle: Non-identifiable models case-study
 output:
   pdf_document: default
@@ -9,17 +11,17 @@ output:
 
 # What is non-identifiability?
 
-There are many kinds of non-identifiable models in statistics, and many methods that have been developed to spot them, but here we define non-identifiability as "when all parameters in a model cannot be uniquely identified with infinite data". A classic case of non-identifiability could be defined as:
+There are many kinds of non-identifiable models in statistics, and many methods that have been developed to spot them, but here we define non-identifiability as "when all parameters in a model cannot be uniquely identified with infinite data." A classic case of non-identifiability could be defined as:
 
 $y \sim normal(\alpha \cdot \beta, \sigma^2)$
 
 Where we are attempting to estimate three parameters ($\alpha$, $\beta$, and $\sigma$) in order to model a continuous response variable ($y$). There are multiple combinations of $\alpha$ and $\beta$ that could lead to the same prediction of $y$ (e.g., compare the predictions of $\alpha=1$ and $\beta = 1$ vs. $\alpha=2$ and $\beta = 0.5$) and so $\alpha$ and $\beta$ are non-identifiable.
 
-These kinds of non-identifiability would most likely be caught by Step 2 of our approach: the ability of a given model to detect such parameters would be so poor it would warrant further investigation. However, many other off-the-shelf statistical tools detect such issues (and, indeed, you cannot easily fit a model such as described above using tools such as `R`'s `lm`). So what about cases of non-identifiability that 'standard' tools can't detect, but that our workflow can?
+These kinds of non-identifiability would most likely be caught by Step 2 of our approach: the ability of a given model to detect such parameters would be so poor it would warrant further investigation. However, many other off-the-shelf statistical tools detect such issues (and, indeed, you cannot easily fit a model such as described above using tools such as `lm` in `R`). So what about cases of non-identifiability that `standard' tools can't detect, but that our workflow can?
 
 # Non-identifiability in regression models
 
-Perhaps the most commonly observed form of non-identifiability comes from correlation or redundancy among explanatory variables. While such cases are often straightforward to identify when the variable are linear combinations of each other, if they are not linear combinations, or if sufficient error is introduced that the correlation is not obvious, it can be difficult to spot.
+Perhaps the most commonly observed form of non-identifiability comes from correlation or redundancy among explanatory variables. While such cases are often straightforward to identify when the variables are linear combinations of each other, if they are not linear combinations, or if sufficient error is introduced that the correlation is not obvious, it can be difficult to spot.
 
 Consider a case where there are three variables, each of which sequentially affects the other. This is a common consideration in path-analysis/structural-equation modelling type scenarios, and can be simulated by drawing a variable (`a`), making another explanatory variable that depends upon `a` (`b`), and then finally simulating a response variable that depends on both `a` and `b`:
 
@@ -38,7 +40,7 @@ summary(lm(y ~ a + b))
 
 Where the user would be left under the impression that neither `a` nor `b` were notable correlates of `y`. There is non-identifiability in the sense that the statistical model is unable to distinguish or identify the true values of the coefficients in the model. Because the model cannot distinguish between the impact of either `a` or `b`, it assigns no importance to either.
 
-Properly data exploration would hopefully detect extreme cases of this problem (see also our 'lasso' example), but where the issue is inherent to the model or the correlation is not as profound as in this demonstration, Steps 2 (checking our model with simulated data, where this non-identifiability would be noticed) and 4 (checking the impact of the parameters of the model) would identify it. Notably, our approach would be of use even if the researcher were "only" carrying out a linear regression model, and would be flagged in both steps even if only this were being used. This would highlight the implausibility of generating a model that explains such a high proportion of the variance and yet has not a single statistically significant term.
+Properly done data exploration would hopefully detect extreme cases of this problem (see also our 'lasso' example), but where the issue is inherent to the model, or the correlation is not as profound as in this demonstration, Steps 2 (checking our model with simulated data, where this non-identifiability would be noticed) and 4 (checking the impact of the parameters of the model) would identify it. Notably, our approach would be of use even if the researcher were "only" carrying out a linear regression model, and would be flagged in both steps even if only this were being used. This would highlight the implausibility of generating a model that explains such a high proportion of the variance and yet has not a single statistically significant term.
 
 # Non-identifiability in mixed models and comparative analysis
 
