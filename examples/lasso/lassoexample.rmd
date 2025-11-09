@@ -5,9 +5,9 @@ subtitle: "Steps 1-2 using Lasso regression for leafout\n\n From: A four-step si
   workflow for ecological analysis and science"
 pagetitle: Lassos and leafout
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 
