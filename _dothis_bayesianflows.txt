@@ -1,5 +1,11 @@
 Started 22 August 2023 
 
+<><><><><><><><><>
+To do for FINAL submission version ...
+
+- Move all the examples (and get them running) to the other repo
+- Clean out some of the extra files here (DIFF, bayesianflows_submitted, file for Diff)
+
 
 <><><><><><><><><>
 Back at it, try Phil Trans A
