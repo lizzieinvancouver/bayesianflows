@@ -1,11 +1,11 @@
 Started 22 August 2023 
 
 <><><><><><><><><>
-To do for FINAL submission version ...
+Stuff I did for FINAL submission version ...
+1 March 2026
 
-- Move all the examples (and get them running) to the other repo
-- Clean out some of the extra files here (DIFF, bayesianflows_submitted, file for Diff)
-
+- Moved all the examples (and get them running) to the other repo: https://github.com/lizzieinvancouver/bayesianflowsexample
+- Cleaned out some of the extra files here (DIFF, bayesianflows_submitted, file for Diff) -- deleted them!
 
 <><><><><><><><><>
 Back at it, try Phil Trans A
