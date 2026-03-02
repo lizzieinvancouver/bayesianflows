@@ -72,13 +72,16 @@ Formally, all a `workflow' does is organize various steps together in a systemat
 
 % Ultimately it may be helpful to advocate for workflows, plural.  Bayesian methodologies can be used to systematically investigate the consequences of a given model, such as an estimator calibration workflow.  They can also be used to formalize heuristic residual checking with posterior retrodictive check and implement an iterative model development workflow.  Etc, etc.  The goal is to identify what you want to do and organize the steps to achieve that output as systematically as possible.
 
+\section*{Three simple examples}
+
+The three very simple examples shown in Fig. \ref{fig:twoexamples} are available at: \url{https://github.com/lizzieinvancouver/bayesianflowsexample/tree/main/casestudies}
 
 \section*{An example workflow}
 
 Our workflow in the main text is explained mostly program-agnostically. Though at times we assume a user of \textsf{Stan}, a relatively new probabilistic programming language, that interfaces with \textsf{R, Python, Julia} (and more) to write bespoke Bayesian models \citep{Carpenter:2017stan}. We focus on \textsf{Stan} as its MCMC algorithm (a variant of Hamiltonian Monte Carlo, HMC) is fast and produces specific output to warn of model fit issues (i.e., divergent transitions) in a way other MCMC algorithms do not (e.g. Metropolis-Hastings or Gibbs), but the basic workflow should apply to diverse implementations of Bayesian modeling, and can be extended to other approaches (frequentist, resampling, etc.). 
 
 % For our example workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (\verb|example.md| available at: \url{https://github.com/lizzieinvancouver/bayesianflowsexample}). 
-For our example of the full workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (see files). As our goal is to introduce people to this approach, we present a simple---but real-world---example to walk through the basic steps. Like all models, it is a work in progress, and could easily be adjusted, expanded and likely improved (all data and code will be fully and freely available on Zenodo before publication). For now, you can download the workflow here: \url{https://github.com/lizzieinvancouver/bayesianflows/blob/main/examples/synchrony/example.html}.
+For our example of the full workflow we use \textsf{Stan} and \textsf{R}, presented in Markdown (see files). As our goal is to introduce people to this approach, we present a simple---but real-world---example to walk through the basic steps. Like all models, it is a work in progress, and could easily be adjusted, expanded and likely improved (all data and code will be fully and freely available on Zenodo before publication). For now, you can download the workflow here: \url{https://github.com/lizzieinvancouver/bayesianflowsexample/blob/main/exampleworkflow/example.html}.
 
 \section*{References}
 \vspace{-5ex}
